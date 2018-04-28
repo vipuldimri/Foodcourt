@@ -49,6 +49,7 @@ public class Login extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(36, 47, 65));
@@ -82,16 +83,16 @@ public class Login extends javax.swing.JFrame {
         jSeparator2.setBounds(120, 380, 331, 17);
 
         jPasswordField1.setBackground(new java.awt.Color(36, 47, 65));
+        jPasswordField1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jPasswordField1.setForeground(new java.awt.Color(255, 255, 255));
-        jPasswordField1.setText("jPasswordField1");
         jPasswordField1.setBorder(null);
+        jPasswordField1.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         jPanel1.add(jPasswordField1);
         jPasswordField1.setBounds(120, 340, 331, 40);
 
         jTextField1.setBackground(new java.awt.Color(36, 47, 65));
         jTextField1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jTextField1.setForeground(new java.awt.Color(255, 255, 255));
-        jTextField1.setText("Enter UserName");
         jTextField1.setBorder(null);
         jTextField1.setCaretColor(new java.awt.Color(255, 255, 255));
         jPanel1.add(jTextField1);
@@ -138,11 +139,27 @@ public class Login extends javax.swing.JFrame {
         jPanel1.add(jPanel2);
         jPanel2.setBounds(120, 410, 140, 50);
 
+        jButton1.setText("Go main page");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton1);
+        jButton1.setBounds(320, 550, 190, 23);
+
         getContentPane().add(jPanel1);
         jPanel1.setBounds(0, 0, 560, 620);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:Testing method
+        
+        MainScreen main = new MainScreen();
+        main.setVisible(rootPaneCheckingEnabled);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -180,6 +197,7 @@ public class Login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
