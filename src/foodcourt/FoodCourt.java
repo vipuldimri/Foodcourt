@@ -5,6 +5,9 @@
  */
 package foodcourt;
 
+import GUI.Login;
+import GUI.Splash;
+
 /**
  *
  * @author u20o90
@@ -14,8 +17,25 @@ public class FoodCourt {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
-        // TODO code application logic here
+    public static void main(String[] args) throws InterruptedException 
+    {
+        Splash splash = new Splash();
+        splash.setVisible(true);
+        for(int i=1 ;i<=100 ;i++)
+        {
+            Thread.sleep(45);
+            splash.jLabel2.setText("Loading "+i+" %");
+            splash.jProgressBar1.setValue(i);
+            if(i == 100)
+            {
+                splash.setVisible(false);
+                new Login().setVisible(true);
+                break;
+                
+            }
+            
+        }
+        
     }
     
 }
