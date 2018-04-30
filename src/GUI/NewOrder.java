@@ -5,8 +5,12 @@
  */
 package GUI;
 
+import DataStructures.Trie;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.util.ArrayList;
+import javax.swing.DefaultListModel;
+import javax.swing.JList;
 
 /**
  *
@@ -17,6 +21,7 @@ public class NewOrder extends javax.swing.JFrame {
     /**
      * Creates new form NewOrder
      */
+    Trie trie;
     public NewOrder() {
         initComponents();
            setExtendedState(this.MAXIMIZED_BOTH); 
@@ -26,6 +31,22 @@ public class NewOrder extends javax.swing.JFrame {
         int x = (int) ((dimension.getWidth() - getWidth()) / 2);
         int y = (int) ((dimension.getHeight() - getHeight()) / 2);
         setLocation(x, y);
+         
+        trie = new Trie();
+       
+        trie.addWord("pizza");
+        trie.addWord("burger");
+        trie.addWord("bun");
+        trie.addWord("pasta");
+        trie.addWord("chickenbrest");
+        trie.addWord("chickenpizza");
+        trie.addWord("chickenburger");
+        trie.addWord("coke");
+        trie.addWord("fries");
+        trie.addWord("hotdog");
+        
+        
+        
     }
 
     /**
@@ -38,6 +59,7 @@ public class NewOrder extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
@@ -61,6 +83,7 @@ public class NewOrder extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jTextField3 = new javax.swing.JTextField();
         jPanel10 = new javax.swing.JPanel();
+        list1 = new java.awt.List();
         jPanel9 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -70,16 +93,9 @@ public class NewOrder extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
         jPanel1.setPreferredSize(new java.awt.Dimension(580, 100));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 699, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel3.setText("Please Place Your Order");
+        jPanel1.add(jLabel3);
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.NORTH);
 
@@ -211,7 +227,11 @@ public class NewOrder extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel7.setText("Search");
 
-        jTextField3.setText("jTextField3");
+        jTextField3.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField3KeyReleased(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -243,11 +263,11 @@ public class NewOrder extends javax.swing.JFrame {
         jPanel10.setLayout(jPanel10Layout);
         jPanel10Layout.setHorizontalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 549, Short.MAX_VALUE)
+            .addComponent(list1, javax.swing.GroupLayout.DEFAULT_SIZE, 549, Short.MAX_VALUE)
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addComponent(list1, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)
         );
 
         jPanel4.add(jPanel10);
@@ -275,7 +295,7 @@ public class NewOrder extends javax.swing.JFrame {
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
         );
 
         jPanel4.add(jPanel9);
@@ -286,6 +306,20 @@ public class NewOrder extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jTextField3KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField3KeyReleased
+        // TODO add your handling code here:Key relaes
+        list1.removeAll();
+        String word = jTextField3.getText();
+        ArrayList<String> list = new ArrayList<>();
+        trie.AutoComplete(word.trim(), list);
+
+         list.forEach((food) -> 
+         {
+              list1.add(food);
+         });
+        
+    }//GEN-LAST:event_jTextField3KeyReleased
 
     /**
      * @param args the command line arguments
@@ -332,6 +366,7 @@ public class NewOrder extends javax.swing.JFrame {
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -350,5 +385,6 @@ public class NewOrder extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
+    private java.awt.List list1;
     // End of variables declaration//GEN-END:variables
 }

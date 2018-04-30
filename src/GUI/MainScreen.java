@@ -527,6 +527,7 @@ public class MainScreen extends javax.swing.JFrame
         
         NewOrder neworder = new NewOrder();
         neworder.setVisible(true);
+        setVisible(false);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
