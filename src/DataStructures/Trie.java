@@ -25,7 +25,21 @@ public class Trie
       }
       
       char currentchar = word.charAt(0);
-      int index =  currentchar - 97;
+      if(currentchar == ' ' )
+      {
+          if(current.children.get(27)==null)
+          {
+                Node newnode = new Node();
+        newnode.char_data = ' ';
+        current.children.set(27,newnode);
+        addWord(word.substring(1),current.children.get(27));
+          }else{
+              addWord(word.substring(1),current.children.get(27));
+          }
+      
+      
+      }else{
+              int index =  currentchar - 97;
       if(current.children.get(index) == null)
       {
         
@@ -33,15 +47,19 @@ public class Trie
         newnode.char_data = currentchar ;
         current.children.set(index,newnode);
         addWord(word.substring(1),current.children.get(index));
-      }else{
-        addWord(word.substring(1),current.children.get(index));
       }
+      else
+      {
+            addWord(word.substring(1),current.children.get(index));
+      }
+      }
+  
       
       
 	}
 	// Here Add method Finished
   
-  	public boolean search(String word)
+    public boolean search(String word)
     {
       
       return search(word,start);
@@ -75,12 +93,12 @@ public class Trie
     // Search Method Ends here
     public ArrayList<String> AutoComplete(String word,ArrayList<String> list)
     {
-      if(word.length()==0 || word.contains(" "))
+      if(word.length()==0 )
       {
           return list ;
       }
       
-      return AutoComplete(word.trim(),start,word,list);
+      return AutoComplete(word,start,word,list);
     }
     private ArrayList<String>  AutoComplete(String word , Node current,String ans,ArrayList<String> list)
     {
@@ -91,6 +109,19 @@ public class Trie
         return list;
       }
       char currentchar = word.charAt(0);
+      if(currentchar == ' ')
+      {
+           if(current.children.get(27) == null)
+           {
+           return list;
+       
+           }else
+           {
+            return  AutoComplete(word.substring(1),current.children.get(27),ans,list);
+            }
+          
+      }else{
+              
       int index =  currentchar - 97;
       if(current.children.get(index) == null)
       {
@@ -100,6 +131,8 @@ public class Trie
       {
        return  AutoComplete(word.substring(1),current.children.get(index),ans,list);
       }
+              }
+   
       
       
     }
@@ -112,8 +145,7 @@ public class Trie
       }
       
       
-      
-	for(int i =0 ;i < 27 ;i++)
+    for(int i =0 ;i < 28 ;i++)
     {
       if(current.children.get(i) != null)
       {

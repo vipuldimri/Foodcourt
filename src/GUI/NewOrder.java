@@ -44,9 +44,11 @@ public class NewOrder extends javax.swing.JFrame {
         trie.addWord("coke");
         trie.addWord("fries");
         trie.addWord("hotdog");
+        trie.addWord("vipul dimri");
+         trie.addWord("vipul adimri");
         
         
-        
+        System.out.println("asd");
     }
 
     /**
@@ -312,7 +314,7 @@ public class NewOrder extends javax.swing.JFrame {
         list1.removeAll();
         String word = jTextField3.getText();
         ArrayList<String> list = new ArrayList<>();
-        trie.AutoComplete(word.trim(), list);
+        trie.AutoComplete(word, list);
 
          list.forEach((food) -> 
          {

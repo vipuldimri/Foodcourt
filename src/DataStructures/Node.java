@@ -8,7 +8,7 @@ public class Node
 	Node()
 	{
         children = new ArrayList<>();
-      	for(int i=0 ;i < 27 ; i++)
+      	for(int i=0 ;i < 28 ; i++)
         {
           children.add(null);
         }
