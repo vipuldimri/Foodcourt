@@ -5,6 +5,7 @@
  */
 package GUI;
 
+import GUI.MainScreen;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 
@@ -44,9 +45,7 @@ public class Login extends javax.swing.JFrame {
         jSeparator2 = new javax.swing.JSeparator();
         jPasswordField1 = new javax.swing.JPasswordField();
         jTextField1 = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
@@ -98,21 +97,11 @@ public class Login extends javax.swing.JFrame {
         jPanel1.add(jTextField1);
         jTextField1.setBounds(120, 230, 331, 40);
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/StarkLogo.jpg"))); // NOI18N
-        jLabel4.setText("jLabel4");
-        jPanel1.add(jLabel4);
-        jLabel4.setBounds(270, 80, 128, 66);
-
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("User Name");
         jPanel1.add(jLabel5);
         jLabel5.setBounds(120, 180, 86, 22);
-
-        jLabel6.setBackground(new java.awt.Color(36, 47, 65));
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/showpassword.png"))); // NOI18N
-        jPanel1.add(jLabel6);
-        jLabel6.setBounds(460, 340, 30, 30);
 
         jPanel2.setBackground(new java.awt.Color(153, 153, 255));
 
@@ -187,6 +176,7 @@ public class Login extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -201,9 +191,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
