@@ -38,9 +38,9 @@ public class NewOrder extends javax.swing.JFrame {
         trie.addWord("burger");
         trie.addWord("bun");
         trie.addWord("pasta");
-        trie.addWord("chickenbrest");
-        trie.addWord("chickenpizza");
-        trie.addWord("chickenburger");
+        trie.addWord("chicken brest");
+        trie.addWord("chicken pizza");
+        trie.addWord("chicken burger");
         trie.addWord("coke");
         trie.addWord("fries");
         trie.addWord("hotdog");
