@@ -12,12 +12,12 @@ import java.awt.Toolkit;
  *
  * @author dimri
  */
-public class BeveragesMenu extends javax.swing.JDialog {
+public class ChineeseMenu extends javax.swing.JDialog {
 
     /**
      * Creates new form FastFoodMenu
      */
-    public BeveragesMenu(java.awt.Frame parent, boolean modal) {
+    public ChineeseMenu(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
                            Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
@@ -49,7 +49,7 @@ public class BeveragesMenu extends javax.swing.JDialog {
         jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("ADD / UPDATE BEVERAGES ITEMS");
+        setTitle("ADD / UPDATE CHINEESE ITEMS");
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -170,21 +170,23 @@ public class BeveragesMenu extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(BeveragesMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ChineeseMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(BeveragesMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ChineeseMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(BeveragesMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ChineeseMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(BeveragesMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ChineeseMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                BeveragesMenu dialog = new BeveragesMenu(new javax.swing.JFrame(), true);
+                ChineeseMenu dialog = new ChineeseMenu(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
