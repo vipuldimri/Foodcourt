@@ -68,11 +68,11 @@ public class MainScreen extends javax.swing.JFrame
         DashBooard = new javax.swing.JPanel();
         jPanel11 = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
         jLabel14 = new javax.swing.JLabel();
         jPanel12 = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
         jPanel13 = new javax.swing.JPanel();
         jLabel18 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
@@ -183,7 +183,7 @@ public class MainScreen extends javax.swing.JFrame
 
         jPanel6.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel11.setText("Contact and Support");
+        jLabel11.setText("Contact");
 
         jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/Contact.png"))); // NOI18N
 
@@ -194,9 +194,9 @@ public class MainScreen extends javax.swing.JFrame
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addComponent(jLabel12)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -206,7 +206,7 @@ public class MainScreen extends javax.swing.JFrame
                         .addGap(19, 19, 19)
                         .addComponent(jLabel12))
                     .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGap(32, 32, 32)
+                        .addGap(29, 29, 29)
                         .addComponent(jLabel11)))
                 .addContainerGap(19, Short.MAX_VALUE))
         );
@@ -370,8 +370,6 @@ public class MainScreen extends javax.swing.JFrame
 
         jLabel13.setText("Order");
 
-        jButton2.setText("take a Order");
-
         jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/Order.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
@@ -379,27 +377,22 @@ public class MainScreen extends javax.swing.JFrame
         jPanel11Layout.setHorizontalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel11Layout.createSequentialGroup()
-                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel11Layout.createSequentialGroup()
-                            .addGap(25, 25, 25)
-                            .addComponent(jButton2))
-                        .addGroup(jPanel11Layout.createSequentialGroup()
-                            .addGap(83, 83, 83)
-                            .addComponent(jLabel14))))
+                .addGap(83, 83, 83)
+                .addComponent(jLabel14)
                 .addContainerGap(89, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(101, 101, 101))
         );
         jPanel11Layout.setVerticalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel11Layout.createSequentialGroup()
-                .addGap(31, 31, 31)
+                .addGap(42, 42, 42)
                 .addComponent(jLabel13)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel14)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
-                .addComponent(jButton2)
-                .addGap(23, 23, 23))
+                .addContainerGap(107, Short.MAX_VALUE))
         );
 
         DashBooard.add(jPanel11);
@@ -409,30 +402,42 @@ public class MainScreen extends javax.swing.JFrame
 
         jLabel15.setText("Recharge");
 
-        jLabel16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/Card.png"))); // NOI18N
+        jLabel16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/recharge.png"))); // NOI18N
+
+        jButton2.setText("Recharge");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
         jPanel12.setLayout(jPanel12Layout);
         jPanel12Layout.setHorizontalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel12Layout.createSequentialGroup()
-                .addContainerGap(96, Short.MAX_VALUE)
+                .addContainerGap(94, Short.MAX_VALUE)
                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel12Layout.createSequentialGroup()
                         .addComponent(jLabel15)
                         .addGap(129, 129, 129))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel12Layout.createSequentialGroup()
                         .addComponent(jLabel16)
-                        .addGap(76, 76, 76))))
+                        .addGap(78, 78, 78))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel12Layout.createSequentialGroup()
+                        .addComponent(jButton2)
+                        .addGap(99, 99, 99))))
         );
         jPanel12Layout.setVerticalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel12Layout.createSequentialGroup()
                 .addGap(31, 31, 31)
                 .addComponent(jLabel15)
-                .addGap(18, 18, 18)
+                .addGap(40, 40, 40)
                 .addComponent(jLabel16)
-                .addContainerGap(109, Short.MAX_VALUE))
+                .addGap(30, 30, 30)
+                .addComponent(jButton2)
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         DashBooard.add(jPanel12);
@@ -1051,6 +1056,13 @@ public class MainScreen extends javax.swing.JFrame
           menusidepanel.setBackground(Color.WHITE);
    
     }//GEN-LAST:event_menusidepanelMouseExited
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        recharge rec = new recharge(this, rootPaneCheckingEnabled);
+        rec.setVisible(rootPaneCheckingEnabled);
+               
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
