@@ -10,11 +10,11 @@ public class Connect
     public Connect()throws Exception
     {
         
-                   conn = null;
-	           String url =  "jdbc:mysql://gamezone.cn406nlqr1z7.us-east-2.rds.amazonaws.com:3306/GameZoneDB";
-	           Class.forName("com.mysql.jdbc.Driver");
-	           conn = DriverManager.getConnection (url,"vipuldimri","foodcourt");
-	           System.out.println ("Database connection established");
+         conn = null;
+	 String url =  "jdbc:mysql://foodcourt.cw0b5ff1vv8q.us-east-2.rds.amazonaws.com:3306/FoodCourt";
+	 Class.forName("com.mysql.jdbc.Driver");
+	 conn = DriverManager.getConnection (url,"vasant","foodcourt");
+	 System.out.println ("Database connection established");
 
     }
     public static Connection getconnection()

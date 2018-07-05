@@ -21,6 +21,10 @@ public class FoodCourt {
     {
         Splash splash = new Splash();
         splash.setVisible(true);
+        
+        ConnectionBackgroundThread connectionBackgroundThread = new ConnectionBackgroundThread();
+        connectionBackgroundThread.start();
+        
         for(int i=1 ;i<=100 ;i++)
         {
             Thread.sleep(45);
