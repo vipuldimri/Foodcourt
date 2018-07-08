@@ -5,12 +5,16 @@
  */
 package GUI;
 
+import DataBase.MenuFactory;
+import DataBase.MenuInterface;
 import DataStructures.Trie;
+import foodcourt.Menu_Items;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -21,6 +25,7 @@ public class NewOrder extends javax.swing.JFrame {
     /**
      * Creates new form NewOrder
      */
+    ArrayList<Menu_Items> items;
     Trie trie;
     public NewOrder() {
         initComponents();
@@ -33,22 +38,12 @@ public class NewOrder extends javax.swing.JFrame {
         setLocation(x, y);
          
         trie = new Trie();
+        
        
-        trie.addWord("pizza");
-        trie.addWord("burger");
-        trie.addWord("bun");
-        trie.addWord("pasta");
-        trie.addWord("chicken brest");
-        trie.addWord("chicken pizza");
-        trie.addWord("chicken burger");
-        trie.addWord("coke");
-        trie.addWord("fries");
-        trie.addWord("hotdog");
-        trie.addWord("vipul dimri");
-         trie.addWord("vipul adimri");
+
+        GetItems();
         
         
-        System.out.println("asd");
     }
 
     /**
@@ -88,7 +83,7 @@ public class NewOrder extends javax.swing.JFrame {
         list1 = new java.awt.List();
         jPanel9 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        BillingTable = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -261,6 +256,13 @@ public class NewOrder extends javax.swing.JFrame {
         jPanel10.setBackground(new java.awt.Color(255, 51, 51));
         jPanel10.setPreferredSize(new java.awt.Dimension(549, 300));
 
+        list1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        list1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                list1MouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
         jPanel10Layout.setHorizontalGroup(
@@ -276,18 +278,15 @@ public class NewOrder extends javax.swing.JFrame {
 
         jPanel9.setPreferredSize(new java.awt.Dimension(549, 600));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        BillingTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Name", "QTY", "Price"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(BillingTable);
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
@@ -322,6 +321,27 @@ public class NewOrder extends javax.swing.JFrame {
          });
         
     }//GEN-LAST:event_jTextField3KeyReleased
+
+    private void list1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_list1MouseClicked
+        // TODO add your handling code here:
+        System.out.println("Cliked" + list1.getSelectedItem());
+        for(Menu_Items item : items)
+        {
+            if(item.getName().toLowerCase().equalsIgnoreCase(list1.getSelectedItem().toLowerCase()))
+            {
+                DefaultTableModel  model = (DefaultTableModel) BillingTable.getModel();
+                Object row[] = new Object[3];
+      
+                row[0] = item.getName();
+                row[1] = "1";
+                row[2] = item.getPrice();
+                model.addRow(row);
+              
+                list1.removeAll();
+            }
+            
+        }
+    }//GEN-LAST:event_list1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -359,6 +379,7 @@ public class NewOrder extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable BillingTable;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -383,10 +404,28 @@ public class NewOrder extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private java.awt.List list1;
     // End of variables declaration//GEN-END:variables
+
+   private void GetItems() 
+    {
+        
+        MenuInterface Dao = MenuFactory.GetInstance();
+        try
+        {
+            this.items = Dao.GetItems("Demo",trie);
+        }
+        catch (Exception ex) 
+        {
+            System.out.println("Failed loading items"+ex);
+            return;
+        }
+        
+        
+    }
+
+
 }

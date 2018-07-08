@@ -2,6 +2,7 @@
 package DataBase;
 
 
+import DataStructures.Trie;
 import foodcourt.Category;
 import foodcourt.Menu_Items;
 import java.awt.image.DataBufferByte;
@@ -18,7 +19,7 @@ public interface MenuInterface
     public Boolean AddItem (String FoodCourtID, String Name , String Price ,String Category )throws Exception;
      
    
-    public ArrayList<Menu_Items> GetItems(String FoodCourtName)throws Exception;
+    public ArrayList<Menu_Items> GetItems(String FoodCourtName,Trie trie)throws Exception;
     
     
     public ArrayList<Menu_Items> GetCatItems(String FoodCourtName,String cat)throws Exception;;

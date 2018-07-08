@@ -66,6 +66,7 @@ public class MenuItems extends javax.swing.JDialog
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
+        ItemsTable.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         ItemsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -86,7 +87,7 @@ public class MenuItems extends javax.swing.JDialog
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 945, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1040, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -142,7 +143,7 @@ public class MenuItems extends javax.swing.JDialog
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE))
+                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -208,18 +209,29 @@ public class MenuItems extends javax.swing.JDialog
                       JOptionPane.ERROR_MESSAGE);
                       return ;
       }
-        
-        Menu_Items item = new Menu_Items(Items.get(Items.size()-1).getId()+1, itemname.getText().trim(), itemprice .getText().trim(), cateName);
+        boolean firstitem = false;
+        Menu_Items item  = null;
+        if(Items.size() != 0)
+        {
+                   firstitem = false;
+                   item = new Menu_Items(Items.get(Items.size()-1).getId()+1, itemname.getText().trim(), itemprice .getText().trim(), cateName);
+
+            
+        }
+
+             item = new Menu_Items(1, itemname.getText().trim(), itemprice .getText().trim(), cateName);
+
         MenuInterface Dao = MenuFactory.GetInstance();
         try
         {
+            System.out.println("Adding item");
             Dao.AddItem("Demo", itemname.getText().trim(), itemprice .getText().trim(), cateName);
         } catch (Exception ex) 
         {
             System.out.println("Failed"+ex);
             return;
         }
- 
+        
          Items.add(item);
          FillingTable();
     }//GEN-LAST:event_jButton1ActionPerformed

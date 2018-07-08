@@ -1,5 +1,6 @@
 
 package DataBase;
+import DataStructures.Trie;
 import foodcourt.Category;
 import foodcourt.Menu_Items;
 import java.awt.Image;
@@ -84,45 +85,37 @@ public class Menuimplementation implements MenuInterface
     public Boolean AddItem(String FoodCourtID, String Name, String Price, String Category) throws Exception 
     {
         
-         
+           System.out.println(Category + " " + Name + " "+Price );
             PreparedStatement psmnt = null;
             psmnt = conn.prepareStatement(" insert into Demo_Items(Name,price,Category) values (?,?,?);");
             psmnt.setString(1, Name.trim());
             psmnt.setString(2, Price.trim());
             psmnt.setString(3, Category.trim()); 
             int ans = psmnt.executeUpdate();
-
-            return true;
-            
-
-            
-            
-            
+            return true;         
     }
 
     @Override
-    public ArrayList<Menu_Items> GetItems(String FoodCourtName) throws Exception 
+    public ArrayList<Menu_Items> GetItems(String FoodCourtName,Trie trie) throws Exception 
     {
         
-       ArrayList<Menu_Items> Items = new ArrayList<>();
-       final String Query = "select * from Demo_Items;";
-       
+        ArrayList<Menu_Items> Items = new ArrayList<>();
+        final String Query = "select * from Demo_Items ";
         Statement stmt=conn.createStatement();  
         ResultSet rs = stmt.executeQuery(Query);
         while(rs.next())  
         {
          int id = rs.getInt(1);
          String Name = rs.getString(2);
+         System.out.println("adding "+Name);
+         trie.addWord(Name.toLowerCase());
          String Price = rs.getString(3);
          String Cat = rs.getString(4);
-         
-            System.out.println(Price);
-         
          Menu_Items item = new Menu_Items(id, Name, Price, Cat);
          Items.add(item);
          
         }
-        
+        System.out.println(Items.size());
         return Items;
        
        
