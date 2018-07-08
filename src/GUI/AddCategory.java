@@ -3,6 +3,9 @@ package GUI;
 
 import DataBase.MenuFactory;
 import DataBase.MenuInterface;
+import foodcourt.Category;
+import foodcourt.Menu_Items;
+import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -10,13 +13,19 @@ import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 import java.awt.image.WritableRaster;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -28,9 +37,22 @@ public class AddCategory extends javax.swing.JDialog {
      * Creates new form AddCategory
      */
     DataBufferByte data;
-    public AddCategory(java.awt.Frame parent, boolean modal) {
+     ArrayList<Category> categ;
+     File image;
+    public AddCategory(java.awt.Frame parent, boolean modal,ArrayList<Category> categ) 
+    {
+        
+        
         super(parent, modal);
         initComponents();
+        this.categ=   categ;
+           Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+        int x = (int) ((dimension.getWidth() - getWidth()) / 2);
+        int y = (int) ((dimension.getHeight() - getHeight()) / 2);
+        
+        
+        DisplayCattable();
+        setLocation(x, y);
     }
 
     /**
@@ -43,7 +65,7 @@ public class AddCategory extends javax.swing.JDialog {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        CatTable = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -54,18 +76,15 @@ public class AddCategory extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        CatTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Sno", "Title 2"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(CatTable);
 
         jPanel1.setBackground(new java.awt.Color(0, 0, 0));
 
@@ -99,22 +118,23 @@ public class AddCategory extends javax.swing.JDialog {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(162, 162, 162)
-                        .addComponent(jLabel2)
-                        .addGap(102, 102, 102)
-                        .addComponent(jButton2))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(294, 294, 294)
-                        .addComponent(jButton1)))
-                .addGap(52, 52, 52)
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(202, 202, 202))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(294, 294, 294)
+                        .addComponent(jButton1))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(162, 162, 162)
+                        .addComponent(jLabel2)
+                        .addGap(102, 102, 102)
+                        .addComponent(jButton2)))
+                .addGap(66, 66, 66)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addGap(158, 158, 158)
@@ -133,16 +153,16 @@ public class AddCategory extends javax.swing.JDialog {
                             .addComponent(jLabel2)
                             .addComponent(jButton2))
                         .addGap(58, 58, 58)
-                        .addComponent(jButton1)
-                        .addGap(30, 30, 30))
+                        .addComponent(jButton1))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(34, 34, 34)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(30, 30, 30))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addGap(47, 47, 47)
                     .addComponent(jLabel3)
-                    .addContainerGap(147, Short.MAX_VALUE)))
+                    .addContainerGap(204, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -165,46 +185,34 @@ public class AddCategory extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+
         JFileChooser chooser;
         FileNameExtensionFilter filter;
         chooser = new JFileChooser();
-        File image = null;
+         image = null;
         ImageIcon photo = null;
         WritableRaster raster;
-      
-        
-        
         chooser.setCurrentDirectory(image);
         filter = new FileNameExtensionFilter("jpeg, gif and png files", "jpg", "gif", "png");
         chooser.addChoosableFileFilter(filter);
         
          int i = chooser.showOpenDialog(this);
-           if (i == JFileChooser.APPROVE_OPTION) {
+           if (i == JFileChooser.APPROVE_OPTION) 
+           {
             image = chooser.getSelectedFile();
-           // jLabel2.setText(image.getAbsolutePath());
-            try {
-                BufferedImage originalImage = ImageIO.read(image);
-                int type = originalImage.getType() == 0 ? BufferedImage.TYPE_INT_ARGB : originalImage.getType();
- 
-                BufferedImage resizeImageJpg = resizeImage(originalImage, type);
-                photo = new ImageIcon(toImage(resizeImageJpg));
- 
-                //converting buffered image to byte array
-                raster = resizeImageJpg.getRaster();
-                data = (DataBufferByte) raster.getDataBuffer();
- 
-            } catch (IOException e) 
+      
+            BufferedImage myImg = null;
+         
+            try 
             {
-                System.out.println(e.getMessage());
+                myImg = ImageIO.read(image);
+                
+                
+            } catch (IOException ex) {
+                Logger.getLogger(AddCategory.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
-           
-            jLabel1.setIcon(photo);
-            
- 
-            repaint();
-            chooser.setCurrentDirectory(image);
-   
+               ImageIcon icon = new ImageIcon(myImg);
+             jLabel1.setIcon(icon);
      
            }
            
@@ -216,10 +224,10 @@ public class AddCategory extends javax.swing.JDialog {
         // TODO add your handling code here://Add Category button
         try
         {
-                System.out.println("click");
+               
                 MenuInterface Dao   =  MenuFactory.GetInstance();
-//                Dao.AddCategory("Demo",jTextField1.getText().trim(),data);  
-                        Dao.AddCategory();  
+                Dao.AddCategory("Demo",jTextField1.getText().trim(),image);  
+                      
 
         }
         catch(Exception ex)
@@ -227,13 +235,14 @@ public class AddCategory extends javax.swing.JDialog {
             System.out.println("Unable to add new category ");
         }
         
+        System.out.println("Category added Successfully");
         
     }//GEN-LAST:event_jButton1ActionPerformed
    private static BufferedImage resizeImage(BufferedImage originalImage, int type)
    {
-        BufferedImage resizedImage = new BufferedImage(300, 300, type);
+        BufferedImage resizedImage = new BufferedImage(201, 137, type);
         Graphics2D g = resizedImage.createGraphics();
-        g.drawImage(originalImage, 0, 0, 300, 300, null);
+        g.drawImage(originalImage, 0, 0, 201, 137, null);
         g.dispose();
  
         return resizedImage;
@@ -273,19 +282,13 @@ public class AddCategory extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                AddCategory dialog = new AddCategory(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
+
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable CatTable;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
@@ -293,7 +296,29 @@ public class AddCategory extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
+
+    private void DisplayCattable() {
+
+                  
+       DefaultTableModel m = (DefaultTableModel) CatTable.getModel();
+       m.setRowCount(0);
+       
+       int i =1 ;
+       for(Category cat : categ)
+       {
+        DefaultTableModel  model = (DefaultTableModel) CatTable.getModel();
+        Object row[] = new Object[2];
+      
+            row[0] = i;
+            row[1] = cat.getName();
+
+            model.addRow(row);
+            
+            i++;
+            
+        
+       }
+    }    
 }

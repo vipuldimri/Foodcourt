@@ -1,11 +1,23 @@
 
 package DataBase;
+import foodcourt.Category;
+import foodcourt.Menu_Items;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import static java.lang.System.in;
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import javax.imageio.ImageIO;
 
 public class Menuimplementation implements MenuInterface
 {
@@ -16,9 +28,9 @@ public class Menuimplementation implements MenuInterface
     }
     
     @Override
-    public ArrayList<String> GetCategory(String FoodCourtName) throws Exception 
+    public ArrayList<Category> GetCategory(String FoodCourtName) throws Exception 
     {
-       ArrayList<String> categories = new ArrayList<>();
+       ArrayList<Category> categories = new ArrayList<>();
        final String Query = "select * from Demo_Category;";
        
         Statement stmt=conn.createStatement();  
@@ -27,7 +39,15 @@ public class Menuimplementation implements MenuInterface
         {
          int id = rs.getInt(1);
          String Name = rs.getString(2);
-         categories.add(Name);
+         Blob is = rs.getBlob(3); 
+         
+            FileOutputStream fout = new FileOutputStream("C://Foodcourt//Images/"+id+".jpg");
+         
+            int len = (int) is.length();
+            byte[] buf = is.getBytes(1, len);
+            fout.write(buf,0,len);
+         Category cat = new Category(id, Name, null);
+         categories.add(cat);
          
         }
         
@@ -36,32 +56,102 @@ public class Menuimplementation implements MenuInterface
        
     }
 
-//    @Override
-//    public Boolean AddCategory(String FoodCourtID,String Name , DataBufferByte data) throws Exception
-//    {
-//           System.out.println("Idhar a ");
-//            PreparedStatement psmnt = null;
-//        
-//            psmnt = conn.prepareStatement(" insert into Demo_Category(Name,Image) values (?,?);");
-//                
-//            psmnt.setString(1, Name.trim());
-//            byte[] extractBytes = data.getData();
-//            psmnt.setBytes(2, extractBytes); 
-//            int s = psmnt.executeUpdate();
-//            
-//            if(s > 0)
-//            {
-//                return true;
-//            }else{
-//                return false;
-//            }
-//            
-//    }
-//    
+    @Override
+    public Boolean AddCategory(String FoodCourtID,String Name , File data) throws Exception
+    {
+           System.out.println("Idhar a ");
+            PreparedStatement psmnt = null;
+        
+            psmnt = conn.prepareStatement(" insert into Demo_Category(Name,Image) values (?,?);");
+                
+            psmnt.setString(1, Name.trim());
+            
+            FileInputStream f =  new FileInputStream(data);
+
+            psmnt.setBinaryStream(2,(InputStream) f, (int)(data.length())); 
+            int s = psmnt.executeUpdate();
+            
+            if(s > 0)
+            {
+                return true;
+            }else{
+                return false;
+            }
+            
+    }
 
     @Override
-    public Boolean AddCategory() throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Boolean AddItem(String FoodCourtID, String Name, String Price, String Category) throws Exception 
+    {
+        
+         
+            PreparedStatement psmnt = null;
+            psmnt = conn.prepareStatement(" insert into Demo_Items(Name,price,Category) values (?,?,?);");
+            psmnt.setString(1, Name.trim());
+            psmnt.setString(2, Price.trim());
+            psmnt.setString(3, Category.trim()); 
+            int ans = psmnt.executeUpdate();
+
+            return true;
+            
+
+            
+            
+            
     }
+
+    @Override
+    public ArrayList<Menu_Items> GetItems(String FoodCourtName) throws Exception 
+    {
+        
+       ArrayList<Menu_Items> Items = new ArrayList<>();
+       final String Query = "select * from Demo_Items;";
+       
+        Statement stmt=conn.createStatement();  
+        ResultSet rs = stmt.executeQuery(Query);
+        while(rs.next())  
+        {
+         int id = rs.getInt(1);
+         String Name = rs.getString(2);
+         String Price = rs.getString(2);
+         String Cat = rs.getString(2);
+         
+         Menu_Items item = new Menu_Items(id, Name, Price, Cat);
+         Items.add(item);
+         
+        }
+        
+        return Items;
+       
+       
+        
+        
+    }
+
+    @Override
+    public ArrayList<Menu_Items> GetCatItems(String FoodCourtName,String cat) throws Exception {
+       
+        ArrayList<Menu_Items> Items = new ArrayList<>();
+        final String Query = "select * from Demo_Items where Category = '"+cat+"';";
+        System.out.println(Query);
+        Statement stmt=conn.createStatement();  
+        ResultSet rs = stmt.executeQuery(Query);
+        while(rs.next())  
+        {
+         int id = rs.getInt(1);
+         String Name = rs.getString(2);
+         String Price = rs.getString(2);
+         String Cat = rs.getString(2);
+         
+         Menu_Items item = new Menu_Items(id, Name, Price, Cat);
+         Items.add(item);
+         
+        }
+        
+        return Items;
+    }
+    
+
+   
 }
  

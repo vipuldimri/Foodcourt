@@ -1061,7 +1061,7 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout">
                 <Property name="alignment" type="int" value="0"/>
-                <Property name="horizontalGap" type="int" value="150"/>
+                <Property name="horizontalGap" type="int" value="50"/>
                 <Property name="verticalGap" type="int" value="50"/>
               </Layout>
               <SubComponents>
@@ -1105,6 +1105,9 @@
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Add New Category"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="vbutActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JLabel" name="blab">
                       <Properties>

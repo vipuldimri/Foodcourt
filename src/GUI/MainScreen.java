@@ -1,18 +1,22 @@
 package GUI;
 import DataBase.MenuFactory;
 import DataBase.MenuInterface;
+import foodcourt.Category;
+import java.awt.CheckboxMenuItem;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.MenuItem;
 import java.awt.Toolkit;
 import java.util.ArrayList;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import jdk.nashorn.internal.objects.NativeArray;
+
 
 public class MainScreen extends javax.swing.JFrame 
 {
-    ArrayList<String> Categories;
+    ArrayList<Category> Categories;
     public MainScreen() 
     {
         
@@ -37,20 +41,33 @@ public class MainScreen extends javax.swing.JFrame
             System.out.println("Unable to get categories from database "+ex);
             
         }
+  
         
         for (int i = 0; i < Categories.size(); i++) 
         {
-             String name = Categories.get(i);
+             String name = Categories.get(i).getName();
              JButton  Button = new javax.swing.JButton();
-             Button.setText(name);
              
+            
+             Button.addActionListener((ae) ->
+             {    
+             MenuItems menuItems = new MenuItems(this, rootPaneCheckingEnabled,"Demo",Button.getText());
+             menuItems.setVisible(rootPaneCheckingEnabled);
+                
+             });
+            
+             
+             Button.setText(name);
+             //ImageIcon icon = new ImageIcon(Categories.get(i).getImage());
              JLabel  Labe = new javax.swing.JLabel();
-             Labe.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/Card.png"))); // NOI18N
-
+             Labe.setIcon(new javax.swing.ImageIcon("C://Foodcourt/Images/"+Categories.get(i).getID()+".jpg")); // NOI18N
+          
              
              JPanel PP  = new javax.swing.JPanel(); 
              PP.setVisible(true);
-             PP.setMinimumSize(new java.awt.Dimension(100, 200));
+             PP.setMaximumSize(new java.awt.Dimension(200, 200));
+             PP.setMinimumSize(new java.awt.Dimension(200, 200));
+             PP.setSize(200, 200);
              PP.setBackground(new java.awt.Color(255, 255, 255));
              javax.swing.GroupLayout PPLayout = new javax.swing.GroupLayout(PP);
              PP.setLayout(PPLayout);
@@ -80,6 +97,8 @@ public class MainScreen extends javax.swing.JFrame
                 .addComponent(Button)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
               );
+             
+             
              
              Menu.add(PP);
     
@@ -714,11 +733,16 @@ public class MainScreen extends javax.swing.JFrame
                 .addComponent(jPanel23, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        Menu.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 150, 50));
+        Menu.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 50, 50));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
         vbut.setText("Add New Category");
+        vbut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                vbutActionPerformed(evt);
+            }
+        });
 
         blab.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/Card.png"))); // NOI18N
 
@@ -910,6 +934,15 @@ public class MainScreen extends javax.swing.JFrame
         rec.setVisible(rootPaneCheckingEnabled);
                
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void vbutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vbutActionPerformed
+        // TODO add your handling code here:
+       
+     
+        AddCategory addCategory = new AddCategory(this, rootPaneCheckingEnabled,Categories);
+        addCategory.setVisible(rootPaneCheckingEnabled);
+        
+    }//GEN-LAST:event_vbutActionPerformed
 
     /**
      * @param args the command line arguments
