@@ -6,6 +6,7 @@ import foodcourt.Menu_Items;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -73,6 +74,11 @@ public class MenuItems extends javax.swing.JDialog
                 "Name", "Price"
             }
         ));
+        ItemsTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ItemsTableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(ItemsTable);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -170,13 +176,40 @@ public class MenuItems extends javax.swing.JDialog
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         
-        if(itemname.getText() == ""  || itemprice .getText() == "")
+        if("".equals(itemname.getText())  || "".equals(itemprice .getText()))
         {
-            System.out.println("");
-            return;
+                     JOptionPane.showMessageDialog(jPanel1,
+                     "Please Fill both Details",
+                     "Inane error",
+                      JOptionPane.ERROR_MESSAGE);
+                      return ;
+            
         }
         
+        for(Menu_Items item : Items)
+        {
+                  if(item.getName().equalsIgnoreCase(itemname.getText().trim()))
+                 {
+                    JOptionPane.showMessageDialog(jPanel1,
+                     "Item already Exits",
+                     "Inane error",
+                      JOptionPane.ERROR_MESSAGE);
+                      return ;
+                    }
+        }
         
+      try{
+            int price = Integer.parseInt(itemprice .getText());
+      }catch(Exception ex)
+      {
+          JOptionPane.showMessageDialog(jPanel1,
+                     "Invalid Price",
+                     "Inane error",
+                      JOptionPane.ERROR_MESSAGE);
+                      return ;
+      }
+        
+        Menu_Items item = new Menu_Items(Items.get(Items.size()-1).getId()+1, itemname.getText().trim(), itemprice .getText().trim(), cateName);
         MenuInterface Dao = MenuFactory.GetInstance();
         try
         {
@@ -184,11 +217,28 @@ public class MenuItems extends javax.swing.JDialog
         } catch (Exception ex) 
         {
             System.out.println("Failed"+ex);
+            return;
         }
-
-          System.out.println("Added Category");
-         
+ 
+         Items.add(item);
+         FillingTable();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void ItemsTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ItemsTableMouseClicked
+        // TODO add your handling code here:
+         
+        int row = ItemsTable.getSelectedRow();
+
+        String Name = ItemsTable.getModel().getValueAt(row, 0).toString();
+        String Price = ItemsTable.getModel().getValueAt(row, 1).toString();
+     
+        itemname.setText(Name);
+        itemprice.setText(Price);
+
+       
+        
+        
+    }//GEN-LAST:event_ItemsTableMouseClicked
 
     /**
      * @param args the command line arguments

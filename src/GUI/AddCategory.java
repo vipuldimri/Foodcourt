@@ -24,6 +24,7 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 
@@ -222,6 +223,23 @@ public class AddCategory extends javax.swing.JDialog {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here://Add Category button
+        
+        for(Category c : categ)
+        {
+            if(c.getName().equalsIgnoreCase(jTextField1.getText().trim()))
+            {
+                    JOptionPane.showMessageDialog(jPanel1,
+                     "Category already Exits",
+                     "Inane error",
+                      JOptionPane.ERROR_MESSAGE);
+                      return ;
+                
+            }
+            
+            
+        }
+        
+        
         try
         {
                
@@ -238,15 +256,7 @@ public class AddCategory extends javax.swing.JDialog {
         System.out.println("Category added Successfully");
         
     }//GEN-LAST:event_jButton1ActionPerformed
-   private static BufferedImage resizeImage(BufferedImage originalImage, int type)
-   {
-        BufferedImage resizedImage = new BufferedImage(201, 137, type);
-        Graphics2D g = resizedImage.createGraphics();
-        g.drawImage(originalImage, 0, 0, 201, 137, null);
-        g.dispose();
- 
-        return resizedImage;
-    }
+
    
     public Image toImage(BufferedImage bufferedImage) {
         return Toolkit.getDefaultToolkit().createImage(bufferedImage.getSource());

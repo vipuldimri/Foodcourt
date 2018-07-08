@@ -113,8 +113,10 @@ public class Menuimplementation implements MenuInterface
         {
          int id = rs.getInt(1);
          String Name = rs.getString(2);
-         String Price = rs.getString(2);
-         String Cat = rs.getString(2);
+         String Price = rs.getString(3);
+         String Cat = rs.getString(4);
+         
+            System.out.println(Price);
          
          Menu_Items item = new Menu_Items(id, Name, Price, Cat);
          Items.add(item);
@@ -140,8 +142,8 @@ public class Menuimplementation implements MenuInterface
         {
          int id = rs.getInt(1);
          String Name = rs.getString(2);
-         String Price = rs.getString(2);
-         String Cat = rs.getString(2);
+         String Price = rs.getString(3);
+         String Cat = rs.getString(4);
          
          Menu_Items item = new Menu_Items(id, Name, Price, Cat);
          Items.add(item);
