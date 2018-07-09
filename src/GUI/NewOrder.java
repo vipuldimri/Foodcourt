@@ -165,6 +165,11 @@ public class NewOrder extends javax.swing.JFrame {
         jPanel5.add(jButton7);
 
         jButton6.setText("CheckOut");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
         jPanel5.add(jButton6);
 
         jPanel7.add(jPanel5, java.awt.BorderLayout.CENTER);
@@ -342,6 +347,11 @@ public class NewOrder extends javax.swing.JFrame {
             
         }
     }//GEN-LAST:event_list1MouseClicked
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+        System.out.println("Code for check Out");
+    }//GEN-LAST:event_jButton6ActionPerformed
 
     /**
      * @param args the command line arguments
