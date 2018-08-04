@@ -1,17 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package foodcourt;
-
 import DataBase.Connect;
 import DataBase.FoodCourtFactory;
 import DataBase.FoodCourtMainInterface;
 import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Properties;
-
 
 public class ConnectionBackgroundThread extends Thread
 {
@@ -29,7 +22,8 @@ public class ConnectionBackgroundThread extends Thread
         {
             Connect connection = new Connect();
             Properties prop2 = new Properties();
-	    prop2.load(new FileInputStream("c://stark//FoodCourt//config.properties"));
+	   // prop2.load(new FileInputStream("C://stark//FoodCourt//config.properties"));
+            prop2.load(new FileInputStream("C://Foodcourt//config.properties"));
             Id = prop2.getProperty("ID");       
             Name = prop2.getProperty("Name");
             
