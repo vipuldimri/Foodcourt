@@ -5,9 +5,12 @@
  */
 package GUI;
 
-import GUI.MainScreen;
+import foodcourt.FoodCourtModel;
+import foodcourt.Users;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -18,13 +21,18 @@ public class Login extends javax.swing.JFrame {
     /**
      * Creates new form Login
      */
-    public Login()
+        public ArrayList<Users> users;
+    public FoodCourtModel FoodCourt;
+    public Login(FoodCourtModel FoodCourt ,  ArrayList<Users> users)
     {
+    
         initComponents();
-           Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
-    int x = (int) ((dimension.getWidth() - getWidth()) / 2);
-    int y = (int) ((dimension.getHeight() - getHeight()) / 2);
-    setLocation(x, y);
+        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+        int x = (int) ((dimension.getWidth() - getWidth()) / 2);
+        int y = (int) ((dimension.getHeight() - getHeight()) / 2);
+        setLocation(x, y);
+        this.FoodCourt = FoodCourt;
+        this.users = users;
       
     }
 
@@ -43,12 +51,11 @@ public class Login extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
-        jPasswordField1 = new javax.swing.JPasswordField();
-        jTextField1 = new javax.swing.JTextField();
+        Password = new javax.swing.JPasswordField();
+        UserName = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -64,7 +71,7 @@ public class Login extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/StarkLogo.jpg"))); // NOI18N
         jPanel1.add(jLabel1);
-        jLabel1.setBounds(260, 56, 140, 70);
+        jLabel1.setBounds(240, 70, 140, 70);
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
@@ -76,35 +83,40 @@ public class Login extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Password");
         jPanel1.add(jLabel3);
-        jLabel3.setBounds(120, 310, 74, 22);
+        jLabel3.setBounds(120, 320, 74, 22);
         jPanel1.add(jSeparator1);
         jSeparator1.setBounds(120, 270, 331, 10);
         jPanel1.add(jSeparator2);
         jSeparator2.setBounds(120, 380, 331, 17);
 
-        jPasswordField1.setBackground(new java.awt.Color(36, 47, 65));
-        jPasswordField1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jPasswordField1.setForeground(new java.awt.Color(255, 255, 255));
-        jPasswordField1.setBorder(null);
-        jPasswordField1.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        jPanel1.add(jPasswordField1);
-        jPasswordField1.setBounds(120, 340, 331, 40);
+        Password.setBackground(new java.awt.Color(36, 47, 65));
+        Password.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        Password.setForeground(new java.awt.Color(255, 255, 255));
+        Password.setBorder(null);
+        Password.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        jPanel1.add(Password);
+        Password.setBounds(120, 340, 331, 40);
 
-        jTextField1.setBackground(new java.awt.Color(36, 47, 65));
-        jTextField1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jTextField1.setForeground(new java.awt.Color(255, 255, 255));
-        jTextField1.setBorder(null);
-        jTextField1.setCaretColor(new java.awt.Color(255, 255, 255));
-        jPanel1.add(jTextField1);
-        jTextField1.setBounds(120, 230, 331, 40);
+        UserName.setBackground(new java.awt.Color(36, 47, 65));
+        UserName.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        UserName.setForeground(new java.awt.Color(255, 255, 255));
+        UserName.setBorder(null);
+        UserName.setCaretColor(new java.awt.Color(255, 255, 255));
+        jPanel1.add(UserName);
+        UserName.setBounds(120, 230, 331, 40);
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("User Name");
         jPanel1.add(jLabel5);
-        jLabel5.setBounds(120, 180, 86, 22);
+        jLabel5.setBounds(120, 210, 86, 22);
 
         jPanel2.setBackground(new java.awt.Color(153, 153, 255));
+        jPanel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel2MouseClicked(evt);
+            }
+        });
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel7.setText("Sign In");
@@ -129,15 +141,6 @@ public class Login extends javax.swing.JFrame {
         jPanel1.add(jPanel2);
         jPanel2.setBounds(120, 410, 140, 50);
 
-        jButton1.setText("Go main page");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jButton1);
-        jButton1.setBounds(320, 550, 190, 23);
-
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Sign In");
@@ -150,12 +153,45 @@ public class Login extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:Testing method
+    private void jPanel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MouseClicked
+        // TODO add your handling code here:
+        //Login click event here 
+        if(UserName.getText().length() == 0 || Password.getPassword().length == 0)
+        {
+                    JOptionPane.showMessageDialog(jPanel1,
+                     "Both Fields Are Mandatory",
+                     "Inane error",
+                      JOptionPane.ERROR_MESSAGE);
+                  
+            return ;
+        }
         
-        MainScreen main = new MainScreen();
-        main.setVisible(rootPaneCheckingEnabled);
-    }//GEN-LAST:event_jButton1ActionPerformed
+        String username = UserName.getText();
+        char[] password = Password.getPassword();
+        String pass ="";
+        for(int i = 0 ; i <password.length ; i ++)
+        {
+            pass = pass + password[i];
+        }
+
+        
+        for( Users u : users)
+        {
+            if(u.getUserName().equalsIgnoreCase(username) && u.getPassword().equals(pass))
+            {
+                MainScreen main = new MainScreen(FoodCourt,u);
+                main.setVisible(rootPaneCheckingEnabled);
+                this.setVisible(false);
+                return;
+            }
+        }
+        //Getting current time and then converting it into String for easy comparision
+                      JOptionPane.showMessageDialog(jPanel1,
+                     "Please check Upername and password",
+                     "Inane error",
+                      JOptionPane.ERROR_MESSAGE);
+         
+    }//GEN-LAST:event_jPanel2MouseClicked
 
     /**
      * @param args the command line arguments
@@ -188,13 +224,14 @@ public class Login extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Login().setVisible(true);
+              
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JPasswordField Password;
+    private javax.swing.JTextField UserName;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -203,9 +240,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }

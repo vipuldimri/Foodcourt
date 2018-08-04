@@ -122,7 +122,7 @@ public class recharge extends javax.swing.JDialog {
         getContentPane().add(jRadioButton7);
         jRadioButton7.setBounds(220, 270, 100, 40);
         getContentPane().add(jSeparator1);
-        jSeparator1.setBounds(10, 450, 1080, 10);
+        jSeparator1.setBounds(10, 450, 1080, 2);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

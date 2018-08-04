@@ -2,6 +2,8 @@ package GUI;
 import DataBase.MenuFactory;
 import DataBase.MenuInterface;
 import foodcourt.Category;
+import foodcourt.FoodCourtModel;
+import foodcourt.Users;
 import java.awt.CheckboxMenuItem;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -17,7 +19,9 @@ import javax.swing.JPanel;
 public class MainScreen extends javax.swing.JFrame 
 {
     ArrayList<Category> Categories;
-    public MainScreen() 
+    FoodCourtModel foodcourt;
+    Users CurrentUser;
+    public MainScreen(FoodCourtModel foodcourt ,   Users CurrentUser) 
     {
         
         
@@ -30,6 +34,8 @@ public class MainScreen extends javax.swing.JFrame
         int y = (int) ((dimension.getHeight() - getHeight()) / 2);
         setLocation(x, y);
         
+        this.foodcourt = foodcourt;
+        this.CurrentUser = CurrentUser;
         //Getting Menu From the Database 
         MenuInterface Dao   = MenuFactory.GetInstance();
         try
@@ -853,14 +859,14 @@ public class MainScreen extends javax.swing.JFrame
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:NEw order
         
-        NewOrder neworder = new NewOrder();
+        NewOrder neworder = new NewOrder(foodcourt);
         neworder.setVisible(true);
         setVisible(false);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         // TODO add your handling code here:Setting 
-        Settings setting = new Settings(this, rootPaneCheckingEnabled);
+        Settings setting = new Settings(this, rootPaneCheckingEnabled,foodcourt);
         setting.setVisible(true);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
@@ -974,7 +980,7 @@ public class MainScreen extends javax.swing.JFrame
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MainScreen().setVisible(true);
+          
             }
         });
     }

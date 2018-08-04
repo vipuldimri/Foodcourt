@@ -7,6 +7,7 @@ package foodcourt;
 
 import GUI.Login;
 import GUI.Splash;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -33,7 +34,11 @@ public class FoodCourt {
             if(i == 100)
             {
                 splash.setVisible(false);
-                new Login().setVisible(true);
+                if(connectionBackgroundThread.Name.equals("") || connectionBackgroundThread.Id.equals(""))
+                {
+                      
+                }
+                new Login(connectionBackgroundThread.FoodCourt , connectionBackgroundThread.users).setVisible(true);
                 break;
                 
             }

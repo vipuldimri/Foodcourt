@@ -8,13 +8,33 @@ package GUI;
 import DataBase.MenuFactory;
 import DataBase.MenuInterface;
 import DataStructures.Trie;
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+import foodcourt.FoodCourtModel;
 import foodcourt.Menu_Items;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.List;
 import java.awt.Toolkit;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
-import javax.swing.DefaultListModel;
-import javax.swing.JList;
+import java.util.Date;
+import javax.print.Doc;
+import javax.print.DocFlavor;
+import javax.print.DocPrintJob;
+import javax.print.PrintService;
+import javax.print.SimpleDoc;
+import javax.print.attribute.HashPrintRequestAttributeSet;
 import javax.swing.table.DefaultTableModel;
+
 
 /**
  *
@@ -27,9 +47,10 @@ public class NewOrder extends javax.swing.JFrame {
      */
     ArrayList<Menu_Items> items;
     Trie trie;
-    public NewOrder() {
+    FoodCourtModel foodcourt;
+    public NewOrder(FoodCourtModel foodcourt) {
         initComponents();
-           setExtendedState(this.MAXIMIZED_BOTH); 
+        setExtendedState(this.MAXIMIZED_BOTH); 
        
          
         Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
@@ -38,7 +59,7 @@ public class NewOrder extends javax.swing.JFrame {
         setLocation(x, y);
          
         trie = new Trie();
-        
+        this.foodcourt = foodcourt;
        
 
         GetItems();
@@ -78,7 +99,7 @@ public class NewOrder extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        SeachItem = new javax.swing.JTextField();
         jPanel10 = new javax.swing.JPanel();
         list1 = new java.awt.List();
         jPanel9 = new javax.swing.JPanel();
@@ -229,9 +250,9 @@ public class NewOrder extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel7.setText("Search");
 
-        jTextField3.addKeyListener(new java.awt.event.KeyAdapter() {
+        SeachItem.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                jTextField3KeyReleased(evt);
+                SeachItemKeyReleased(evt);
             }
         });
 
@@ -243,7 +264,7 @@ public class NewOrder extends javax.swing.JFrame {
                 .addGap(30, 30, 30)
                 .addComponent(jLabel7)
                 .addGap(18, 18, 18)
-                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(SeachItem, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(64, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
@@ -251,7 +272,7 @@ public class NewOrder extends javax.swing.JFrame {
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(SeachItem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -313,23 +334,23 @@ public class NewOrder extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField3KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField3KeyReleased
+    private void SeachItemKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_SeachItemKeyReleased
         // TODO add your handling code here:Key relaes
-        list1.removeAll();
-        String word = jTextField3.getText();
-        ArrayList<String> list = new ArrayList<>();
-        trie.AutoComplete(word, list);
-
-         list.forEach((food) -> 
-         {
-              list1.add(food);
-         });
+                list1.removeAll();
+                String enteredstring =  SeachItem.getText().trim();
+                for (Menu_Items item : this.items) {
+                if(item.getName().toLowerCase().startsWith(enteredstring.toLowerCase()))
+                {
+                    list1.add(item.getName());
+                }
+        }
+                
         
-    }//GEN-LAST:event_jTextField3KeyReleased
+    }//GEN-LAST:event_SeachItemKeyReleased
 
     private void list1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_list1MouseClicked
         // TODO add your handling code here:
-        System.out.println("Cliked" + list1.getSelectedItem());
+        SeachItem.setText("");
         for(Menu_Items item : items)
         {
             if(item.getName().toLowerCase().equalsIgnoreCase(list1.getSelectedItem().toLowerCase()))
@@ -341,16 +362,141 @@ public class NewOrder extends javax.swing.JFrame {
                 row[1] = "1";
                 row[2] = item.getPrice();
                 model.addRow(row);
-              
+       
                 list1.removeAll();
+                break;
             }
             
         }
     }//GEN-LAST:event_list1MouseClicked
-
+    //code for bill makinng
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
-        System.out.println("Code for check Out");
+                 DefaultTableModel  model = (DefaultTableModel) BillingTable.getModel();
+                 int rows = model.getRowCount();
+                 float Total = 0;
+                 
+        Document doc = new Document();
+        try{
+            PdfWriter writer = PdfWriter.getInstance(doc, new FileOutputStream("text.pdf"));
+            doc.open();
+             doc.add(new Paragraph("Powered By Stark Technology"));
+            
+            Image img = Image.getInstance("StarkLogo.jpg");
+            doc.add(img);
+            
+            doc.add(new Paragraph("welcome to Foodcourt",FontFactory.getFont(FontFactory.TIMES_BOLD,30,Font.BOLD,BaseColor.BLACK)));
+            doc.add(new Paragraph(new Date().toString()));
+            doc.add(new Paragraph("----------------------------------------------------------------------------------------------------------------------------------"));
+            
+            doc.add(new Paragraph("Your Order Details",FontFactory.getFont(FontFactory.TIMES_BOLD,15,Font.BOLD,BaseColor.BLACK)));
+            
+            PdfPTable table = new PdfPTable(4);
+            table.setWidthPercentage(105);
+            table.setSpacingBefore(11f);
+            table.setSpacingAfter(11f);
+            
+            float[] colwidth = {2f,2f,2f,2f};
+            table.setWidths(colwidth);
+            
+            PdfPCell c1 = new PdfPCell(new Paragraph("Sno"));   
+            PdfPCell c2 = new PdfPCell(new Paragraph("Item Name"));
+            PdfPCell c44= new PdfPCell(new Paragraph("QTY"));   
+            PdfPCell c3  = new PdfPCell(new Paragraph("Price"));  
+            table.addCell(c1);
+            table.addCell(c2);
+            table.addCell(c44);
+            table.addCell(c3);
+            
+            for(int i = 0 ; i < rows ;  i ++)
+            {
+                        
+            c1 = new PdfPCell(new Paragraph(""+(i+1)));   
+           
+            c2 = new PdfPCell(new Paragraph(""+ model.getValueAt(i, 0)));
+            c44= new PdfPCell(new Paragraph(""+ model.getValueAt(i, 1)));
+            c3  = new PdfPCell(new Paragraph(""+ model.getValueAt(i, 2)));
+            Total = Total + Float.valueOf(""+ model.getValueAt(i, 2));
+            table.addCell(c1);
+            table.addCell(c2);
+            table.addCell(c44);
+            table.addCell(c3);
+                
+            }
+            
+            
+            doc.add(table);
+            
+            PdfPTable table2= new PdfPTable(2);
+            table2.setWidthPercentage(105);
+  
+            
+            float[] colwidth2 = {1f,1f};
+            table2.setWidths(colwidth2);
+            
+            PdfPCell c4 = new PdfPCell(new Paragraph("Total  "));  
+         
+            c4.setBorder(PdfPCell.NO_BORDER);
+            PdfPCell c5 = new PdfPCell(new Paragraph("Rs :-   "+Total));   
+            c5.setBorder(PdfPCell.NO_BORDER);
+               
+            PdfPCell c6 = new PdfPCell(new Paragraph("CGST : "+foodcourt.getCGST()+" %"));  
+            c6.setBorder(PdfPCell.NO_BORDER);
+            PdfPCell c7 = new PdfPCell(new Paragraph("Rs :-   0"));   
+            c7.setBorder(PdfPCell.NO_BORDER);   
+     
+            
+            PdfPCell c8 = new PdfPCell(new Paragraph("SGST : "+foodcourt.getGGST()+" %"));  
+            c8.setBorder(PdfPCell.NO_BORDER);
+            PdfPCell c9 = new PdfPCell(new Paragraph("Rs :-   0"));   
+            c9.setBorder(PdfPCell.NO_BORDER);  
+            
+            
+            PdfPCell c10 = new PdfPCell(new Paragraph("Grand Total "));  
+            c10.setBorder(PdfPCell.NO_BORDER);
+            PdfPCell c11 = new PdfPCell(new Paragraph("Rs :-   "+Total));   
+            c11.setBorder(PdfPCell.NO_BORDER);  
+            
+            
+            table2.addCell(c4);
+            table2.addCell(c5);
+            table2.addCell(c6);
+            table2.addCell(c7);
+            table2.addCell(c8);
+            table2.addCell(c9);
+            table2.addCell(c10);
+            table2.addCell(c11);
+            
+            
+            
+            doc.add(table2);
+            
+            doc.add(new Paragraph("----------------------------------------------------------------------------------------------------------------------------------"));
+            doc.add(new Paragraph("Thanx for your Visit have a nice day , enjoy your meal."));
+            doc.add(new Paragraph("Contact us",FontFactory.getFont(FontFactory.TIMES_BOLD,20,Font.BOLD,BaseColor.BLACK)));
+            doc.add(new Paragraph("Address : gurugram"));
+            doc.add(new Paragraph("Phone : 9718327876"));
+            
+            doc.close();
+            writer.close();
+            
+//           String  filename = "text.pdf";
+//           java.io.File fileout =  new File(filename);
+//           
+//             
+        
+    FileInputStream fis = new FileInputStream("C:/Users/dimri/Documents/NetBeansProjects/Foodcourt/text.pdf");
+    Doc pdfDoc = new SimpleDoc(fis, DocFlavor.INPUT_STREAM.AUTOSENSE, null);
+    
+    PrintService myService = null;
+    DocPrintJob printJob = myService.createPrintJob();
+    printJob.print(pdfDoc, new HashPrintRequestAttributeSet());
+    fis.close();  
+            
+        }catch(Exception ex)
+        {
+            System.out.println(ex);
+        }
     }//GEN-LAST:event_jButton6ActionPerformed
 
     /**
@@ -383,13 +529,14 @@ public class NewOrder extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new NewOrder().setVisible(true);
+                
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable BillingTable;
+    private javax.swing.JTextField SeachItem;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -416,7 +563,6 @@ public class NewOrder extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
     private java.awt.List list1;
     // End of variables declaration//GEN-END:variables
 
