@@ -22,18 +22,28 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.List;
 import java.awt.Toolkit;
+import java.awt.print.PrinterJob;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import javax.print.Doc;
 import javax.print.DocFlavor;
 import javax.print.DocPrintJob;
 import javax.print.PrintService;
+import javax.print.PrintServiceLookup;
 import javax.print.SimpleDoc;
 import javax.print.attribute.HashPrintRequestAttributeSet;
+import javax.print.attribute.PrintRequestAttributeSet;
+import javax.print.attribute.standard.Sides;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.printing.PDFPageable;
 
 
 /**
@@ -48,7 +58,8 @@ public class NewOrder extends javax.swing.JFrame {
     ArrayList<Menu_Items> items;
     Trie trie;
     FoodCourtModel foodcourt;
-    public NewOrder(FoodCourtModel foodcourt) {
+    MainScreen mainscreen;
+    public NewOrder(FoodCourtModel foodcourt,MainScreen mainscreen) {
         initComponents();
         setExtendedState(this.MAXIMIZED_BOTH); 
        
@@ -60,6 +71,7 @@ public class NewOrder extends javax.swing.JFrame {
          
         trie = new Trie();
         this.foodcourt = foodcourt;
+        this.mainscreen = mainscreen;
        
 
         GetItems();
@@ -86,16 +98,6 @@ public class NewOrder extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
-        jPanel7 = new javax.swing.JPanel();
-        jPanel5 = new javax.swing.JPanel();
-        jButton8 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jPanel6 = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
@@ -105,6 +107,10 @@ public class NewOrder extends javax.swing.JFrame {
         jPanel9 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         BillingTable = new javax.swing.JTable();
+        jPanel5 = new javax.swing.JPanel();
+        jButton8 = new javax.swing.JButton();
+        jButton7 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -166,83 +172,12 @@ public class NewOrder extends javax.swing.JFrame {
                 .addComponent(jButton4)
                 .addGap(32, 32, 32)
                 .addComponent(jButton5)
-                .addContainerGap(175, Short.MAX_VALUE))
+                .addContainerGap(749, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel2, java.awt.BorderLayout.WEST);
 
         jPanel3.setLayout(new java.awt.BorderLayout());
-
-        jPanel7.setBackground(new java.awt.Color(51, 0, 255));
-        jPanel7.setPreferredSize(new java.awt.Dimension(549, 100));
-        jPanel7.setLayout(new java.awt.BorderLayout());
-
-        jPanel5.setBackground(new java.awt.Color(153, 255, 0));
-
-        jButton8.setText("Cancel");
-        jPanel5.add(jButton8);
-
-        jButton7.setText("Clear");
-        jPanel5.add(jButton7);
-
-        jButton6.setText("CheckOut");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
-            }
-        });
-        jPanel5.add(jButton6);
-
-        jPanel7.add(jPanel5, java.awt.BorderLayout.CENTER);
-
-        jPanel6.setBackground(new java.awt.Color(102, 255, 0));
-        jPanel6.setPreferredSize(new java.awt.Dimension(400, 95));
-
-        jTextField1.setText("jTextField1");
-
-        jTextField2.setText("jTextField1");
-
-        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel5.setText("Total");
-
-        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel6.setText("Discount");
-
-        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel6))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(25, 25, 25))
-        );
-        jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jLabel5)))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        jPanel7.add(jPanel6, java.awt.BorderLayout.EAST);
-
-        jPanel3.add(jPanel7, java.awt.BorderLayout.SOUTH);
 
         jPanel4.setBackground(new java.awt.Color(204, 204, 255));
         jPanel4.setLayout(new javax.swing.BoxLayout(jPanel4, javax.swing.BoxLayout.PAGE_AXIS));
@@ -250,6 +185,7 @@ public class NewOrder extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel7.setText("Search");
 
+        SeachItem.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         SeachItem.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 SeachItemKeyReleased(evt);
@@ -264,8 +200,8 @@ public class NewOrder extends javax.swing.JFrame {
                 .addGap(30, 30, 30)
                 .addComponent(jLabel7)
                 .addGap(18, 18, 18)
-                .addComponent(SeachItem, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(64, Short.MAX_VALUE))
+                .addComponent(SeachItem, javax.swing.GroupLayout.DEFAULT_SIZE, 873, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -293,17 +229,18 @@ public class NewOrder extends javax.swing.JFrame {
         jPanel10.setLayout(jPanel10Layout);
         jPanel10Layout.setHorizontalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(list1, javax.swing.GroupLayout.DEFAULT_SIZE, 549, Short.MAX_VALUE)
+            .addComponent(list1, javax.swing.GroupLayout.DEFAULT_SIZE, 985, Short.MAX_VALUE)
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(list1, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)
+            .addComponent(list1, javax.swing.GroupLayout.DEFAULT_SIZE, 333, Short.MAX_VALUE)
         );
 
         jPanel4.add(jPanel10);
 
         jPanel9.setPreferredSize(new java.awt.Dimension(549, 600));
 
+        BillingTable.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         BillingTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -312,17 +249,63 @@ public class NewOrder extends javax.swing.JFrame {
                 "Name", "QTY", "Price"
             }
         ));
+        BillingTable.setRowHeight(25);
+        BillingTable.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                BillingTableFocusLost(evt);
+            }
+        });
+        BillingTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                BillingTableMouseClicked(evt);
+            }
+        });
+        BillingTable.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                BillingTableKeyReleased(evt);
+            }
+        });
         jScrollPane1.setViewportView(BillingTable);
+
+        jPanel5.setBackground(new java.awt.Color(0, 0, 0));
+
+        jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/cancel.png"))); // NOI18N
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
+        jPanel5.add(jButton8);
+
+        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/clear.png"))); // NOI18N
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
+        jPanel5.add(jButton7);
+
+        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/checkout.png"))); // NOI18N
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+        jPanel5.add(jButton6);
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
         jPanel9Layout.setHorizontalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 549, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 985, Short.MAX_VALUE)
+            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 451, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jPanel4.add(jPanel9);
@@ -372,20 +355,39 @@ public class NewOrder extends javax.swing.JFrame {
     //code for bill makinng
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
+        
                  DefaultTableModel  model = (DefaultTableModel) BillingTable.getModel();
                  int rows = model.getRowCount();
                  float Total = 0;
                  
+            for(int i = 0 ; i < rows ;  i ++)
+            {
+                        
+            Total = Total + Float.valueOf(""+ model.getValueAt(i, 2));
+      
+                
+            }
+        
+        int dialogButton = JOptionPane.YES_NO_OPTION;
+        int dialogResult = JOptionPane.showConfirmDialog(this, "Checkout Total amount  "+Total, "Bill Confirmation", dialogButton);
+        if(dialogResult == 0) {
+          System.out.println("Yes option");
+        } else {
+          System.out.println("No Option");
+          return;
+        } 
+         Total = 0 ;
         Document doc = new Document();
         try{
-            PdfWriter writer = PdfWriter.getInstance(doc, new FileOutputStream("text.pdf"));
+            PdfWriter writer = PdfWriter.getInstance(doc, new FileOutputStream("C:/Foodcourt/text.pdf"));
+
             doc.open();
              doc.add(new Paragraph("Powered By Stark Technology"));
             
             Image img = Image.getInstance("StarkLogo.jpg");
             doc.add(img);
             
-            doc.add(new Paragraph("welcome to Foodcourt",FontFactory.getFont(FontFactory.TIMES_BOLD,30,Font.BOLD,BaseColor.BLACK)));
+            doc.add(new Paragraph("welcome to "+foodcourt.getName(),FontFactory.getFont(FontFactory.TIMES_BOLD,30,Font.BOLD,BaseColor.BLACK)));
             doc.add(new Paragraph(new Date().toString()));
             doc.add(new Paragraph("----------------------------------------------------------------------------------------------------------------------------------"));
             
@@ -477,27 +479,133 @@ public class NewOrder extends javax.swing.JFrame {
             doc.add(new Paragraph("Address : gurugram"));
             doc.add(new Paragraph("Phone : 9718327876"));
             
+  
+            
             doc.close();
             writer.close();
+     
+
+            DocFlavor flavor = DocFlavor.SERVICE_FORMATTED.PAGEABLE;
+            PrintRequestAttributeSet patts = new HashPrintRequestAttributeSet();
+            patts.add(Sides.DUPLEX);
+            PrintService[] ps = PrintServiceLookup.lookupPrintServices(flavor, patts);
+            if (ps.length == 0) {
+            throw new IllegalStateException("No Printer found");
+            }
+            System.out.println("Available printers: " + Arrays.asList(ps));
+
+            PrintService myService = null;
             
-//           String  filename = "text.pdf";
-//           java.io.File fileout =  new File(filename);
-//           
-//             
-        
-    FileInputStream fis = new FileInputStream("C:/Users/dimri/Documents/NetBeansProjects/Foodcourt/text.pdf");
-    Doc pdfDoc = new SimpleDoc(fis, DocFlavor.INPUT_STREAM.AUTOSENSE, null);
-    
-    PrintService myService = null;
-    DocPrintJob printJob = myService.createPrintJob();
-    printJob.print(pdfDoc, new HashPrintRequestAttributeSet());
-    fis.close();  
+            for (PrintService printService : ps) 
+            {
+               
+                      try{
+                             myService = printService;
+                             FileInputStream fis = new FileInputStream("C:/Foodcourt/text.pdf");
+                             Doc pdfDoc = new SimpleDoc(fis, DocFlavor.INPUT_STREAM.AUTOSENSE, null);
+                             DocPrintJob printJob = myService.createPrintJob();
+                             printJob.print(pdfDoc, new HashPrintRequestAttributeSet());
+                             fis.close();   
+                             break;
+                      }catch(Exception e)
+                      {
+                          System.out.println("  HERE  ");
+                      }
             
+            }
+
+       
+
+     
         }catch(Exception ex)
         {
             System.out.println(ex);
         }
     }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void BillingTableKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BillingTableKeyReleased
+        // TODO add your handling code here:
+            DefaultTableModel  model = (DefaultTableModel) BillingTable.getModel();
+            int rows = model.getRowCount();
+        
+                 
+            for(int i = 0 ; i < rows ;  i ++)
+            {
+                        
+            int qty = Integer.valueOf(""+ model.getValueAt(i, 1));
+            if(qty != 1)
+            {
+                float value=0;
+               for(Menu_Items item : items)
+                {
+                 if(item.getName().toLowerCase().equalsIgnoreCase(model.getValueAt(i, 0).toString().toLowerCase()))
+                {
+               
+                  value = qty * Float.valueOf(item.getPrice());
+                  break;
+                  }
+            
+                  }
+                model.setValueAt(value, i, 2);
+            }
+      
+                
+            }
+        
+    }//GEN-LAST:event_BillingTableKeyReleased
+
+    private void BillingTableFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_BillingTableFocusLost
+        // TODO add your handling code here:
+            DefaultTableModel  model = (DefaultTableModel) BillingTable.getModel();
+            int rows = model.getRowCount();
+        
+                 
+            for(int i = 0 ; i < rows ;  i ++)
+            {
+                        
+            int qty = Integer.valueOf(""+ model.getValueAt(i, 1));
+            if(qty != 1)
+            {
+                float value=0;
+               for(Menu_Items item : items)
+                {
+                 if(item.getName().toLowerCase().equalsIgnoreCase(model.getValueAt(i, 0).toString().toLowerCase()))
+                {
+               
+                  value = qty * Float.valueOf(item.getPrice());
+                  break;
+                  }
+            
+                  }
+                model.setValueAt(value, i, 2);
+            }
+      
+                
+            }
+        
+    }//GEN-LAST:event_BillingTableFocusLost
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        // TODO add your handling code here:
+    
+         
+            DefaultTableModel dm = (DefaultTableModel) BillingTable.getModel();
+            int rowCount = dm.getRowCount();
+            //Remove rows one by one from the end of the table
+            for (int i = rowCount - 1; i >= 0; i--) {
+            dm.removeRow(i);
+}
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void BillingTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BillingTableMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BillingTableMouseClicked
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        // TODO add your handling code here:
+        mainscreen.setVisible(true);
+        setVisible(false);
+    }//GEN-LAST:event_jButton8ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -547,8 +655,6 @@ public class NewOrder extends javax.swing.JFrame {
     private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
@@ -556,13 +662,9 @@ public class NewOrder extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     private java.awt.List list1;
     // End of variables declaration//GEN-END:variables
 
@@ -582,6 +684,14 @@ public class NewOrder extends javax.swing.JFrame {
         
         
     }
-
+private static PrintService findPrintService(String printerName) {
+        PrintService[] printServices = PrintServiceLookup.lookupPrintServices(null, null);
+        for (PrintService printService : printServices) {
+            if (printService.getName().trim().equals(printerName)) {
+                return printService;
+            }
+        }
+        return null;
+    }
 
 }

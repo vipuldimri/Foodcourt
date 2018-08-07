@@ -859,7 +859,7 @@ public class MainScreen extends javax.swing.JFrame
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:NEw order
         
-        NewOrder neworder = new NewOrder(foodcourt);
+        NewOrder neworder = new NewOrder(foodcourt,this);
         neworder.setVisible(true);
         setVisible(false);
     }//GEN-LAST:event_jMenuItem1ActionPerformed

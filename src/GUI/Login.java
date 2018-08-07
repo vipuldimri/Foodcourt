@@ -163,7 +163,7 @@ public class Login extends javax.swing.JFrame {
                      "Inane error",
                       JOptionPane.ERROR_MESSAGE);
                   
-            return ;
+                    return ;
         }
         
         String username = UserName.getText();
@@ -186,7 +186,7 @@ public class Login extends javax.swing.JFrame {
             }
         }
         //Getting current time and then converting it into String for easy comparision
-                      JOptionPane.showMessageDialog(jPanel1,
+                     JOptionPane.showMessageDialog(jPanel1,
                      "Please check Upername and password",
                      "Inane error",
                       JOptionPane.ERROR_MESSAGE);
