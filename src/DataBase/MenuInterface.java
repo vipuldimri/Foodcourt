@@ -17,6 +17,12 @@ public interface MenuInterface
     public Boolean AddCategory(String FoodCourtID,String Name , File data) throws Exception;
 
     public Boolean AddItem (String FoodCourtID, String Name , String Price ,String Category )throws Exception;
+    
+    public Boolean UpdateItem (String FoodCourtID, String Name , String Price ,String Category )throws Exception;
+    
+    public Boolean DeleteItem (String FoodCourtID, String Name , String Price ,String Category )throws Exception;
+
+
      
    
     public ArrayList<Menu_Items> GetItems(String FoodCourtName,Trie trie)throws Exception;

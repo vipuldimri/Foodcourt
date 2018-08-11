@@ -57,6 +57,7 @@ public class Login extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(36, 47, 65));
@@ -147,6 +148,18 @@ public class Login extends javax.swing.JFrame {
         jPanel1.add(jLabel4);
         jLabel4.setBounds(170, 100, 57, 26);
 
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/showpassword.png"))); // NOI18N
+        jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel6MousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jLabel6MouseReleased(evt);
+            }
+        });
+        jPanel1.add(jLabel6);
+        jLabel6.setBounds(460, 340, 60, 30);
+
         getContentPane().add(jPanel1);
         jPanel1.setBounds(0, 0, 560, 620);
 
@@ -185,13 +198,23 @@ public class Login extends javax.swing.JFrame {
                 return;
             }
         }
-        //Getting current time and then converting it into String for easy comparision
+                   
                      JOptionPane.showMessageDialog(jPanel1,
                      "Please check Upername and password",
                      "Inane error",
                       JOptionPane.ERROR_MESSAGE);
          
     }//GEN-LAST:event_jPanel2MouseClicked
+
+    private void jLabel6MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MousePressed
+        // TODO add your handling code here:show password mouse enter
+        Password.setEchoChar((char) 0);
+    }//GEN-LAST:event_jLabel6MousePressed
+
+    private void jLabel6MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseReleased
+        // TODO add your handling code here:show password mouse released
+        Password.setEchoChar('*');
+    }//GEN-LAST:event_jLabel6MouseReleased
 
     /**
      * @param args the command line arguments
@@ -237,6 +260,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

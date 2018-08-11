@@ -107,8 +107,6 @@ public class Menuimplementation implements MenuInterface
         {
          int id = rs.getInt(1);
          String Name = rs.getString(2);
-         System.out.println("adding "+Name);
-         trie.addWord(Name.toLowerCase());
          String Price = rs.getString(3);
          String Cat = rs.getString(4);
          Menu_Items item = new Menu_Items(id, Name, Price, Cat);
@@ -144,6 +142,27 @@ public class Menuimplementation implements MenuInterface
         }
         
         return Items;
+    }
+
+    @Override
+    public Boolean UpdateItem(String FoodCourtID, String Name, String Price, String Category) throws Exception {
+        
+              
+            System.out.println(Category + " " + Name + " "+Price );
+            PreparedStatement psmnt = null;
+            psmnt = conn.prepareStatement(" update Demo_Items set Price = "+Price+" where  Category = '"+Category+"' and Name = '"+Name+"'");
+            psmnt.executeUpdate();
+            return true;    
+    }
+
+    @Override
+    public Boolean DeleteItem(String FoodCourtID, String Name, String Price, String Category) throws Exception {
+        
+           System.out.println("delete  Demo_Items where  Name = '"+Name+"' and Category='"+Category+"'" );
+            PreparedStatement psmnt = null;
+            psmnt = conn.prepareStatement("delete from Demo_Items where  Name = '"+Name+"' and Category='"+Category+"'");
+            psmnt.executeUpdate();
+            return true;    
     }
     
 

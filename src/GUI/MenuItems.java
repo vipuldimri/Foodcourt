@@ -108,6 +108,10 @@ public class MenuItems extends javax.swing.JDialog
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Item Price");
 
+        itemprice.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+
+        itemname.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+
         jButton1.setText("ADD");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -119,8 +123,18 @@ public class MenuItems extends javax.swing.JDialog
         jLabel3.setText("ADD / UPDATE BEVRAGES");
 
         jButton2.setText("Delete");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Update");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -166,7 +180,7 @@ public class MenuItems extends javax.swing.JDialog
                         .addComponent(jButton3)))
                 .addGap(12, 12, 12)
                 .addComponent(jButton2)
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addContainerGap(49, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel2, java.awt.BorderLayout.SOUTH);
@@ -176,7 +190,7 @@ public class MenuItems extends javax.swing.JDialog
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        
+        // code for adding new item 
         if("".equals(itemname.getText())  || "".equals(itemprice .getText()))
         {
                      JOptionPane.showMessageDialog(jPanel1,
@@ -251,6 +265,141 @@ public class MenuItems extends javax.swing.JDialog
         
         
     }//GEN-LAST:event_ItemsTableMouseClicked
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        // code for update 
+        if(itemname.getText().trim().length() == 0 || itemprice.getText().trim().length() == 0 )
+        {
+                     JOptionPane.showMessageDialog(jPanel1,
+                     "First Select item for updation",
+                     "Inane error",
+                      JOptionPane.ERROR_MESSAGE);
+                      return ;
+            
+        }
+             try{
+            int price = Integer.parseInt(itemprice .getText());
+      }catch(Exception ex)
+      {
+          JOptionPane.showMessageDialog(jPanel1,
+                     "Invalid Price",
+                     "Inane error",
+                      JOptionPane.ERROR_MESSAGE);
+                      return ;
+      }
+        
+        String ItemName = itemname.getText().trim();
+        String Categoryitem = cateName;
+        
+        for(Menu_Items item : Items)
+        {
+                 if(item.getName().equalsIgnoreCase(itemname.getText().trim()))
+                 {
+                      if(item.getPrice().equalsIgnoreCase(itemprice.getText().trim()))
+                      {
+                                    JOptionPane.showMessageDialog(jPanel1,
+                                     "Change item price if you want to update ",
+                                    "Inane error",
+                                     JOptionPane.ERROR_MESSAGE);
+                                     return ;
+                      }
+                     
+                     
+                               MenuInterface Dao = MenuFactory.GetInstance();
+                               try
+                               {
+                                   System.out.println("updating item");
+                                   Dao.UpdateItem("Demo", itemname.getText().trim(), itemprice .getText().trim(), cateName);
+                                   item.setPrice(itemprice.getText().trim());
+                                   FillingTable();
+                                   return;
+                                   
+                               } catch (Exception ex) 
+                               {
+                                     JOptionPane.showMessageDialog(jPanel1,
+                                     "Updating failed please check internet connection",
+                                    "Inane error",
+                                     JOptionPane.ERROR_MESSAGE);
+                                     return ;
+                                   
+                               }
+                 }
+        }
+                     JOptionPane.showMessageDialog(jPanel1,
+                     "No item found for update",
+                     "Inane error",
+                      JOptionPane.ERROR_MESSAGE);
+                      return ;
+        
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        // code for delete
+               if(itemname.getText().trim().length() == 0 || itemprice.getText().trim().length() == 0 )
+        {
+                     JOptionPane.showMessageDialog(jPanel1,
+                     "First Select item to be  deleted",
+                     "Inane error",
+                      JOptionPane.ERROR_MESSAGE);
+                      return ;
+            
+        }
+             try{
+            int price = Integer.parseInt(itemprice .getText());
+      }catch(Exception ex)
+      {
+          JOptionPane.showMessageDialog(jPanel1,
+                     "Invalid Price",
+                     "Inane error",
+                      JOptionPane.ERROR_MESSAGE);
+                      return ;
+      }
+        
+        int position = -1 ;
+        boolean deletesuccess = false;
+        for(int i = 0 ; i < Items.size() ; i ++)
+        {
+                 Menu_Items item = Items.get(i);
+                 if(item.getName().equalsIgnoreCase(itemname.getText().trim()))
+                 {
+                     
+                               MenuInterface Dao = MenuFactory.GetInstance();
+                               try
+                               {
+                                   System.out.println("deleting item");
+                                   Dao.DeleteItem("Demo", itemname.getText().trim(), itemprice .getText().trim(), cateName);
+                                   position = i;
+                                   deletesuccess = true;
+                                
+                                   
+                                   
+                               } catch (Exception ex) 
+                               {
+                                     JOptionPane.showMessageDialog(jPanel1,
+                                     "Updating failed please check internet connection",
+                                    "Inane error",
+                                     JOptionPane.ERROR_MESSAGE);
+                                     return ;
+                                   
+                               }
+                 }
+        }
+        
+        if(deletesuccess)
+        {
+               Items.remove(position);
+               FillingTable();
+               return;
+        }
+        
+                     JOptionPane.showMessageDialog(jPanel1,
+                     "No item found for delete",
+                     "Inane error",
+                      JOptionPane.ERROR_MESSAGE);
+                      return ;
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
