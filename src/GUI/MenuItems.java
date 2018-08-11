@@ -248,6 +248,8 @@ public class MenuItems extends javax.swing.JDialog
         
          Items.add(item);
          FillingTable();
+         itemname.setText("");
+         itemprice.setText("");
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void ItemsTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ItemsTableMouseClicked
@@ -313,6 +315,8 @@ public class MenuItems extends javax.swing.JDialog
                                    Dao.UpdateItem("Demo", itemname.getText().trim(), itemprice .getText().trim(), cateName);
                                    item.setPrice(itemprice.getText().trim());
                                    FillingTable();
+                                   itemname.setText("");
+                                    itemprice.setText("");
                                    return;
                                    
                                } catch (Exception ex) 
@@ -391,6 +395,8 @@ public class MenuItems extends javax.swing.JDialog
         {
                Items.remove(position);
                FillingTable();
+               itemname.setText("");
+               itemprice.setText("");
                return;
         }
         
