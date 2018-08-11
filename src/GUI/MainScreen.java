@@ -4,6 +4,8 @@ import DataBase.MenuInterface;
 import foodcourt.Category;
 import foodcourt.FoodCourtModel;
 import foodcourt.Users;
+import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.CheckboxMenuItem;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -27,9 +29,10 @@ public class MainScreen extends javax.swing.JFrame
         
         initComponents();
         setExtendedState(MainScreen.MAXIMIZED_BOTH); 
-        Reports.setVisible(true);
-        Menu.setVisible(false);
-       
+          jPanel6.removeAll();
+          jPanel6.add(Reports);
+          jPanel6.repaint();
+          jPanel6.revalidate();
          
         Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
         int x = (int) ((dimension.getWidth() - getWidth()) / 2);
@@ -62,19 +65,15 @@ public class MainScreen extends javax.swing.JFrame
              MenuItems menuItems = new MenuItems(this, rootPaneCheckingEnabled,"Demo",Button.getText());
              menuItems.setVisible(rootPaneCheckingEnabled);
                 
-             });
-            
-             
+             }); 
              Button.setText(name);
              //ImageIcon icon = new ImageIcon(Categories.get(i).getImage());
              JLabel  Labe = new javax.swing.JLabel();
              Labe.setIcon(new javax.swing.ImageIcon("C://Foodcourt/Images/"+Categories.get(i).getID()+".jpg")); // NOI18N
-          
-             
              JPanel PP  = new javax.swing.JPanel(); 
              PP.setVisible(true);
-             PP.setMaximumSize(new java.awt.Dimension(200, 200));
-             PP.setMinimumSize(new java.awt.Dimension(200, 200));
+             PP.setMaximumSize(new java.awt.Dimension(100, 100));
+             PP.setMinimumSize(new java.awt.Dimension(100, 100));
              PP.setSize(200, 200);
              PP.setBackground(new java.awt.Color(255, 255, 255));
              javax.swing.GroupLayout PPLayout = new javax.swing.GroupLayout(PP);
@@ -133,11 +132,7 @@ public class MainScreen extends javax.swing.JFrame
         jPanel2 = new javax.swing.JPanel();
         jPanel10 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
-        jPanel5 = new javax.swing.JPanel();
-        Menu = new javax.swing.JPanel();
-        jPanel3 = new javax.swing.JPanel();
-        vbut = new javax.swing.JButton();
-        blab = new javax.swing.JLabel();
+        jPanel6 = new javax.swing.JPanel();
         Reports = new javax.swing.JPanel();
         jPanel20 = new javax.swing.JPanel();
         jLabel32 = new javax.swing.JLabel();
@@ -147,6 +142,10 @@ public class MainScreen extends javax.swing.JFrame
         jLabel34 = new javax.swing.JLabel();
         jButton9 = new javax.swing.JButton();
         jLabel35 = new javax.swing.JLabel();
+        Menu = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
+        vbut = new javax.swing.JButton();
+        blab = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -267,7 +266,7 @@ public class MainScreen extends javax.swing.JFrame
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(1423, Short.MAX_VALUE))
+                .addContainerGap(1447, Short.MAX_VALUE))
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -290,47 +289,7 @@ public class MainScreen extends javax.swing.JFrame
 
         jPanel1.add(jPanel2, java.awt.BorderLayout.NORTH);
 
-        jPanel5.setLayout(new java.awt.BorderLayout());
-
-        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
-
-        vbut.setText("Add New Category");
-        vbut.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                vbutActionPerformed(evt);
-            }
-        });
-
-        blab.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/Card.png"))); // NOI18N
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(vbut))
-                    .addComponent(blab))
-                .addContainerGap(13, Short.MAX_VALUE))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(blab)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(vbut)
-                .addContainerGap(23, Short.MAX_VALUE))
-        );
-
-        Menu.add(jPanel3);
-
-        jPanel5.add(Menu, java.awt.BorderLayout.CENTER);
-
-        jPanel1.add(jPanel5, java.awt.BorderLayout.CENTER);
+        jPanel6.setLayout(new java.awt.CardLayout());
 
         jPanel20.setBackground(new java.awt.Color(255, 255, 255));
         jPanel20.setPreferredSize(new java.awt.Dimension(300, 300));
@@ -379,7 +338,7 @@ public class MainScreen extends javax.swing.JFrame
 
         jLabel34.setText("Employee Details");
 
-        jButton9.setText("Search Employeee");
+        jButton9.setText("Employee");
 
         jLabel35.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/Employee.png"))); // NOI18N
 
@@ -393,10 +352,12 @@ public class MainScreen extends javax.swing.JFrame
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel21Layout.createSequentialGroup()
                 .addGap(96, 96, 96)
-                .addGroup(jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel35)
-                    .addComponent(jButton9))
-                .addContainerGap(65, Short.MAX_VALUE))
+                .addComponent(jLabel35)
+                .addContainerGap(76, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel21Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton9)
+                .addGap(92, 92, 92))
         );
         jPanel21Layout.setVerticalGroup(
             jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -405,14 +366,56 @@ public class MainScreen extends javax.swing.JFrame
                 .addComponent(jLabel34)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                 .addComponent(jLabel35)
-                .addGap(28, 28, 28)
+                .addGap(27, 27, 27)
                 .addComponent(jButton9)
-                .addGap(36, 36, 36))
+                .addGap(37, 37, 37))
         );
 
         Reports.add(jPanel21);
 
-        jPanel1.add(Reports, java.awt.BorderLayout.LINE_END);
+        jPanel6.add(Reports, "card2");
+
+        Menu.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 20, 20));
+
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+
+        vbut.setText("Add New Category");
+        vbut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                vbutActionPerformed(evt);
+            }
+        });
+
+        blab.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/Card.png"))); // NOI18N
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(vbut))
+                    .addComponent(blab))
+                .addContainerGap(13, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(blab)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(vbut)
+                .addContainerGap(23, Short.MAX_VALUE))
+        );
+
+        Menu.add(jPanel3);
+
+        jPanel6.add(Menu, "card4");
+
+        jPanel1.add(jPanel6, java.awt.BorderLayout.CENTER);
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
@@ -474,20 +477,25 @@ public class MainScreen extends javax.swing.JFrame
         
         Email email = new Email(this, rootPaneCheckingEnabled);
         email.setVisible(true);
+        
+        
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void menusidepanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menusidepanelMouseClicked
         // TODO add your handling code here:Side bar Menu click event 
-        Reports.setVisible(false);
-        Menu.setVisible(true);
-        
+     jPanel6.removeAll();
+     jPanel6.add(Menu);
+     jPanel6.repaint();
+     jPanel6.revalidate();
        
     }//GEN-LAST:event_menusidepanelMouseClicked
 
     private void DashboardsidepanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DashboardsidepanelMouseClicked
-        // TODO add your handling code here:
-        Reports.setVisible(true);
-        Menu.setVisible(false);
+     jPanel6.removeAll();
+     jPanel6.add(Reports);
+     jPanel6.repaint();
+     jPanel6.revalidate();
+ 
     }//GEN-LAST:event_DashboardsidepanelMouseClicked
 
     private void DashboardsidepanelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DashboardsidepanelMouseEntered
@@ -588,7 +596,7 @@ public class MainScreen extends javax.swing.JFrame
     private javax.swing.JPanel jPanel21;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel menusidepanel;
     private javax.swing.JButton vbut;
     // End of variables declaration//GEN-END:variables
