@@ -365,8 +365,7 @@ public class NewOrder extends javax.swing.JFrame {
              doc.add(new Paragraph("Powered By Stark Technology"));
             
             //Image img = Image.getInstance("StarkLogo.jpg");
-           // doc.add(img);
-            
+            //doc.add(img);
             doc.add(new Paragraph("welcome to "+foodcourt.getName(),FontFactory.getFont(FontFactory.TIMES_BOLD,30,Font.BOLD,BaseColor.BLACK)));
             doc.add(new Paragraph(new Date().toString()));
             doc.add(new Paragraph("----------------------------------------------------------------------------------------------------------------------------------"));
@@ -456,46 +455,39 @@ public class NewOrder extends javax.swing.JFrame {
             doc.add(new Paragraph("Thanx for your Visit have a nice day , enjoy your meal."));
             doc.add(new Paragraph("Contact us",FontFactory.getFont(FontFactory.TIMES_BOLD,20,Font.BOLD,BaseColor.BLACK)));
             doc.add(new Paragraph("Address : gurugram"));
-            doc.add(new Paragraph("Phone : 9718327876"));
-            
-  
-            
+            doc.add(new Paragraph("Phone : 9718327876")); 
             doc.close();
             writer.close();
      
 
-            DocFlavor flavor = DocFlavor.SERVICE_FORMATTED.PAGEABLE;
-           PrintRequestAttributeSet patts = new HashPrintRequestAttributeSet();
-            patts.add(Sides.DUPLEX);
-            PrintService[] ps = PrintServiceLookup.lookupPrintServices(flavor, patts);
-            if (ps.length == 0) {
-            throw new IllegalStateException("No Printer found");
-            }
-            System.out.println("Available printers: " + Arrays.asList(ps));
-
-            PrintService myService = null;
-            
-            for (PrintService printService : ps) 
-            {
-               
-                      try{
-                            myService = printService;
-                             FileInputStream fis = new FileInputStream("C:/Foodcourt/text.pdf");
-                             Doc pdfDoc = new SimpleDoc(fis, DocFlavor.INPUT_STREAM.AUTOSENSE, null);
-                             DocPrintJob printJob = myService.createPrintJob();
-                             printJob.print(pdfDoc, new HashPrintRequestAttributeSet());
-                             fis.close();   
-                             break;
-                      }catch(Exception e)
-                      {
-                          System.out.println("  HERE  ");
-                      }
-            
-            }
-
-       
-
-     
+//            DocFlavor flavor = DocFlavor.SERVICE_FORMATTED.PAGEABLE;
+//            PrintRequestAttributeSet patts = new HashPrintRequestAttributeSet();
+//            patts.add(Sides.DUPLEX);
+//            PrintService[] ps = PrintServiceLookup.lookupPrintServices(flavor, patts);
+//            if (ps.length == 0) {
+//            throw new IllegalStateException("No Printer found");
+//            }
+//            System.out.println("Available printers: " + Arrays.asList(ps));
+//
+//            PrintService myService = null;
+//            
+//            for (PrintService printService : ps) 
+//            {
+//               
+//                      try{
+//                             myService = printService;
+//                             FileInputStream fis = new FileInputStream("C:/Foodcourt/text.pdf");
+//                             Doc pdfDoc = new SimpleDoc(fis, DocFlavor.INPUT_STREAM.AUTOSENSE, null);
+//                             DocPrintJob printJob = myService.createPrintJob();
+//                             printJob.print(pdfDoc, new HashPrintRequestAttributeSet());
+//                             fis.close();   
+//                             break;
+//                      }catch(Exception e)
+//                      {
+//                          System.out.println("  HERE  ");
+//                      }
+//            
+//            }
         }catch(Exception ex)
         {
                JOptionPane.showMessageDialog(this,
