@@ -403,8 +403,7 @@ public class NewOrder extends javax.swing.JFrame {
             table.addCell(c3);
                 
             }
-            
-            
+
             doc.add(table);
             
             PdfPTable table2= new PdfPTable(2);
@@ -430,14 +429,10 @@ public class NewOrder extends javax.swing.JFrame {
             c8.setBorder(PdfPCell.NO_BORDER);
             PdfPCell c9 = new PdfPCell(new Paragraph("Rs :-   0"));   
             c9.setBorder(PdfPCell.NO_BORDER);  
-            
-            
             PdfPCell c10 = new PdfPCell(new Paragraph("Grand Total "));  
             c10.setBorder(PdfPCell.NO_BORDER);
             PdfPCell c11 = new PdfPCell(new Paragraph("Rs :-   "+Total));   
             c11.setBorder(PdfPCell.NO_BORDER);  
-            
-            
             table2.addCell(c4);
             table2.addCell(c5);
             table2.addCell(c6);
@@ -446,11 +441,7 @@ public class NewOrder extends javax.swing.JFrame {
             table2.addCell(c9);
             table2.addCell(c10);
             table2.addCell(c11);
-            
-            
-            
             doc.add(table2);
-            
             doc.add(new Paragraph("----------------------------------------------------------------------------------------------------------------------------------"));
             doc.add(new Paragraph("Thanx for your Visit have a nice day , enjoy your meal."));
             doc.add(new Paragraph("Contact us",FontFactory.getFont(FontFactory.TIMES_BOLD,20,Font.BOLD,BaseColor.BLACK)));
@@ -459,38 +450,47 @@ public class NewOrder extends javax.swing.JFrame {
             doc.close();
             writer.close();
      
+            JOptionPane.showMessageDialog(this,
+            "Pdf generated now prenting",
+              "Inane error",
+             JOptionPane.ERROR_MESSAGE);
 
-//            DocFlavor flavor = DocFlavor.SERVICE_FORMATTED.PAGEABLE;
-//            PrintRequestAttributeSet patts = new HashPrintRequestAttributeSet();
-//            patts.add(Sides.DUPLEX);
-//            PrintService[] ps = PrintServiceLookup.lookupPrintServices(flavor, patts);
-//            if (ps.length == 0) {
-//            throw new IllegalStateException("No Printer found");
-//            }
-//            System.out.println("Available printers: " + Arrays.asList(ps));
-//
-//            PrintService myService = null;
-//            
-//            for (PrintService printService : ps) 
-//            {
-//               
-//                      try{
-//                             myService = printService;
-//                             FileInputStream fis = new FileInputStream("C:/Foodcourt/text.pdf");
-//                             Doc pdfDoc = new SimpleDoc(fis, DocFlavor.INPUT_STREAM.AUTOSENSE, null);
-//                             DocPrintJob printJob = myService.createPrintJob();
-//                             printJob.print(pdfDoc, new HashPrintRequestAttributeSet());
-//                             fis.close();   
-//                             break;
-//                      }catch(Exception e)
-//                      {
-//                          System.out.println("  HERE  ");
-//                      }
-//            
-//            }
+            DocFlavor flavor = DocFlavor.SERVICE_FORMATTED.PAGEABLE;
+            PrintRequestAttributeSet patts = new HashPrintRequestAttributeSet();
+            patts.add(Sides.DUPLEX);
+            PrintService[] ps = PrintServiceLookup.lookupPrintServices(flavor, patts);
+            if (ps.length == 0) {
+            throw new IllegalStateException("No Printer found");
+            }
+            System.out.println("Available printers: " + Arrays.asList(ps));
+
+            PrintService myService = null;
+            
+            for (PrintService printService : ps) 
+            {
+               
+                      try
+                      {
+                             myService = printService;
+                             FileInputStream fis = new FileInputStream("C:/Foodcourt/text.pdf");
+                             Doc pdfDoc = new SimpleDoc(fis, DocFlavor.INPUT_STREAM.AUTOSENSE, null);
+                             DocPrintJob printJob = myService.createPrintJob();
+                             printJob.print(pdfDoc, new HashPrintRequestAttributeSet());
+                             fis.close();   
+                             break;
+                      }catch(Exception e)
+                      {
+                                 JOptionPane.showMessageDialog(this,
+                                    "inside printer "+e.getMessage(),
+                                      "Inane error",
+                                     JOptionPane.ERROR_MESSAGE);
+                                 
+                      }
+            
+            }
         }catch(Exception ex)
         {
-               JOptionPane.showMessageDialog(this,
+                     JOptionPane.showMessageDialog(this,
                      "exception "+ex.getMessage(),
                      "Inane error",
                       JOptionPane.ERROR_MESSAGE);
