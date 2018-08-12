@@ -302,7 +302,14 @@ public class NewOrder extends javax.swing.JFrame {
 
     private void list1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_list1MouseClicked
         // TODO add your handling code here:
-        SeachItem.setText("");
+       
+        if(list1.getSelectedIndex() == -1)
+        {
+            return;
+        }
+        
+        try{
+            SeachItem.setText("");
         for(Menu_Items item : items)
         {
             if(item.getName().toLowerCase().equalsIgnoreCase(list1.getSelectedItem().toLowerCase()))
@@ -318,6 +325,10 @@ public class NewOrder extends javax.swing.JFrame {
                 list1.removeAll();
                 break;
             }
+            
+        }
+        }catch(Exception e)
+        {
             
         }
     }//GEN-LAST:event_list1MouseClicked
@@ -500,8 +511,18 @@ public class NewOrder extends javax.swing.JFrame {
                  
             for(int i = 0 ; i < rows ;  i ++)
             {
-                        
-            int qty = Integer.valueOf(""+ model.getValueAt(i, 1));
+                int qty = -1;        
+     try{
+                  qty = Integer.valueOf(""+ model.getValueAt(i, 1));
+     }catch(NumberFormatException e)
+     {
+                      JOptionPane.showMessageDialog(this,
+                     "Enter valid qty",
+                     "Inane error",
+                      JOptionPane.ERROR_MESSAGE);
+                      return ;
+     }
+     if(qty == -1){ return;}
             if(qty != 1)
             {
                 float value=0;
@@ -525,33 +546,44 @@ public class NewOrder extends javax.swing.JFrame {
 
     private void BillingTableFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_BillingTableFocusLost
         // TODO add your handling code here:
-            DefaultTableModel  model = (DefaultTableModel) BillingTable.getModel();
-            int rows = model.getRowCount();
         
-                 
-            for(int i = 0 ; i < rows ;  i ++)
-            {
-                        
-            int qty = Integer.valueOf(""+ model.getValueAt(i, 1));
-            if(qty != 1)
-            {
-                float value=0;
-               for(Menu_Items item : items)
-                {
-                 if(item.getName().toLowerCase().equalsIgnoreCase(model.getValueAt(i, 0).toString().toLowerCase()))
-                {
-               
-                  value = qty * Float.valueOf(item.getPrice());
-                  break;
-                  }
-            
-                  }
-                model.setValueAt(value, i, 2);
-            }
-      
-                
-            }
-        
+        return;
+//            DefaultTableModel  model = (DefaultTableModel) BillingTable.getModel();
+//            int rows = model.getRowCount();
+//        
+//                 
+//            for(int i = 0 ; i < rows ;  i ++)
+//            {
+//                    int qty= -1;    
+//               try{
+//                  qty = Integer.valueOf(""+ model.getValueAt(i, 1));
+//                   }catch(NumberFormatException e)
+//                 {
+//                      JOptionPane.showMessageDialog(this,
+//                     "Enter valid qty",
+//                     "Inane error",
+//                      JOptionPane.ERROR_MESSAGE);
+//                      return ;
+//                }
+//            if(qty != 1)
+//            {
+//                float value=0;
+//               for(Menu_Items item : items)
+//                {
+//                 if(item.getName().toLowerCase().equalsIgnoreCase(model.getValueAt(i, 0).toString().toLowerCase()))
+//                {
+//               
+//                  value = qty * Float.valueOf(item.getPrice());
+//                  break;
+//                  }
+//            
+//                  }
+//                model.setValueAt(value, i, 2);
+//            }
+//      
+//                
+//            }
+//        
     }//GEN-LAST:event_BillingTableFocusLost
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
