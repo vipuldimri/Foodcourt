@@ -359,18 +359,17 @@ public class NewOrder extends javax.swing.JFrame {
          Total = 0 ;
         Document doc = new Document();
         try{
-            PdfWriter writer = PdfWriter.getInstance(doc, new FileOutputStream("C:/Foodcourt/text.pdf"));
+           PdfWriter writer = PdfWriter.getInstance(doc, new FileOutputStream("C:/Foodcourt/text.pdf"));
 
             doc.open();
              doc.add(new Paragraph("Powered By Stark Technology"));
             
-            Image img = Image.getInstance("StarkLogo.jpg");
-            doc.add(img);
+            //Image img = Image.getInstance("StarkLogo.jpg");
+           // doc.add(img);
             
             doc.add(new Paragraph("welcome to "+foodcourt.getName(),FontFactory.getFont(FontFactory.TIMES_BOLD,30,Font.BOLD,BaseColor.BLACK)));
             doc.add(new Paragraph(new Date().toString()));
             doc.add(new Paragraph("----------------------------------------------------------------------------------------------------------------------------------"));
-            
             doc.add(new Paragraph("Your Order Details",FontFactory.getFont(FontFactory.TIMES_BOLD,15,Font.BOLD,BaseColor.BLACK)));
             
             PdfPTable table = new PdfPTable(4);
@@ -466,7 +465,7 @@ public class NewOrder extends javax.swing.JFrame {
      
 
             DocFlavor flavor = DocFlavor.SERVICE_FORMATTED.PAGEABLE;
-            PrintRequestAttributeSet patts = new HashPrintRequestAttributeSet();
+           PrintRequestAttributeSet patts = new HashPrintRequestAttributeSet();
             patts.add(Sides.DUPLEX);
             PrintService[] ps = PrintServiceLookup.lookupPrintServices(flavor, patts);
             if (ps.length == 0) {
@@ -480,7 +479,7 @@ public class NewOrder extends javax.swing.JFrame {
             {
                
                       try{
-                             myService = printService;
+                            myService = printService;
                              FileInputStream fis = new FileInputStream("C:/Foodcourt/text.pdf");
                              Doc pdfDoc = new SimpleDoc(fis, DocFlavor.INPUT_STREAM.AUTOSENSE, null);
                              DocPrintJob printJob = myService.createPrintJob();
@@ -499,8 +498,12 @@ public class NewOrder extends javax.swing.JFrame {
      
         }catch(Exception ex)
         {
-            System.out.println(ex);
-        }
+               JOptionPane.showMessageDialog(this,
+                     "exception "+ex.getMessage(),
+                     "Inane error",
+                      JOptionPane.ERROR_MESSAGE);
+                    
+         }
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void BillingTableKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BillingTableKeyReleased
