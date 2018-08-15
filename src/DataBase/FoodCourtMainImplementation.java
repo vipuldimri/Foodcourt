@@ -12,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  *
@@ -116,5 +117,29 @@ public class FoodCourtMainImplementation implements FoodCourtMainInterface
        }
                    return old+"";
     }
-    
+
+    @Override
+    public String GetPerticulardateCollection(int id, Date start, Date end) throws Exception 
+    {
+         java.sql.Date sdate = new java.sql.Date(start.getTime());
+        java.sql.Date edate = new java.sql.Date(end.getTime());
+        
+        
+        String Query="select  Collect from  Demo_collection  WHERE Date >= '"+sdate+"' AND Date <= '"+edate+"';";    
+         float old =0;
+       boolean newday = true;
+       Statement stmt=conn.createStatement();  
+       ResultSet rs = stmt.executeQuery(Query);
+       while(rs.next())  
+                   {
+                       old = Float.parseFloat(rs.getString(1));
+                       newday = false;
+                    
+                   }
+       
+       if(newday){
+           return "0";
+       }
+                   return old+"";
+    }
 }
