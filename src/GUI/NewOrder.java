@@ -5,6 +5,8 @@
  */
 package GUI;
 
+import DataBase.FoodCourtFactory;
+import DataBase.FoodCourtMainInterface;
 import DataBase.MenuFactory;
 import DataBase.MenuInterface;
 import DataStructures.Trie;
@@ -33,6 +35,7 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import javax.print.Doc;
 import javax.print.DocFlavor;
 import javax.print.DocPrintJob;
@@ -231,7 +234,7 @@ public class NewOrder extends javax.swing.JFrame {
         });
 
         jButton6.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jButton6.setText("Check Out");
+        jButton6.setText("Print");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton6ActionPerformed(evt);
@@ -258,8 +261,8 @@ public class NewOrder extends javax.swing.JFrame {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -335,10 +338,18 @@ public class NewOrder extends javax.swing.JFrame {
     //code for bill makinng
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
-        
-                 DefaultTableModel  model = (DefaultTableModel) BillingTable.getModel();
-                 int rows = model.getRowCount();
-                 float Total = 0;
+
+            DefaultTableModel  model = (DefaultTableModel) BillingTable.getModel();
+            int rows = model.getRowCount();
+            if(rows == 0)
+            {
+                                    JOptionPane.showMessageDialog(this,
+                                    "Can't take empty order",
+                                      "Inane error",
+                                     JOptionPane.ERROR_MESSAGE);
+                                    return;
+            }
+            float Total = 0;
                  
             for(int i = 0 ; i < rows ;  i ++)
             {
@@ -356,6 +367,18 @@ public class NewOrder extends javax.swing.JFrame {
           System.out.println("No Option");
           return;
         } 
+        //Updating the collection
+        try
+        {
+            FoodCourtMainInterface dao = FoodCourtFactory.GetInstance();
+            dao.updatecollection(1, Total);
+        }catch(Exception e)
+        {
+            JOptionPane.showMessageDialog(this,
+            "Internet connection error",
+            "Inane error",
+            JOptionPane.ERROR_MESSAGE);
+        }
          Total = 0 ;
         Document doc = new Document();
         try{
@@ -496,6 +519,14 @@ public class NewOrder extends javax.swing.JFrame {
                       JOptionPane.ERROR_MESSAGE);
                     
          }
+            
+         
+            DefaultTableModel dm = (DefaultTableModel) BillingTable.getModel();
+            int rowCount = dm.getRowCount();
+            //Remove rows one by one from the end of the table
+            for (int i = rowCount - 1; i >= 0; i--) {
+            dm.removeRow(i);}
+        
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void BillingTableKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BillingTableKeyReleased

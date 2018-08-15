@@ -134,6 +134,10 @@ public class MainScreen extends javax.swing.JFrame
         jLabel10 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         Reports = new javax.swing.JPanel();
+        jPanel22 = new javax.swing.JPanel();
+        jLabel33 = new javax.swing.JLabel();
+        jButton10 = new javax.swing.JButton();
+        jLabel41 = new javax.swing.JLabel();
         jPanel20 = new javax.swing.JPanel();
         jLabel32 = new javax.swing.JLabel();
         jButton8 = new javax.swing.JButton();
@@ -291,12 +295,60 @@ public class MainScreen extends javax.swing.JFrame
 
         jPanel6.setLayout(new java.awt.CardLayout());
 
+        jPanel22.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel22.setPreferredSize(new java.awt.Dimension(300, 300));
+
+        jLabel33.setText("Take Order");
+
+        jButton10.setText("Take Order");
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
+            }
+        });
+
+        jLabel41.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/Order.png"))); // NOI18N
+
+        javax.swing.GroupLayout jPanel22Layout = new javax.swing.GroupLayout(jPanel22);
+        jPanel22.setLayout(jPanel22Layout);
+        jPanel22Layout.setHorizontalGroup(
+            jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel22Layout.createSequentialGroup()
+                .addGap(91, 91, 91)
+                .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel33, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel41)
+                        .addGroup(jPanel22Layout.createSequentialGroup()
+                            .addGap(15, 15, 15)
+                            .addComponent(jButton10))))
+                .addContainerGap(81, Short.MAX_VALUE))
+        );
+        jPanel22Layout.setVerticalGroup(
+            jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel22Layout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addComponent(jLabel33)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+                .addComponent(jLabel41)
+                .addGap(29, 29, 29)
+                .addComponent(jButton10)
+                .addGap(37, 37, 37))
+        );
+
+        Reports.add(jPanel22);
+
         jPanel20.setBackground(new java.awt.Color(255, 255, 255));
         jPanel20.setPreferredSize(new java.awt.Dimension(300, 300));
 
         jLabel32.setText("Today Collection");
 
         jButton8.setText("Today Collection");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
 
         jLabel40.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/if_shop-14_730803.png"))); // NOI18N
 
@@ -531,6 +583,20 @@ public class MainScreen extends javax.swing.JFrame
         
     }//GEN-LAST:event_vbutActionPerformed
 
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        // TODO add your handling code here:
+        TodayCollection todaycollection = new  TodayCollection(this, rootPaneCheckingEnabled);
+        todaycollection.setVisible(rootPaneCheckingEnabled);
+    }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+        // TODO add your handling code here:
+               
+        NewOrder neworder = new NewOrder(foodcourt,this);
+        neworder.setVisible(true);
+        setVisible(false);
+    }//GEN-LAST:event_jButton10ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -571,6 +637,7 @@ public class MainScreen extends javax.swing.JFrame
     private javax.swing.JPanel Menu;
     private javax.swing.JPanel Reports;
     private javax.swing.JLabel blab;
+    private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
@@ -579,10 +646,12 @@ public class MainScreen extends javax.swing.JFrame
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel40;
+    private javax.swing.JLabel jLabel41;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
@@ -594,6 +663,7 @@ public class MainScreen extends javax.swing.JFrame
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel20;
     private javax.swing.JPanel jPanel21;
+    private javax.swing.JPanel jPanel22;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel6;

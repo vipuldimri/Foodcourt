@@ -21,4 +21,7 @@ public interface FoodCourtMainInterface {
     
     public void updateinfo(int id,FoodCourtModel foodcourt)throws Exception;
     
+    public void updatecollection(int id,Float price) throws Exception;
+    
+    public String GettodayCollection(int id) throws Exception;
 }

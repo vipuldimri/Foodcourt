@@ -68,7 +68,7 @@ public class recharge extends javax.swing.JDialog {
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/Clear.png"))); // NOI18N
         jButton1.setText("Clear");
         getContentPane().add(jButton1);
-        jButton1.setBounds(200, 340, 180, 73);
+        jButton1.setBounds(200, 340, 180, 137);
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/cardrecharge.png"))); // NOI18N
         jButton2.setText("Recharge");

@@ -8,6 +8,7 @@ package DataBase;
 import foodcourt.FoodCourtModel;
 import foodcourt.Users;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -61,6 +62,59 @@ public class FoodCourtMainImplementation implements FoodCourtMainInterface
     @Override
     public void updateinfo(int id,FoodCourtModel foodcourt) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void updatecollection(int id, Float price) throws Exception {
+        
+       String data ="select  Collect from  Demo_collection where  date = curdate()"; 
+       float old =0;
+       boolean newday = true;
+         Statement stmt=conn.createStatement();  
+          ResultSet rs = stmt.executeQuery(data);
+                   while(rs.next())  
+                   {
+                       old = Float.parseFloat(rs.getString(1));
+                       newday = false;
+                    
+                   }
+                   
+        if(newday)
+        {
+                   old = old + price;
+                   String query = "insert into Demo_collection(Collect,date) values ('"+price+"',curdate())";
+                   PreparedStatement psmnt = null;
+                   psmnt = conn.prepareStatement(query);
+                   psmnt.executeUpdate();
+        
+        }else {
+                             old = old + price;
+        String query = "update  Demo_collection set  Collect = '"+old+"' where date = curdate()";
+       PreparedStatement psmnt = null;
+        psmnt = conn.prepareStatement(query);
+        psmnt.executeUpdate();
+        }
+  
+    }
+
+    @Override
+    public String GettodayCollection(int id) throws Exception {
+       String data ="select  Collect from  Demo_collection where  date = curdate()"; 
+       float old =0;
+       boolean newday = true;
+       Statement stmt=conn.createStatement();  
+       ResultSet rs = stmt.executeQuery(data);
+       while(rs.next())  
+                   {
+                       old = Float.parseFloat(rs.getString(1));
+                       newday = false;
+                    
+                   }
+       
+       if(newday){
+           return "0";
+       }
+                   return old+"";
     }
     
 }
