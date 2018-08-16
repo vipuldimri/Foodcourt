@@ -12,9 +12,11 @@ import DataBase.MenuInterface;
 import DataStructures.Trie;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
+import com.itextpdf.text.Element;
 import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -379,33 +381,42 @@ public class NewOrder extends javax.swing.JFrame {
             "Inane error",
             JOptionPane.ERROR_MESSAGE);
         }
-         Total = 0 ;
-        Document doc = new Document();
+         // Adjusted size to EPSON printer 
+        Rectangle one = new Rectangle(227,842);
+        Document doc = new Document(one);
         try{
            PdfWriter writer = PdfWriter.getInstance(doc, new FileOutputStream("C:/Foodcourt/text.pdf"));
-
+           
             doc.open();
-             doc.add(new Paragraph("Powered By Stark Technology"));
-            
-            //Image img = Image.getInstance("StarkLogo.jpg");
-            //doc.add(img);
-            doc.add(new Paragraph("welcome to "+foodcourt.getName(),FontFactory.getFont(FontFactory.TIMES_BOLD,30,Font.BOLD,BaseColor.BLACK)));
-            doc.add(new Paragraph(new Date().toString()));
-            doc.add(new Paragraph("----------------------------------------------------------------------------------------------------------------------------------"));
-            doc.add(new Paragraph("Your Order Details",FontFactory.getFont(FontFactory.TIMES_BOLD,15,Font.BOLD,BaseColor.BLACK)));
+           // Print *Welcome* on the top     			
+           Paragraph paragraph = new Paragraph("| Welcome |");
+           // set font and size
+	   paragraph.setFont(FontFactory.getFont(FontFactory.HELVETICA, 10,Font.BOLD));
+           // set alignment to CENTER of the page
+	   paragraph.setAlignment(Element.ALIGN_CENTER); 
+           doc.add(paragraph);// End of *Welcome* 
+           
+	   doc.add(new Paragraph(foodcourt.getName(),FontFactory.getFont(FontFactory.HELVETICA,20,Font.BOLD,BaseColor.BLACK)));
+           // Adjust Date/Time string to one line
+	   doc.add(new Paragraph(new Date().toString()));
+           /*Paragraph date = new Paragraph(new Date().toString());
+           date.setFont(FontFactory.getFont(FontFactory.HELVETICA, 8));
+           doc.add(date);*/
+           doc.add(new Paragraph("Tiffins | Chaat | Juice",FontFactory.getFont(FontFactory.HELVETICA,10,BaseColor.BLACK)));
+           doc.add(new Paragraph("Order Details",FontFactory.getFont(FontFactory.HELVETICA,10,Font.BOLD,BaseColor.BLACK)));
             
             PdfPTable table = new PdfPTable(4);
             table.setWidthPercentage(105);
             table.setSpacingBefore(11f);
             table.setSpacingAfter(11f);
             
-            float[] colwidth = {2f,2f,2f,2f};
+            float[] colwidth = {1f,2.5f,1f,2f};
             table.setWidths(colwidth);
-            
-            PdfPCell c1 = new PdfPCell(new Paragraph("Sno"));   
-            PdfPCell c2 = new PdfPCell(new Paragraph("Item Name"));
-            PdfPCell c44= new PdfPCell(new Paragraph("QTY"));   
-            PdfPCell c3  = new PdfPCell(new Paragraph("Price"));  
+            // Adjusted Font Size
+            PdfPCell c1 = new PdfPCell(new Paragraph("Sno",FontFactory.getFont(FontFactory.HELVETICA,8)));   
+            PdfPCell c2 = new PdfPCell(new Paragraph("Item Name",FontFactory.getFont(FontFactory.HELVETICA,8)));
+            PdfPCell c44= new PdfPCell(new Paragraph("QTY",FontFactory.getFont(FontFactory.HELVETICA,8)));   
+            PdfPCell c3  = new PdfPCell(new Paragraph("Price",FontFactory.getFont(FontFactory.HELVETICA,8)));  
             table.addCell(c1);
             table.addCell(c2);
             table.addCell(c44);
@@ -419,43 +430,49 @@ public class NewOrder extends javax.swing.JFrame {
             c2 = new PdfPCell(new Paragraph(""+ model.getValueAt(i, 0)));
             c44= new PdfPCell(new Paragraph(""+ model.getValueAt(i, 1)));
             c3  = new PdfPCell(new Paragraph(""+ model.getValueAt(i, 2)));
-            Total = Total + Float.valueOf(""+ model.getValueAt(i, 2));
+            Total = Float.valueOf(""+ model.getValueAt(i, 2));
+			
             table.addCell(c1);
             table.addCell(c2);
             table.addCell(c44);
-            table.addCell(c3);
-                
+            table.addCell(c3);           
             }
-
+            
             doc.add(table);
             
             PdfPTable table2= new PdfPTable(2);
             table2.setWidthPercentage(105);
   
-            
             float[] colwidth2 = {1f,1f};
             table2.setWidths(colwidth2);
             
             PdfPCell c4 = new PdfPCell(new Paragraph("Total  "));  
-         
+            
             c4.setBorder(PdfPCell.NO_BORDER);
             PdfPCell c5 = new PdfPCell(new Paragraph("Rs :-   "+Total));   
             c5.setBorder(PdfPCell.NO_BORDER);
-               
+            // CGST Calculation   
             PdfPCell c6 = new PdfPCell(new Paragraph("CGST : "+foodcourt.getCGST()+" %"));  
             c6.setBorder(PdfPCell.NO_BORDER);
-            PdfPCell c7 = new PdfPCell(new Paragraph("Rs :-   0"));   
+            float cgstValue = Total;
+            cgstValue = (float)((cgstValue) * (foodcourt.getCGST()/100));
+            PdfPCell c7 = new PdfPCell(new Paragraph("Rs :-   "+cgstValue));   
             c7.setBorder(PdfPCell.NO_BORDER);   
-     
-            
+            // SGST Calculation   
             PdfPCell c8 = new PdfPCell(new Paragraph("SGST : "+foodcourt.getGGST()+" %"));  
             c8.setBorder(PdfPCell.NO_BORDER);
-            PdfPCell c9 = new PdfPCell(new Paragraph("Rs :-   0"));   
-            c9.setBorder(PdfPCell.NO_BORDER);  
+            float sgstValue = Total;
+            sgstValue = (float)((sgstValue) * (foodcourt.getGGST()/100));
+            PdfPCell c9 = new PdfPCell(new Paragraph("Rs :-   "+sgstValue));   
+            c9.setBorder(PdfPCell.NO_BORDER);
+            
+            // Grand Total Calculation       
             PdfPCell c10 = new PdfPCell(new Paragraph("Grand Total "));  
             c10.setBorder(PdfPCell.NO_BORDER);
-            PdfPCell c11 = new PdfPCell(new Paragraph("Rs :-   "+Total));   
+            PdfPCell c11 = new PdfPCell(new Paragraph("Rs :-   "+(Total+sgstValue+cgstValue)));   
             c11.setBorder(PdfPCell.NO_BORDER);  
+            
+            
             table2.addCell(c4);
             table2.addCell(c5);
             table2.addCell(c6);
@@ -464,19 +481,26 @@ public class NewOrder extends javax.swing.JFrame {
             table2.addCell(c9);
             table2.addCell(c10);
             table2.addCell(c11);
+                      
             doc.add(table2);
-            doc.add(new Paragraph("----------------------------------------------------------------------------------------------------------------------------------"));
-            doc.add(new Paragraph("Thanx for your Visit have a nice day , enjoy your meal."));
-            doc.add(new Paragraph("Contact us",FontFactory.getFont(FontFactory.TIMES_BOLD,20,Font.BOLD,BaseColor.BLACK)));
-            doc.add(new Paragraph("Address : gurugram"));
-            doc.add(new Paragraph("Phone : 9718327876")); 
+            
+            doc.add(new Paragraph("--------------------------------"));
+            doc.add(new Paragraph("Thank you , enjoy your meal."));
+            doc.add(new Paragraph("Contact us",FontFactory.getFont(FontFactory.HELVETICA,14,Font.BOLD,BaseColor.BLACK)));
+            doc.add(new Paragraph("Phone :+91-9000008749 "));
+                                   
+            doc.add(new Paragraph("---------------------------------"));
+            doc.add(new Paragraph("Powered by",FontFactory.getFont(FontFactory.HELVETICA,9,Font.BOLD,BaseColor.BLACK)));
+            doc.add(new Paragraph("Stark Technologies",FontFactory.getFont(FontFactory.HELVETICA,9,Font.BOLD,BaseColor.BLACK)));
+            
             doc.close();
             writer.close();
+
      
             JOptionPane.showMessageDialog(this,
-            "Pdf generated now prenting",
-              "Inane error",
-             JOptionPane.ERROR_MESSAGE);
+            "Pdf generated now printing",
+              "Bill",
+             JOptionPane.INFORMATION_MESSAGE);
 
             DocFlavor flavor = DocFlavor.SERVICE_FORMATTED.PAGEABLE;
             PrintRequestAttributeSet patts = new HashPrintRequestAttributeSet();
