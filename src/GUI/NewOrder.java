@@ -430,7 +430,7 @@ public class NewOrder extends javax.swing.JFrame {
             c2 = new PdfPCell(new Paragraph(""+ model.getValueAt(i, 0)));
             c44= new PdfPCell(new Paragraph(""+ model.getValueAt(i, 1)));
             c3  = new PdfPCell(new Paragraph(""+ model.getValueAt(i, 2)));
-            Total = Float.valueOf(""+ model.getValueAt(i, 2));
+            //Total = Float.valueOf(""+ model.getValueAt(i, 2));
 			
             table.addCell(c1);
             table.addCell(c2);
