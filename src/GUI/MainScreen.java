@@ -23,7 +23,8 @@ public class MainScreen extends javax.swing.JFrame
     ArrayList<Category> Categories;
     FoodCourtModel foodcourt;
     Users CurrentUser;
-    public MainScreen(FoodCourtModel foodcourt ,   Users CurrentUser) 
+    Login loginscreen;
+    public MainScreen(FoodCourtModel foodcourt ,   Users CurrentUser ,Login loginscreen) 
     {
         
         
@@ -41,6 +42,7 @@ public class MainScreen extends javax.swing.JFrame
         
         this.foodcourt = foodcourt;
         this.CurrentUser = CurrentUser;
+        this.loginscreen = loginscreen;
         //Getting Menu From the Database 
         MenuInterface Dao   = MenuFactory.GetInstance();
         try
@@ -501,6 +503,11 @@ public class MainScreen extends javax.swing.JFrame
         jMenu1.add(jMenuItem4);
 
         jMenuItem3.setText("Sign Out");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem3);
 
         jMenuBar1.add(jMenu1);
@@ -527,7 +534,7 @@ public class MainScreen extends javax.swing.JFrame
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         // TODO add your handling code here:email
         
-        Email email = new Email(this, rootPaneCheckingEnabled);
+        Email email = new Email(this, rootPaneCheckingEnabled,foodcourt);
         email.setVisible(true);
         
         
@@ -578,7 +585,7 @@ public class MainScreen extends javax.swing.JFrame
         // TODO add your handling code here:
        
      
-        AddCategory addCategory = new AddCategory(this, rootPaneCheckingEnabled,Categories);
+        AddCategory addCategory = new AddCategory(this, rootPaneCheckingEnabled,Categories,foodcourt);
         addCategory.setVisible(rootPaneCheckingEnabled);
         
     }//GEN-LAST:event_vbutActionPerformed
@@ -596,6 +603,13 @@ public class MainScreen extends javax.swing.JFrame
         neworder.setVisible(true);
         setVisible(false);
     }//GEN-LAST:event_jButton10ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        // TODO add your handling code here:
+        loginscreen.setVisible(true);
+        this.setVisible(false);
+        this.dispose();
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     /**
      * @param args the command line arguments

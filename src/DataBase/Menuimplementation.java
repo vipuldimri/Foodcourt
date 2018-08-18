@@ -3,22 +3,16 @@ package DataBase;
 import DataStructures.Trie;
 import foodcourt.Category;
 import foodcourt.Menu_Items;
-import java.awt.Image;
-import java.awt.Toolkit;
-import java.awt.image.BufferedImage;
-import java.awt.image.DataBufferByte;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
-import static java.lang.System.in;
 import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
-import javax.imageio.ImageIO;
 
 public class Menuimplementation implements MenuInterface
 {
@@ -158,14 +152,27 @@ public class Menuimplementation implements MenuInterface
     @Override
     public Boolean DeleteItem(String FoodCourtID, String Name, String Price, String Category) throws Exception {
         
-           System.out.println("delete  Demo_Items where  Name = '"+Name+"' and Category='"+Category+"'" );
+            System.out.println("delete  Demo_Items where  Name = '"+Name+"' and Category='"+Category+"'" );
             PreparedStatement psmnt = null;
             psmnt = conn.prepareStatement("delete from Demo_Items where  Name = '"+Name+"' and Category='"+Category+"'");
             psmnt.executeUpdate();
             return true;    
     }
-    
 
-   
+    @Override
+    public Boolean DeleteCategory(String FoodCourtID,String CategoryID,String CategoryName) throws Exception {
+        
+            System.out.println("delete  Demo_Category where  ID = '"+CategoryID);
+            PreparedStatement psmnt = null;
+            psmnt = conn.prepareStatement("delete from  Demo_Category  where ID = "+CategoryID);
+            psmnt.executeUpdate();
+            
+            
+            psmnt = null;
+            psmnt = conn.prepareStatement("delete from Demo_Items where  Category='"+CategoryName+"'");
+            psmnt.executeUpdate();
+            return true;
+    }
+    
 }
  

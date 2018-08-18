@@ -1,14 +1,19 @@
 
 package GUI;
 
+import DataBase.FoodCourtFactory;
+import DataBase.FoodCourtMainInterface;
 import DataBase.MenuFactory;
 import DataBase.MenuInterface;
 import foodcourt.Category;
+import foodcourt.FoodCourtModel;
 import foodcourt.Menu_Items;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 import java.awt.image.WritableRaster;
@@ -24,7 +29,11 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPopupMenu;
+import javax.swing.JTable;
+import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 
@@ -37,17 +46,19 @@ public class AddCategory extends javax.swing.JDialog {
     /**
      * Creates new form AddCategory
      */
-    DataBufferByte data;
+     DataBufferByte data;
      ArrayList<Category> categ;
      File image;
-    public AddCategory(java.awt.Frame parent, boolean modal,ArrayList<Category> categ) 
+     FoodCourtModel foodcourt;
+    public AddCategory(java.awt.Frame parent, boolean modal,ArrayList<Category> categ, FoodCourtModel foodcourt) 
     {
         
         
         super(parent, modal);
         initComponents();
         this.categ=   categ;
-           Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+        this.foodcourt = foodcourt;
+        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
         int x = (int) ((dimension.getWidth() - getWidth()) / 2);
         int y = (int) ((dimension.getHeight() - getHeight()) / 2);
         
@@ -85,6 +96,11 @@ public class AddCategory extends javax.swing.JDialog {
                 "Sno", "Title 2"
             }
         ));
+        CatTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                CatTableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(CatTable);
 
         jPanel1.setBackground(new java.awt.Color(0, 0, 0));
@@ -242,11 +258,10 @@ public class AddCategory extends javax.swing.JDialog {
         
         try
         {
-               
+           
                 MenuInterface Dao   =  MenuFactory.GetInstance();
                 Dao.AddCategory("Demo",jTextField1.getText().trim(),image);  
                       
-
         }
         catch(Exception ex)
         {
@@ -266,6 +281,34 @@ public class AddCategory extends javax.swing.JDialog {
         
         
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void CatTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CatTableMouseClicked
+        // TODO add your handling code here:
+        Boolean rightmouse = SwingUtilities.isRightMouseButton(evt);
+        if(rightmouse)
+        {
+        int r = CatTable.rowAtPoint(evt.getPoint());
+        if (r >= 0 && r < CatTable.getRowCount()) {
+            CatTable.setRowSelectionInterval(r, r);
+        } else {
+            CatTable.clearSelection();
+        }
+
+        int rowindex = CatTable.getSelectedRow();
+        if (rowindex < 0)
+            return;
+      
+         final  RowPopup2 pop2 = new RowPopup2(CatTable);
+         
+         DefaultTableModel  model = (DefaultTableModel) CatTable.getModel();
+         pop2.CategoryName = model.getValueAt(rowindex, 1).toString();
+         pop2.categ = categ;
+         pop2.FoodcourtId = foodcourt.getId()+"";
+         pop2.show(evt.getComponent(), evt.getX(), evt.getY());
+        
+        
+        }
+    }//GEN-LAST:event_CatTableMouseClicked
 
    
     public Image toImage(BufferedImage bufferedImage) {
@@ -341,4 +384,47 @@ public class AddCategory extends javax.swing.JDialog {
         
        }
     }    
+}
+class RowPopup2 extends JPopupMenu
+{
+    String CategoryName;
+    String FoodcourtId;
+    String CategoryID;
+    ArrayList<Category> categ;
+    public RowPopup2(JTable table)
+    {
+        
+        JMenuItem delete = new JMenuItem("DELETE Category");
+        
+        delete.addActionListener((ActionEvent ae) -> 
+        {
+           
+            for (int i = 0; i < categ.size(); i++) {
+                if(categ.get(i).getName().equalsIgnoreCase(CategoryName))
+                {
+                    CategoryID = categ.get(i).getID()+"";
+                    break;
+                }
+            }
+         try
+         {
+            MenuInterface dao = MenuFactory.GetInstance();
+            dao.DeleteCategory(FoodcourtId,CategoryID,CategoryName);
+            
+        }catch(Exception e)
+        {
+            JOptionPane.showMessageDialog(this,
+            "Internet connection error ,Unable to delette Category",
+            "Inane error",
+            JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+           JOptionPane.showMessageDialog(this,
+            "Category Deleted successfully , System will stop now start again to see changes",
+            "Inane error",
+            JOptionPane.PLAIN_MESSAGE);
+            System.exit(0);
+        });
+        add(delete);
+    }
 }

@@ -47,7 +47,6 @@ public class Login extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
@@ -73,12 +72,6 @@ public class Login extends javax.swing.JFrame {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/StarkLogo.jpg"))); // NOI18N
         jPanel1.add(jLabel1);
         jLabel1.setBounds(240, 70, 140, 70);
-
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Forget Password");
-        jPanel1.add(jLabel2);
-        jLabel2.setBounds(120, 470, 140, 22);
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
@@ -192,7 +185,7 @@ public class Login extends javax.swing.JFrame {
         {
             if(u.getUserName().equalsIgnoreCase(username) && u.getPassword().equals(pass))
             {
-                MainScreen main = new MainScreen(FoodCourt,u);
+                MainScreen main = new MainScreen(FoodCourt,u,this);
                 main.setVisible(rootPaneCheckingEnabled);
                 this.setVisible(false);
                 return;
@@ -256,7 +249,6 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JPasswordField Password;
     private javax.swing.JTextField UserName;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

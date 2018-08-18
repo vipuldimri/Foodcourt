@@ -28,7 +28,7 @@ public class FoodCourt {
         
         for(int i=1 ;i<=100 ;i++)
         {
-            Thread.sleep(45);
+            Thread.sleep(75);
             splash.jLabel2.setText("Loading "+i+" %");
             splash.jProgressBar1.setValue(i);
             if(i == 100)

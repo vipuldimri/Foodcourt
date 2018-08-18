@@ -69,7 +69,7 @@ public class TodayCollection extends javax.swing.JDialog {
         jTextField1.setEditable(false);
         jTextField1.setBackground(new java.awt.Color(255, 255, 255));
         jTextField1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jTextField1.setEnabled(false);
+        jTextField1.setSelectionColor(new java.awt.Color(0, 0, 0));
 
         jLabel2.setText("Start Date:");
 

@@ -5,8 +5,22 @@
  */
 package GUI;
 
+import foodcourt.FoodCourt;
+import foodcourt.FoodCourtModel;
+import foodcourt.SendEmailThread;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.net.PasswordAuthentication;
+import java.util.Properties;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import javax.swing.ImageIcon;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
+import javax.swing.SwingWorker;
 
 /**
  *
@@ -17,10 +31,14 @@ public class Email extends javax.swing.JDialog {
     /**
      * Creates new form Email
      */
-    public Email(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
-        initComponents();
-                   Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+    FoodCourtModel foodcourt;
+    
+    public Email(java.awt.Frame parent, boolean modal,FoodCourtModel foodcourt) {
+    super(parent, modal);
+    initComponents();
+    this.foodcourt = foodcourt;
+    To.setText(foodcourt.getEmail());
+    Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
     int x = (int) ((dimension.getWidth() - getWidth()) / 2);
     int y = (int) ((dimension.getHeight() - getHeight()) / 2);
     setLocation(x, y);
@@ -37,17 +55,14 @@ public class Email extends javax.swing.JDialog {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
-        jCheckBox1 = new javax.swing.JCheckBox();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        To = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        Comment = new javax.swing.JTextArea();
         jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -55,48 +70,53 @@ public class Email extends javax.swing.JDialog {
         jPanel1.setMinimumSize(new java.awt.Dimension(495, 437));
         jPanel1.setLayout(null);
 
-        jLabel1.setText("TO");
-        jPanel1.add(jLabel1);
-        jLabel1.setBounds(135, 128, 14, 14);
-
-        jLabel2.setText("Default");
-        jPanel1.add(jLabel2);
-        jLabel2.setBounds(130, 60, 35, 14);
-
+        jButton1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jButton1.setText("Send");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButton1);
-        jButton1.setBounds(140, 340, 57, 23);
+        jButton1.setBounds(151, 370, 130, 50);
 
-        jLabel3.setText("Comments");
-        jPanel1.add(jLabel3);
-        jLabel3.setBounds(130, 210, 80, 14);
-
+        jButton2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jButton2.setText("Reset");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButton2);
-        jButton2.setBounds(260, 340, 61, 23);
+        jButton2.setBounds(333, 370, 110, 50);
 
-        jCheckBox1.setText("Use Custom");
-        jPanel1.add(jCheckBox1);
-        jCheckBox1.setBounds(130, 180, 110, 23);
+        To.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        To.setEnabled(false);
+        jPanel1.add(To);
+        To.setBounds(40, 100, 540, 40);
 
-        jTextField1.setText("jTextField1");
-        jPanel1.add(jTextField1);
-        jTextField1.setBounds(130, 90, 240, 20);
-
-        jTextField2.setText("jTextField2");
-        jPanel1.add(jTextField2);
-        jTextField2.setBounds(130, 150, 240, 20);
-
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        Comment.setColumns(20);
+        Comment.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        Comment.setRows(5);
+        jScrollPane1.setViewportView(Comment);
 
         jPanel1.add(jScrollPane1);
-        jScrollPane1.setBounds(130, 230, 240, 70);
+        jScrollPane1.setBounds(40, 210, 540, 100);
 
-        jLabel4.setText("E-mail trasaction");
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel4.setText("Comment");
         jPanel1.add(jLabel4);
-        jLabel4.setBounds(210, 20, 110, 14);
+        jLabel4.setBounds(40, 170, 190, 30);
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel5.setText("E-mail trasaction");
+        jPanel1.add(jLabel5);
+        jLabel5.setBounds(210, 20, 190, 30);
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel6.setText("To");
+        jPanel1.add(jLabel6);
+        jLabel6.setBounds(40, 60, 190, 30);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -111,6 +131,22 @@ public class Email extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        Comment.setText("");
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        if(foodcourt.getEmail().length() == 0)
+        {
+            return;
+        }
+        SendEmailThread sendthread = new SendEmailThread(foodcourt,Comment.getText().trim());
+        sendthread.run();
+        System.out.println("done");
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -142,30 +178,20 @@ public class Email extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                Email dialog = new Email(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
+               
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextArea Comment;
+    private javax.swing.JTextField To;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
 }
