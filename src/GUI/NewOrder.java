@@ -697,12 +697,12 @@ public class NewOrder extends javax.swing.JFrame {
         System.out.println(printerService.getPrinters());
 
         //print some stuff. Change the printer name to your thermal printer name.
-        printerService.printString("EPSON-TM-T88", "\n\n testing testing 1 2 3eeeee \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+        printerService.printString("EPSON-TM-T88IV", "\n\n testing testing 1 2 3eeeee \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 
         // cut that paper!
         byte[] cutP = new byte[] { 0x1d, 'V', 1 };
 
-        printerService.printBytes("EPSON-TM-T88", cutP);
+        printerService.printBytes("EPSON-TM-T88IV", cutP);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
