@@ -24,6 +24,7 @@ import foodcourt.FoodCourtModel;
 import foodcourt.Menu_Items;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Graphics2D;
 import java.awt.List;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -505,48 +506,9 @@ public class NewOrder extends javax.swing.JFrame {
             doc.add(new Paragraph("Powered by",FontFactory.getFont(FontFactory.HELVETICA,9,Font.BOLD,BaseColor.BLACK)));
             doc.add(new Paragraph("Stark Technologies",FontFactory.getFont(FontFactory.HELVETICA,9,Font.BOLD,BaseColor.BLACK)));
             
-           // doc.close();
-            //writer.close();
+            doc.close();
+            writer.close();
 
-     ////////////////////////////////
-            JOptionPane.showMessageDialog(this,
-            "Pdf generated now printing",
-            "Bill",
-             JOptionPane.INFORMATION_MESSAGE);
-
-            DocFlavor flavor = DocFlavor.BYTE_ARRAY.AUTOSENSE;
-            PrintRequestAttributeSet patts = new HashPrintRequestAttributeSet();
-            patts.add(Sides.DUPLEX);
-            PrintService[] ps = PrintServiceLookup.lookupPrintServices(flavor, patts);
-            if (ps.length == 0) {
-            throw new IllegalStateException("No Printer found");
-            }
-            System.out.println("Available printers: " + Arrays.asList(ps));
-
-            PrintService myService = null;
-            
-            for (PrintService printService : ps) 
-            {
-                      try
-                      {
-                             myService = printService;
-                             FileInputStream fis = new FileInputStream("C:/Foodcourt/text.pdf");
-                             Doc pdfDoc = new SimpleDoc(doc, DocFlavor.BYTE_ARRAY.AUTOSENSE, null);
-                            // Doc pdfDoc = new SimpleDoc(fis, DocFlavor.BYTE_ARRAY.AUTOSENSE, null);
-                             DocPrintJob printJob = myService.createPrintJob();
-                             printJob.print(pdfDoc, new HashPrintRequestAttributeSet());
-                             fis.close();   
-                             break;
-                      }catch(Exception e)
-                      {
-                                 JOptionPane.showMessageDialog(this,
-                                 "inside printer "+e.getMessage(),
-                                 "Inane error",
-                                 JOptionPane.ERROR_MESSAGE);
-                                 
-                      }
-            
-            }
         }catch(Exception ex)
         {
                      JOptionPane.showMessageDialog(this,
@@ -695,14 +657,36 @@ public class NewOrder extends javax.swing.JFrame {
         PrinterService printerService = new PrinterService();
 
         System.out.println(printerService.getPrinters());
+        Date d = new Date();
+        String demo = "Sno   ItemName   QTY   Price \n";
+        for(int i = 0 ; i < 5 ; i ++)
+        {
+             demo = ""+i +"   Name   Qty   price \n" + demo;
+        }
+        String s = "\n\n | Welcome | \n FoodCourtName \n "+d+" \n  Tiffins | Chatt | Juice \n\n ORDER DETAILS";
+        
+        s = s + demo;
+        s = s +  "\n\n Total -------------------- Rs:- 120.0";
+        s = s +   "\n\n CGST : 5% -----------------Rs:- 6.0";
+        s = s +   "\n\n SGST : 5% -----------------Rs:- 120.0";
+        s = s +  "\n\n Grand Total --------------- Rs:- 132.0";
+        s = s +  "\n\n*****************************************************\n\n";
+        s = s + "Thank you , enjoy your meal\n";
+        s = s + "Contact Us \n";
+        s = s +  "9718327876\n";
+        s = s +  "\n********************************************************\n";
+        s = s +  "\n Powered by \n Strack Technologies";
+
 
         //print some stuff. Change the printer name to your thermal printer name.
-        printerService.printString("EPSON-TM-T88IV", "\n\n testing testing 1 2 3eeeee \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-
+       printerService.printString("EPSON-TM-T88IV", 
+               s);
         // cut that paper!
-        byte[] cutP = new byte[] { 0x1d, 'V', 1 };
+        //byte[] cutP = new byte[] { 0x1d, 'V', 1 };
 
-        printerService.printBytes("EPSON-TM-T88IV", cutP);
+       // printerService.printBytes("EPSON-TM-T88IV", cutP);
+       
+      
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
