@@ -112,6 +112,7 @@ public class NewOrder extends javax.swing.JFrame {
         jButton8 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Order");
@@ -243,6 +244,13 @@ public class NewOrder extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setText("test");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -251,8 +259,10 @@ public class NewOrder extends javax.swing.JFrame {
                 .addGap(34, 34, 34)
                 .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(38, 38, 38)
                 .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(69, 69, 69)
+                .addGap(38, 38, 38)
                 .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(48, 48, 48))
         );
@@ -260,11 +270,13 @@ public class NewOrder extends javax.swing.JFrame {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton1)
+                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -493,16 +505,16 @@ public class NewOrder extends javax.swing.JFrame {
             doc.add(new Paragraph("Powered by",FontFactory.getFont(FontFactory.HELVETICA,9,Font.BOLD,BaseColor.BLACK)));
             doc.add(new Paragraph("Stark Technologies",FontFactory.getFont(FontFactory.HELVETICA,9,Font.BOLD,BaseColor.BLACK)));
             
-            doc.close();
-            writer.close();
+           // doc.close();
+            //writer.close();
 
-     
+     ////////////////////////////////
             JOptionPane.showMessageDialog(this,
             "Pdf generated now printing",
-              "Bill",
+            "Bill",
              JOptionPane.INFORMATION_MESSAGE);
 
-            DocFlavor flavor = DocFlavor.SERVICE_FORMATTED.PAGEABLE;
+            DocFlavor flavor = DocFlavor.BYTE_ARRAY.AUTOSENSE;
             PrintRequestAttributeSet patts = new HashPrintRequestAttributeSet();
             patts.add(Sides.DUPLEX);
             PrintService[] ps = PrintServiceLookup.lookupPrintServices(flavor, patts);
@@ -515,12 +527,12 @@ public class NewOrder extends javax.swing.JFrame {
             
             for (PrintService printService : ps) 
             {
-               
                       try
                       {
                              myService = printService;
                              FileInputStream fis = new FileInputStream("C:/Foodcourt/text.pdf");
-                             Doc pdfDoc = new SimpleDoc(fis, DocFlavor.INPUT_STREAM.AUTOSENSE, null);
+                             Doc pdfDoc = new SimpleDoc(doc, DocFlavor.BYTE_ARRAY.AUTOSENSE, null);
+                            // Doc pdfDoc = new SimpleDoc(fis, DocFlavor.BYTE_ARRAY.AUTOSENSE, null);
                              DocPrintJob printJob = myService.createPrintJob();
                              printJob.print(pdfDoc, new HashPrintRequestAttributeSet());
                              fis.close();   
@@ -528,9 +540,9 @@ public class NewOrder extends javax.swing.JFrame {
                       }catch(Exception e)
                       {
                                  JOptionPane.showMessageDialog(this,
-                                    "inside printer "+e.getMessage(),
-                                      "Inane error",
-                                     JOptionPane.ERROR_MESSAGE);
+                                 "inside printer "+e.getMessage(),
+                                 "Inane error",
+                                 JOptionPane.ERROR_MESSAGE);
                                  
                       }
             
@@ -678,6 +690,21 @@ public class NewOrder extends javax.swing.JFrame {
         setVisible(false);
     }//GEN-LAST:event_jButton8ActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        PrinterService printerService = new PrinterService();
+
+        System.out.println(printerService.getPrinters());
+
+        //print some stuff. Change the printer name to your thermal printer name.
+        printerService.printString("EPSON-TM-T88", "\n\n testing testing 1 2 3eeeee \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+
+        // cut that paper!
+        byte[] cutP = new byte[] { 0x1d, 'V', 1 };
+
+        printerService.printBytes("EPSON-TM-T88", cutP);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -716,6 +743,7 @@ public class NewOrder extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable BillingTable;
     private javax.swing.JTextField SeachItem;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;

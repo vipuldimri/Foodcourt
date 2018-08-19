@@ -9,13 +9,17 @@ import java.awt.CardLayout;
 import java.awt.CheckboxMenuItem;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.MenuItem;
 import java.awt.Toolkit;
 import java.util.ArrayList;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 
 public class MainScreen extends javax.swing.JFrame 
@@ -24,16 +28,17 @@ public class MainScreen extends javax.swing.JFrame
     FoodCourtModel foodcourt;
     Users CurrentUser;
     Login loginscreen;
+    JPanel container;
     public MainScreen(FoodCourtModel foodcourt ,   Users CurrentUser ,Login loginscreen) 
     {
         
         
         initComponents();
         setExtendedState(MainScreen.MAXIMIZED_BOTH); 
-          jPanel6.removeAll();
-          jPanel6.add(Reports);
-          jPanel6.repaint();
-          jPanel6.revalidate();
+        jPanel6.removeAll();
+        jPanel6.add(Reports);
+        jPanel6.repaint();
+        jPanel6.revalidate();
          
         Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
         int x = (int) ((dimension.getWidth() - getWidth()) / 2);
@@ -51,11 +56,22 @@ public class MainScreen extends javax.swing.JFrame
              
         }catch(Exception ex)
         {
-            System.out.println("Unable to get categories from database "+ex);
-            
+            System.out.println("Unable to get categories from database "+ex);        
         }
-  
-        
+     
+        //container = new ScroolPanelCustom();
+        //container.setLayout(new FlowLayout(FlowLayout.CENTER));
+        //container.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
+          
+
+       // JScrollPane scroll = new JScrollPane(container);
+       // scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+       // scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+
+
+       // jPanel6.add(scroll);
+
+        //container.add(jPanel3);
         for (int i = 0; i < Categories.size(); i++) 
         {
              String name = Categories.get(i).getName();
@@ -79,9 +95,7 @@ public class MainScreen extends javax.swing.JFrame
              PP.setSize(200, 200);
              PP.setBackground(new java.awt.Color(255, 255, 255));
              javax.swing.GroupLayout PPLayout = new javax.swing.GroupLayout(PP);
-             PP.setLayout(PPLayout);
-             
-             
+             PP.setLayout(PPLayout);   
              PPLayout.setHorizontalGroup(
              PPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
               .addGroup(PPLayout.createSequentialGroup()
@@ -107,10 +121,12 @@ public class MainScreen extends javax.swing.JFrame
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
               );
              
-             
-             
+        
+             //container.add(PP);
+   
              Menu.add(PP);
-    
+             //jScrollPane1.add(new JButton("asdas"));
+             
         }
         
      
@@ -148,6 +164,7 @@ public class MainScreen extends javax.swing.JFrame
         jLabel34 = new javax.swing.JLabel();
         jButton9 = new javax.swing.JButton();
         jLabel35 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
         Menu = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         vbut = new javax.swing.JButton();
@@ -429,7 +446,13 @@ public class MainScreen extends javax.swing.JFrame
 
         jPanel6.add(Reports, "card2");
 
-        Menu.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 20, 20));
+        jScrollPane1.setToolTipText("");
+        jScrollPane1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jScrollPane1.setMaximumSize(new java.awt.Dimension(500, 500));
+        jScrollPane1.setOpaque(false);
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(500, 500));
+
+        Menu.setBackground(new java.awt.Color(204, 204, 204));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -467,7 +490,9 @@ public class MainScreen extends javax.swing.JFrame
 
         Menu.add(jPanel3);
 
-        jPanel6.add(Menu, "card4");
+        jScrollPane1.setViewportView(Menu);
+
+        jPanel6.add(jScrollPane1, "card4");
 
         jPanel1.add(jPanel6, java.awt.BorderLayout.CENTER);
 
@@ -543,7 +568,9 @@ public class MainScreen extends javax.swing.JFrame
     private void menusidepanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menusidepanelMouseClicked
         // TODO add your handling code here:Side bar Menu click event 
      jPanel6.removeAll();
-     jPanel6.add(Menu);
+     //jPanel6.add(Menu);
+     //jPanel6.add(container);
+     jPanel6.add(jScrollPane1);
      jPanel6.repaint();
      jPanel6.revalidate();
        
@@ -681,6 +708,7 @@ public class MainScreen extends javax.swing.JFrame
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel menusidepanel;
     private javax.swing.JButton vbut;
     // End of variables declaration//GEN-END:variables

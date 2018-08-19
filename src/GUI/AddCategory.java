@@ -242,7 +242,7 @@ public class AddCategory extends javax.swing.JDialog {
         
         for(Category c : categ)
         {
-            if(c.getName().equalsIgnoreCase(jTextField1.getText().trim()))
+            if(c.getName().trim().equalsIgnoreCase(jTextField1.getText().trim()))
             {
                     JOptionPane.showMessageDialog(jPanel1,
                      "Category already Exits",
@@ -250,12 +250,8 @@ public class AddCategory extends javax.swing.JDialog {
                       JOptionPane.ERROR_MESSAGE);
                       return ;
                 
-            }
-            
-            
-        }
-        
-        
+            }   
+        }   
         try
         {
            
