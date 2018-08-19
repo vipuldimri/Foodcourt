@@ -113,7 +113,6 @@ public class NewOrder extends javax.swing.JFrame {
         jButton8 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Order");
@@ -200,7 +199,7 @@ public class NewOrder extends javax.swing.JFrame {
                 .addComponent(jLabel7)
                 .addGap(18, 18, 18)
                 .addComponent(SeachItem, javax.swing.GroupLayout.PREFERRED_SIZE, 627, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(21, Short.MAX_VALUE))
             .addComponent(list1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jScrollPane1)
         );
@@ -245,13 +244,6 @@ public class NewOrder extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("test");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -259,11 +251,9 @@ public class NewOrder extends javax.swing.JFrame {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(34, 34, 34)
                 .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(38, 38, 38)
+                .addGap(78, 78, 78)
                 .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(38, 38, 38)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(48, 48, 48))
         );
@@ -271,13 +261,11 @@ public class NewOrder extends javax.swing.JFrame {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton1)
-                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -394,131 +382,46 @@ public class NewOrder extends javax.swing.JFrame {
             "Inane error",
             JOptionPane.ERROR_MESSAGE);
         }
-         // Adjusted size to EPSON printer 
-        Rectangle one = new Rectangle(227,842);
-        Document doc = new Document(one);
-        try{
-           PdfWriter writer = PdfWriter.getInstance(doc, new FileOutputStream("C:/Foodcourt/text.pdf"));
-           
-            doc.open();
-           // Print *Welcome* on the top     			
-           Paragraph paragraph = new Paragraph("| Welcome |");
-           // set font and size
-	   paragraph.setFont(FontFactory.getFont(FontFactory.HELVETICA, 10,Font.BOLD));
-           // set alignment to CENTER of the page
-	   paragraph.setAlignment(Element.ALIGN_CENTER); 
-           doc.add(paragraph);// End of *Welcome* 
-           
-	   doc.add(new Paragraph(foodcourt.getName(),FontFactory.getFont(FontFactory.HELVETICA,20,Font.BOLD,BaseColor.BLACK)));
-           // Adjust Date/Time string to one line
-	   doc.add(new Paragraph(new Date().toString()));
-           /*Paragraph date = new Paragraph(new Date().toString());
-           date.setFont(FontFactory.getFont(FontFactory.HELVETICA, 8));
-           doc.add(date);*/
-           doc.add(new Paragraph("Tiffins | Chaat | Juice",FontFactory.getFont(FontFactory.HELVETICA,10,BaseColor.BLACK)));
-           doc.add(new Paragraph("Order Details",FontFactory.getFont(FontFactory.HELVETICA,10,Font.BOLD,BaseColor.BLACK)));
-            
-            PdfPTable table = new PdfPTable(4);
-            table.setWidthPercentage(105);
-            table.setSpacingBefore(11f);
-            table.setSpacingAfter(11f);
-            
-            float[] colwidth = {1f,2.5f,1f,2f};
-            table.setWidths(colwidth);
-            // Adjusted Font Size
-            PdfPCell c1 = new PdfPCell(new Paragraph("Sno",FontFactory.getFont(FontFactory.HELVETICA,8)));   
-            PdfPCell c2 = new PdfPCell(new Paragraph("Item Name",FontFactory.getFont(FontFactory.HELVETICA,8)));
-            PdfPCell c44= new PdfPCell(new Paragraph("QTY",FontFactory.getFont(FontFactory.HELVETICA,8)));   
-            PdfPCell c3  = new PdfPCell(new Paragraph("Price",FontFactory.getFont(FontFactory.HELVETICA,8)));  
-            table.addCell(c1);
-            table.addCell(c2);
-            table.addCell(c44);
-            table.addCell(c3);
-            
-            for(int i = 0 ; i < rows ;  i ++)
-            {
-                        
-            c1 = new PdfPCell(new Paragraph(""+(i+1)));   
-           
-            c2 = new PdfPCell(new Paragraph(""+ model.getValueAt(i, 0)));
-            c44= new PdfPCell(new Paragraph(""+ model.getValueAt(i, 1)));
-            c3  = new PdfPCell(new Paragraph(""+ model.getValueAt(i, 2)));
-            //Total = Float.valueOf(""+ model.getValueAt(i, 2));
-			
-            table.addCell(c1);
-            table.addCell(c2);
-            table.addCell(c44);
-            table.addCell(c3);           
-            }
-            
-            doc.add(table);
-            
-            PdfPTable table2= new PdfPTable(2);
-            table2.setWidthPercentage(105);
-  
-            float[] colwidth2 = {1f,1f};
-            table2.setWidths(colwidth2);
-            
-            PdfPCell c4 = new PdfPCell(new Paragraph("Total  "));  
-            
-            c4.setBorder(PdfPCell.NO_BORDER);
-            PdfPCell c5 = new PdfPCell(new Paragraph("Rs :-   "+Total));   
-            c5.setBorder(PdfPCell.NO_BORDER);
-            // CGST Calculation   
-            PdfPCell c6 = new PdfPCell(new Paragraph("CGST : "+foodcourt.getCGST()+" %"));  
-            c6.setBorder(PdfPCell.NO_BORDER);
-            float cgstValue = Total;
-            cgstValue = (float)((cgstValue) * (foodcourt.getCGST()/100));
-            PdfPCell c7 = new PdfPCell(new Paragraph("Rs :-   "+cgstValue));   
-            c7.setBorder(PdfPCell.NO_BORDER);   
-            // SGST Calculation   
-            PdfPCell c8 = new PdfPCell(new Paragraph("SGST : "+foodcourt.getGGST()+" %"));  
-            c8.setBorder(PdfPCell.NO_BORDER);
-            float sgstValue = Total;
-            sgstValue = (float)((sgstValue) * (foodcourt.getGGST()/100));
-            PdfPCell c9 = new PdfPCell(new Paragraph("Rs :-   "+sgstValue));   
-            c9.setBorder(PdfPCell.NO_BORDER);
-            
-            // Grand Total Calculation       
-            PdfPCell c10 = new PdfPCell(new Paragraph("Grand Total "));  
-            c10.setBorder(PdfPCell.NO_BORDER);
-            PdfPCell c11 = new PdfPCell(new Paragraph("Rs :-   "+(Total+sgstValue+cgstValue)));   
-            c11.setBorder(PdfPCell.NO_BORDER);  
-            
-            
-            table2.addCell(c4);
-            table2.addCell(c5);
-            table2.addCell(c6);
-            table2.addCell(c7);
-            table2.addCell(c8);
-            table2.addCell(c9);
-            table2.addCell(c10);
-            table2.addCell(c11);
-                      
-            doc.add(table2);
-            
-            doc.add(new Paragraph("--------------------------------"));
-            doc.add(new Paragraph("Thank you , enjoy your meal."));
-            doc.add(new Paragraph("Contact us",FontFactory.getFont(FontFactory.HELVETICA,14,Font.BOLD,BaseColor.BLACK)));
-            doc.add(new Paragraph("Phone :+91-9000008749 "));
-                                   
-            doc.add(new Paragraph("---------------------------------"));
-            doc.add(new Paragraph("Powered by",FontFactory.getFont(FontFactory.HELVETICA,9,Font.BOLD,BaseColor.BLACK)));
-            doc.add(new Paragraph("Stark Technologies",FontFactory.getFont(FontFactory.HELVETICA,9,Font.BOLD,BaseColor.BLACK)));
-            
-            doc.close();
-            writer.close();
+   			
+   
 
-        }catch(Exception ex)
-        {
-                     JOptionPane.showMessageDialog(this,
-                     "exception "+ex.getMessage(),
-                     "Inane error",
-                      JOptionPane.ERROR_MESSAGE);
-                    
-         }
-            
-         
+
+
+     
+           PrinterService printerService = new PrinterService();
+
+           System.out.println(printerService.getPrinters());
+           Date d = new Date();
+           String demo = "";
+           for(int i = 0 ; i < rows ;  i ++)
+           {
+                        
+            demo = demo + ""+i +" "+model.getValueAt(i, 0)+" "+model.getValueAt(i, 1)+" "+model.getValueAt(i, 2)+" \n";
+          
+           }
+          
+
+           String s = "\n\n | Welcome | \n FoodCourtName \n "+d+" \n Tiffins | Chatt | Juice \n\n ORDER DETAILS \nSno ItemName QTY Price \n";
+
+           s = s + demo;
+           s = s + "\n Total Rs:- "+Total;
+           s = s + "\n*************************\n";
+           s = s + "Thank you , Visit again\n";
+           s = s + "Contact Us \n";
+           s = s + "9718327876\n";
+           s = s + "************************\n";
+           s = s + "Powered by Stark Technologies";
+           s += "\n";
+
+           //System.out.println(s);
+           //print some stuff. Change the printer name to your thermal printer name.
+           printerService.printString("EPSON TM-T88IV Receipt", 
+           s);
+           // cut that paper!
+           byte[] cutP = new byte[] { 0x1d, 'V', 1 };
+
+           printerService.printBytes("EPSON-TM-T88IV", cutP);
+
             DefaultTableModel dm = (DefaultTableModel) BillingTable.getModel();
             int rowCount = dm.getRowCount();
             //Remove rows one by one from the end of the table
@@ -652,43 +555,6 @@ public class NewOrder extends javax.swing.JFrame {
         setVisible(false);
     }//GEN-LAST:event_jButton8ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        PrinterService printerService = new PrinterService();
-
-        System.out.println(printerService.getPrinters());
-        Date d = new Date();
-        String demo = "";
-        for(int i = 1 ; i < 5 ; i ++)
-        {
-             demo = demo + ""+i +"     Name       Qty       price \n";
-        }
-        String s = "\n\n | Welcome | \n FoodCourtName \n "+d+" \n Tiffins | Chatt | Juice \n\n ORDER DETAILS \nSno   ItemName   QTY   Price \n";
-        
-        s = s + demo;
-        s = s + "\n\n Total -------------------- Rs:- 120.0";
-        s = s + "\n\n CGST : 5% -----------------Rs:- 6.0";
-        s = s + "\n\n SGST : 5% -----------------Rs:- 120.0";
-        s = s + "\n\n Grand Total --------------- Rs:- 132.0";
-        s = s + "\n\n*****************************************************\n\n";
-        s = s + "Thank you , enjoy your meal\n";
-        s = s + "Contact Us \n";
-        s = s +  "9718327876\n";
-        s = s +  "\n********************************************************\n";
-        s = s +  "\n Powered by \n Strack Technologies";
-
-        System.out.println(s);
-        //print some stuff. Change the printer name to your thermal printer name.
-       //printerService.printString("EPSON-TM-T88IV", 
-            //   s);
-        // cut that paper!
-        //byte[] cutP = new byte[] { 0x1d, 'V', 1 };
-
-       // printerService.printBytes("EPSON-TM-T88IV", cutP);
-       
-      
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -727,7 +593,6 @@ public class NewOrder extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable BillingTable;
     private javax.swing.JTextField SeachItem;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
