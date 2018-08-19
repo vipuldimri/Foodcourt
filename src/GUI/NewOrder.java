@@ -658,29 +658,29 @@ public class NewOrder extends javax.swing.JFrame {
 
         System.out.println(printerService.getPrinters());
         Date d = new Date();
-        String demo = "Sno   ItemName   QTY   Price \n";
-        for(int i = 0 ; i < 5 ; i ++)
+        String demo = "";
+        for(int i = 1 ; i < 5 ; i ++)
         {
-             demo = ""+i +"   Name   Qty   price \n" + demo;
+             demo = demo + ""+i +"     Name       Qty       price \n";
         }
-        String s = "\n\n | Welcome | \n FoodCourtName \n "+d+" \n  Tiffins | Chatt | Juice \n\n ORDER DETAILS";
+        String s = "\n\n | Welcome | \n FoodCourtName \n "+d+" \n Tiffins | Chatt | Juice \n\n ORDER DETAILS \nSno   ItemName   QTY   Price \n";
         
         s = s + demo;
-        s = s +  "\n\n Total -------------------- Rs:- 120.0";
-        s = s +   "\n\n CGST : 5% -----------------Rs:- 6.0";
-        s = s +   "\n\n SGST : 5% -----------------Rs:- 120.0";
-        s = s +  "\n\n Grand Total --------------- Rs:- 132.0";
-        s = s +  "\n\n*****************************************************\n\n";
+        s = s + "\n\n Total -------------------- Rs:- 120.0";
+        s = s + "\n\n CGST : 5% -----------------Rs:- 6.0";
+        s = s + "\n\n SGST : 5% -----------------Rs:- 120.0";
+        s = s + "\n\n Grand Total --------------- Rs:- 132.0";
+        s = s + "\n\n*****************************************************\n\n";
         s = s + "Thank you , enjoy your meal\n";
         s = s + "Contact Us \n";
         s = s +  "9718327876\n";
         s = s +  "\n********************************************************\n";
         s = s +  "\n Powered by \n Strack Technologies";
 
-
+        System.out.println(s);
         //print some stuff. Change the printer name to your thermal printer name.
-       printerService.printString("EPSON-TM-T88IV", 
-               s);
+       //printerService.printString("EPSON-TM-T88IV", 
+            //   s);
         // cut that paper!
         //byte[] cutP = new byte[] { 0x1d, 'V', 1 };
 
