@@ -393,15 +393,34 @@ public class NewOrder extends javax.swing.JFrame {
            System.out.println(printerService.getPrinters());
            Date d = new Date();
            String demo = "";
-           for(int i = 0 ; i < rows ;  i ++)
+         for(int i = 0 ; i < rows ; i ++)
+        {
+            String Name = model.getValueAt(i, 0).toString();
+           
+       
+           String ans = "";
+           boolean first = true;
+           if(Name.length() > 15)
            {
-                        
-            demo = demo + ""+i +" "+model.getValueAt(i, 0)+" "+model.getValueAt(i, 1)+" "+model.getValueAt(i, 2)+" \n";
-          
-           }
-          
+                  String fff[] = Name.split(" ");
+                  demo = demo + "|"+ (i+1) +"|  "+model.getValueAt(i, 0).toString().substring(0,14)+"- | "+model.getValueAt(i, 1)+"   | "+model.getValueAt(i, 2)+"\n";
+                  demo = demo + "     "+model.getValueAt(i, 0).toString().substring(15)+"\n";
+           }else {
+                int ll = Name.length();
+                int spaces = 15-ll;
+                String spa ="";
+                for(int o=0;o<spaces;o++){
+                    spa = spa+ " ";
+                }
+                demo = demo + "|"+ (i+1) +"|  "+model.getValueAt(i, 0)+spa+" | "+model.getValueAt(i, 1)+"   | "+model.getValueAt(i, 2)+"\n";
 
-           String s = "\n\n | Welcome | \n FoodCourtName \n "+d+" \n Tiffins | Chatt | Juice \n\n ORDER DETAILS \nSno ItemName QTY Price \n";
+           }
+            
+        }
+
+        String s = " | Welcome | \n FoodCourtName \n "+d+" \n Tiffins | Chatt | Juice \n\n ORDER DETAILS \nSno | ItemName       | QTY | Price \n";
+
+ 
 
            s = s + demo;
            s = s + "\n Total Rs:- "+Total;
@@ -415,7 +434,7 @@ public class NewOrder extends javax.swing.JFrame {
 
            //System.out.println(s);
            //print some stuff. Change the printer name to your thermal printer name.
-           printerService.printString("EPSON TM-T88IV Receipt", 
+          printerService.printString("EPSON TM-T88IV Receipt", 
            s);
            // cut that paper!
            byte[] cutP = new byte[] { 0x1d, 'V', 1 };
