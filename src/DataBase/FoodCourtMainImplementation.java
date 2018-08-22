@@ -68,7 +68,7 @@ public class FoodCourtMainImplementation implements FoodCourtMainInterface
     @Override
     public void updatecollection(String Foodcourtname, Float price) throws Exception {
         
-       String data ="select  Collect from  Demo_collection where  date = curdate()"; 
+       String data ="select  Collect from  "+Foodcourtname+"_collection where  date = curdate()"; 
        float old =0;
        boolean newday = true;
          Statement stmt=conn.createStatement();  
@@ -83,14 +83,14 @@ public class FoodCourtMainImplementation implements FoodCourtMainInterface
         if(newday)
         {
                    old = old + price;
-                   String query = "insert into Demo_collection(Collect,date) values ('"+price+"',curdate())";
+                   String query = "insert into "+Foodcourtname+"_collection(Collect,date) values ('"+price+"',curdate())";
                    PreparedStatement psmnt = null;
                    psmnt = conn.prepareStatement(query);
                    psmnt.executeUpdate();
         
         }else {
                              old = old + price;
-        String query = "update  Demo_collection set  Collect = '"+old+"' where date = curdate()";
+        String query = "update  "+Foodcourtname+"_collection set  Collect = '"+old+"' where date = curdate()";
        PreparedStatement psmnt = null;
         psmnt = conn.prepareStatement(query);
         psmnt.executeUpdate();

@@ -262,7 +262,7 @@ public class AddCategory extends javax.swing.JDialog {
         catch(Exception ex)
         {
                     JOptionPane.showMessageDialog(jPanel1,
-                     "Unable to add category , check internet connection",
+                     "Unable to add category , check internet connection "+ex,
                      "Inane error",
                       JOptionPane.ERROR_MESSAGE);
                       return ;

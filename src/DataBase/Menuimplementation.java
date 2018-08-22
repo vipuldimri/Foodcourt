@@ -26,7 +26,7 @@ public class Menuimplementation implements MenuInterface
     public ArrayList<Category> GetCategory(String FoodCourtName) throws Exception 
     {
        ArrayList<Category> categories = new ArrayList<>();
-       final String Query = "select * from Demo_Category;";
+       final String Query = "select * from "+FoodCourtName+"_Category;";
        
         Statement stmt=conn.createStatement();  
         ResultSet rs = stmt.executeQuery(Query);
@@ -54,10 +54,10 @@ public class Menuimplementation implements MenuInterface
     @Override
     public Boolean AddCategory(String FoodCourtID,String Name , File data) throws Exception
     {
-           System.out.println("Idhar a ");
+  
             PreparedStatement psmnt = null;
         
-            psmnt = conn.prepareStatement(" insert into Demo_Category(Name,Image) values (?,?);");
+            psmnt = conn.prepareStatement(" insert into "+FoodCourtID+"_Category (Name,Image) values (?,?);");
                 
             psmnt.setString(1, Name.trim());
             
@@ -81,7 +81,7 @@ public class Menuimplementation implements MenuInterface
         
            System.out.println(Category + " " + Name + " "+Price );
             PreparedStatement psmnt = null;
-            psmnt = conn.prepareStatement(" insert into Demo_Items(Name,price,Category) values (?,?,?);");
+            psmnt = conn.prepareStatement(" insert into "+FoodCourtID+"_Items(Name,price,Category) values (?,?,?);");
             psmnt.setString(1, Name.trim());
             psmnt.setString(2, Price.trim());
             psmnt.setString(3, Category.trim()); 
@@ -94,7 +94,7 @@ public class Menuimplementation implements MenuInterface
     {
         
         ArrayList<Menu_Items> Items = new ArrayList<>();
-        final String Query = "select * from Demo_Items ";
+        final String Query = "select * from "+FoodCourtName+"_Items ";
         Statement stmt=conn.createStatement();  
         ResultSet rs = stmt.executeQuery(Query);
         while(rs.next())  
@@ -119,7 +119,7 @@ public class Menuimplementation implements MenuInterface
     public ArrayList<Menu_Items> GetCatItems(String FoodCourtName,String cat) throws Exception {
        
         ArrayList<Menu_Items> Items = new ArrayList<>();
-        final String Query = "select * from Demo_Items where Category = '"+cat+"';";
+        final String Query = "select * from "+FoodCourtName+"_Items where Category = '"+cat+"';";
         System.out.println(Query);
         Statement stmt=conn.createStatement();  
         ResultSet rs = stmt.executeQuery(Query);
@@ -144,7 +144,7 @@ public class Menuimplementation implements MenuInterface
               
             System.out.println(Category + " " + Name + " "+Price );
             PreparedStatement psmnt = null;
-            psmnt = conn.prepareStatement(" update Demo_Items set Price = "+Price+" where  Category = '"+Category+"' and Name = '"+Name+"'");
+            psmnt = conn.prepareStatement(" update "+FoodCourtID+"_Items set Price = "+Price+" where  Category = '"+Category+"' and Name = '"+Name+"'");
             psmnt.executeUpdate();
             return true;    
     }
@@ -152,9 +152,9 @@ public class Menuimplementation implements MenuInterface
     @Override
     public Boolean DeleteItem(String FoodCourtID, String Name, String Price, String Category) throws Exception {
         
-            System.out.println("delete  Demo_Items where  Name = '"+Name+"' and Category='"+Category+"'" );
+            System.out.println("delete  "+FoodCourtID+"_Items where  Name = '"+Name+"' and Category='"+Category+"'" );
             PreparedStatement psmnt = null;
-            psmnt = conn.prepareStatement("delete from Demo_Items where  Name = '"+Name+"' and Category='"+Category+"'");
+            psmnt = conn.prepareStatement("delete from "+FoodCourtID+"_Items where  Name = '"+Name+"' and Category='"+Category+"'");
             psmnt.executeUpdate();
             return true;    
     }
@@ -162,14 +162,14 @@ public class Menuimplementation implements MenuInterface
     @Override
     public Boolean DeleteCategory(String FoodCourtID,String CategoryID,String CategoryName) throws Exception {
         
-            System.out.println("delete  Demo_Category where  ID = '"+CategoryID);
+            System.out.println("delete  "+FoodCourtID+"_Category where  ID = '"+CategoryID);
             PreparedStatement psmnt = null;
-            psmnt = conn.prepareStatement("delete from  Demo_Category  where ID = "+CategoryID);
+            psmnt = conn.prepareStatement("delete from  "+FoodCourtID+"_Category  where ID = "+CategoryID);
             psmnt.executeUpdate();
             
             
             psmnt = null;
-            psmnt = conn.prepareStatement("delete from Demo_Items where  Category='"+CategoryName+"'");
+            psmnt = conn.prepareStatement("delete from "+FoodCourtID+"_Items where  Category='"+CategoryName+"'");
             psmnt.executeUpdate();
             return true;
     }

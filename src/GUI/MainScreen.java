@@ -4,22 +4,13 @@ import DataBase.MenuInterface;
 import foodcourt.Category;
 import foodcourt.FoodCourtModel;
 import foodcourt.Users;
-import java.awt.BorderLayout;
-import java.awt.CardLayout;
-import java.awt.CheckboxMenuItem;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.MenuItem;
 import java.awt.Toolkit;
 import java.util.ArrayList;
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 
 
 public class MainScreen extends javax.swing.JFrame 

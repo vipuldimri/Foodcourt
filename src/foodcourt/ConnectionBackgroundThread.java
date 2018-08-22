@@ -29,10 +29,10 @@ public class ConnectionBackgroundThread extends Thread
             
         } catch (Exception ex) 
         {
-            System.out.println("Error Unable to connect to server : "+ex);
+            System.out.println("Error Unable to connect to server "+ex);
             System.exit(0);
         }
-        
+        System.out.println(Id +" and "+Name);
         try
         {
             FoodCourtMainInterface Dao = FoodCourtFactory.GetInstance();
@@ -40,7 +40,7 @@ public class ConnectionBackgroundThread extends Thread
             users = Dao.GetUsers(Name);        
         }catch(Exception e)
         {
-            System.out.println("Error getting data");
+            System.out.println("Error getting data :: "+e);
         }
     
     
