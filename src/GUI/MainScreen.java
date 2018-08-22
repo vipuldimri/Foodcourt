@@ -52,26 +52,13 @@ public class MainScreen extends javax.swing.JFrame
         MenuInterface Dao   = MenuFactory.GetInstance();
         try
         {
-            Categories =   Dao.GetCategory("Demo");
+            Categories =   Dao.GetCategory(foodcourt.getName());
              
         }catch(Exception ex)
         {
             System.out.println("Unable to get categories from database "+ex);        
         }
      
-        //container = new ScroolPanelCustom();
-        //container.setLayout(new FlowLayout(FlowLayout.CENTER));
-        //container.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
-          
-
-       // JScrollPane scroll = new JScrollPane(container);
-       // scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-       // scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-
-
-       // jPanel6.add(scroll);
-
-        //container.add(jPanel3);
         for (int i = 0; i < Categories.size(); i++) 
         {
              String name = Categories.get(i).getName();
@@ -80,12 +67,11 @@ public class MainScreen extends javax.swing.JFrame
             
              Button.addActionListener((ae) ->
              {    
-             MenuItems menuItems = new MenuItems(this, rootPaneCheckingEnabled,"Demo",Button.getText());
+             MenuItems menuItems = new MenuItems(this, rootPaneCheckingEnabled,foodcourt.getName(),Button.getText());
              menuItems.setVisible(rootPaneCheckingEnabled);
                 
              }); 
              Button.setText(name);
-             //ImageIcon icon = new ImageIcon(Categories.get(i).getImage());
              JLabel  Labe = new javax.swing.JLabel();
              Labe.setIcon(new javax.swing.ImageIcon("C://Foodcourt/Images/"+Categories.get(i).getID()+".jpg")); // NOI18N
              JPanel PP  = new javax.swing.JPanel(); 
@@ -122,10 +108,10 @@ public class MainScreen extends javax.swing.JFrame
               );
              
         
-             //container.add(PP);
+
    
              Menu.add(PP);
-             //jScrollPane1.add(new JButton("asdas"));
+
              
         }
         
@@ -619,7 +605,7 @@ public class MainScreen extends javax.swing.JFrame
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         // TODO add your handling code here:
-        TodayCollection todaycollection = new  TodayCollection(this, rootPaneCheckingEnabled);
+        TodayCollection todaycollection = new  TodayCollection(this, rootPaneCheckingEnabled,foodcourt);
         todaycollection.setVisible(rootPaneCheckingEnabled);
     }//GEN-LAST:event_jButton8ActionPerformed
 

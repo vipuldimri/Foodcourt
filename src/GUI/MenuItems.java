@@ -239,7 +239,7 @@ public class MenuItems extends javax.swing.JDialog
         try
         {
             System.out.println("Adding item");
-            Dao.AddItem("Demo", itemname.getText().trim(), itemprice .getText().trim(), cateName);
+            Dao.AddItem(FoodCourtName, itemname.getText().trim(), itemprice .getText().trim(), cateName);
         } catch (Exception ex) 
         {
             System.out.println("Failed"+ex);
@@ -312,7 +312,7 @@ public class MenuItems extends javax.swing.JDialog
                                try
                                {
                                    System.out.println("updating item");
-                                   Dao.UpdateItem("Demo", itemname.getText().trim(), itemprice .getText().trim(), cateName);
+                                   Dao.UpdateItem(FoodCourtName, itemname.getText().trim(), itemprice .getText().trim(), cateName);
                                    item.setPrice(itemprice.getText().trim());
                                    FillingTable();
                                    itemname.setText("");
@@ -373,7 +373,7 @@ public class MenuItems extends javax.swing.JDialog
                                try
                                {
                                    System.out.println("deleting item");
-                                   Dao.DeleteItem("Demo", itemname.getText().trim(), itemprice .getText().trim(), cateName);
+                                   Dao.DeleteItem(FoodCourtName, itemname.getText().trim(), itemprice .getText().trim(), cateName);
                                    position = i;
                                    deletesuccess = true;
                                 

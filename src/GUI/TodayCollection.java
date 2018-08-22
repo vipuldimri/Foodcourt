@@ -7,6 +7,7 @@ package GUI;
 
 import DataBase.FoodCourtFactory;
 import DataBase.FoodCourtMainInterface;
+import foodcourt.FoodCourtModel;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.util.HashMap;
@@ -22,17 +23,19 @@ public class TodayCollection extends javax.swing.JDialog {
      * Creates new form TodayCollection
      */
     String Collection ="";
-    public TodayCollection(java.awt.Frame parent, boolean modal) {
+        FoodCourtModel foodcourt;
+    public TodayCollection(java.awt.Frame parent, boolean modal,FoodCourtModel foodcourt) {
         super(parent, modal);
         initComponents();
             Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
     int x = (int) ((dimension.getWidth() - getWidth()) / 2);
     int y = (int) ((dimension.getHeight() - getHeight()) / 2);
     setLocation(x, y);
+    this.foodcourt = foodcourt;
         try
         {
             FoodCourtMainInterface dao = FoodCourtFactory.GetInstance();
-            this.Collection = dao.GettodayCollection(1);
+            this.Collection = dao.GettodayCollection(this.foodcourt.getName());
             jTextField1.setText(this.Collection);
         }catch(Exception e)
         {
@@ -151,7 +154,7 @@ public class TodayCollection extends javax.swing.JDialog {
      try
         {
             FoodCourtMainInterface dao = FoodCourtFactory.GetInstance();
-            this.Collection = dao.GetPerticulardateCollection(1,date,date2);
+            this.Collection = dao.GetPerticulardateCollection(foodcourt.getName(),date,date2);
             jTextField1.setText(this.Collection);
         }catch(Exception e)
         {
@@ -192,14 +195,7 @@ public class TodayCollection extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                TodayCollection dialog = new TodayCollection(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
+
             }
         });
     }

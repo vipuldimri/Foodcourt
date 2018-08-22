@@ -36,9 +36,8 @@ public class ConnectionBackgroundThread extends Thread
         try
         {
             FoodCourtMainInterface Dao = FoodCourtFactory.GetInstance();
-            FoodCourt = Dao.GetFoodCourtDetails(1);
-            users = Dao.GetUsers(Name);
-            
+            FoodCourt = Dao.GetFoodCourtDetails(Id);
+            users = Dao.GetUsers(Name);        
         }catch(Exception e)
         {
             System.out.println("Error getting data");

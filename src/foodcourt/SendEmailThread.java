@@ -53,14 +53,14 @@ public class SendEmailThread extends Thread
           try 
           {    
            MimeMessage message = new MimeMessage(session);    
-           message.addRecipient(Message.RecipientType.TO,new InternetAddress("dimrivipul.vd@gmail.com"));    
+           message.addRecipient(Message.RecipientType.TO,new InternetAddress(foodcourt.getEmail()));    
           
            message.setSubject(sub);
         String collection = "Error Getting it , Contect Developers";
         try
         {
             FoodCourtMainInterface dao = FoodCourtFactory.GetInstance();
-            collection = dao.GettodayCollection(1);
+            collection = dao.GettodayCollection(foodcourt.getName());
 
         }catch(Exception e)
         {

@@ -256,7 +256,7 @@ public class AddCategory extends javax.swing.JDialog {
         {
            
                 MenuInterface Dao   =  MenuFactory.GetInstance();
-                Dao.AddCategory("Demo",jTextField1.getText().trim(),image);  
+                Dao.AddCategory(foodcourt.getName(),jTextField1.getText().trim(),image);  
                       
         }
         catch(Exception ex)

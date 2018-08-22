@@ -41,6 +41,7 @@ public class FoodCourt {
                 if(connectionBackgroundThread.users == null)
                 {
                     System.out.println("Users is null");
+                    System.exit(0);
                     return;
                 }
                 new Login(connectionBackgroundThread.FoodCourt , connectionBackgroundThread.users).setVisible(true);

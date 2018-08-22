@@ -10,52 +10,22 @@ import DataBase.FoodCourtMainInterface;
 import DataBase.MenuFactory;
 import DataBase.MenuInterface;
 import DataStructures.Trie;
-import com.itextpdf.text.BaseColor;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.Element;
-import com.itextpdf.text.FontFactory;
-import com.itextpdf.text.Image;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.Rectangle;
-import com.itextpdf.text.pdf.PdfPCell;
-import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.pdf.PdfWriter;
 import foodcourt.FoodCourtModel;
 import foodcourt.Menu_Items;
 import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Graphics2D;
-import java.awt.List;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.print.PrinterJob;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.PrintStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.HashMap;
-import javax.print.Doc;
-import javax.print.DocFlavor;
-import javax.print.DocPrintJob;
 import javax.print.PrintService;
 import javax.print.PrintServiceLookup;
-import javax.print.SimpleDoc;
-import javax.print.attribute.HashPrintRequestAttributeSet;
-import javax.print.attribute.PrintRequestAttributeSet;
-import javax.print.attribute.standard.Sides;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.printing.PDFPageable;
 
 
 /**
@@ -374,7 +344,7 @@ public class NewOrder extends javax.swing.JFrame {
         try
         {
             FoodCourtMainInterface dao = FoodCourtFactory.GetInstance();
-            dao.updatecollection(1, Total);
+            dao.updatecollection(foodcourt.getName(), Total);
         }catch(Exception e)
         {
             JOptionPane.showMessageDialog(this,
@@ -417,29 +387,39 @@ public class NewOrder extends javax.swing.JFrame {
            }
             
         }
-
-        String s = " | Welcome | \n FoodCourtName \n "+d+" \n Tiffins | Chatt | Juice \n\n ORDER DETAILS \nSno | ItemName       | QTY | Price \n";
-
- 
+      //Header Text 
+        String s = "                  | Welcome | \n                  Swaad Sadan \n "+
+                "         "+d+"\n           Tiffins | Chatt | Juice \n\nORDER "+
+                "DETAILS \n-------------\nSno | ItemName       | QTY | Price \n"+
+                "----------------------------------\n";
 
            s = s + demo;
            s = s + "\n Total Rs:- "+Total;
-           s = s + "\n*************************\n";
+           s = s + "\n\n-----------------------\n";
            s = s + "Thank you , Visit again\n";
            s = s + "Contact Us \n";
            s = s + "9718327876\n";
-           s = s + "************************\n";
+           s = s + "-----------------------\n";
            s = s + "Powered by Stark Technologies";
-           s += "\n";
+           s += "\n\n\n\n\n\n\n\n";
 
-           //System.out.println(s);
+           try
+           {
            //print some stuff. Change the printer name to your thermal printer name.
-          printerService.printString("EPSON TM-T88IV Receipt", 
-           s);
-           // cut that paper!
-           byte[] cutP = new byte[] { 0x1d, 'V', 1 };
+            printerService.printString("EPSON TM-T88IV Receipt", 
+             s);
+             // cut that paper!
+             byte[] cutP = new byte[] { 0x1d, 'V', 1 };
 
-           printerService.printBytes("EPSON-TM-T88IV", cutP);
+             printerService.printBytes("EPSON TM-T88IV Receipt", cutP);
+           }
+           catch(Exception e)
+           {
+               JOptionPane.showMessageDialog(this,
+            "Printer error",
+            "Error",
+            JOptionPane.ERROR_MESSAGE);                 
+           }
 
             DefaultTableModel dm = (DefaultTableModel) BillingTable.getModel();
             int rowCount = dm.getRowCount();
@@ -631,7 +611,7 @@ public class NewOrder extends javax.swing.JFrame {
         MenuInterface Dao = MenuFactory.GetInstance();
         try
         {
-            this.items = Dao.GetItems("Demo",trie);
+            this.items = Dao.GetItems(foodcourt.getName(),trie);
         }
         catch (Exception ex) 
         {

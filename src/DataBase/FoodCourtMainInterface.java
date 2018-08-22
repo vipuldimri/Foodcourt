@@ -18,13 +18,13 @@ public interface FoodCourtMainInterface {
     
     public ArrayList<Users> GetUsers(String Name)throws Exception;
     
-    public FoodCourtModel GetFoodCourtDetails(int ID)throws Exception;
+    public FoodCourtModel GetFoodCourtDetails(String ID)throws Exception;
     
     public void updateinfo(int id,FoodCourtModel foodcourt)throws Exception;
     
-    public void updatecollection(int id,Float price) throws Exception;
+    public void updatecollection(String Foodcourtname,Float price) throws Exception;
     
-    public String GettodayCollection(int id) throws Exception;
+    public String GettodayCollection(String Foodcourtname) throws Exception;
     
-    public String GetPerticulardateCollection(int id,Date start, Date end) throws Exception;
+    public String GetPerticulardateCollection(String Foodcourtname,Date start, Date end) throws Exception;
 }

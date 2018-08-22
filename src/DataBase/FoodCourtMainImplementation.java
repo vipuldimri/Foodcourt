@@ -42,7 +42,7 @@ public class FoodCourtMainImplementation implements FoodCourtMainInterface
     }
 
     @Override
-    public FoodCourtModel GetFoodCourtDetails(int ID) throws Exception {
+    public FoodCourtModel GetFoodCourtDetails(String ID) throws Exception {
      // FoodCourtModel f = new FoodCourtModel(ID, Name, Contact, Address, Owner, ID, ID, SubEnd, Email)
         String query = "select * from FoodCourts where ID = "+ID+"";
         
@@ -66,7 +66,7 @@ public class FoodCourtMainImplementation implements FoodCourtMainInterface
     }
 
     @Override
-    public void updatecollection(int id, Float price) throws Exception {
+    public void updatecollection(String Foodcourtname, Float price) throws Exception {
         
        String data ="select  Collect from  Demo_collection where  date = curdate()"; 
        float old =0;
@@ -99,8 +99,8 @@ public class FoodCourtMainImplementation implements FoodCourtMainInterface
     }
 
     @Override
-    public String GettodayCollection(int id) throws Exception {
-       String data ="select  Collect from  Demo_collection where  date = curdate()"; 
+    public String GettodayCollection(String Foodcourtname) throws Exception {
+       String data ="select  Collect from  "+Foodcourtname+"_collection where  date = curdate()"; 
        float old =0;
        boolean newday = true;
        Statement stmt=conn.createStatement();  
@@ -119,13 +119,13 @@ public class FoodCourtMainImplementation implements FoodCourtMainInterface
     }
 
     @Override
-    public String GetPerticulardateCollection(int id, Date start, Date end) throws Exception 
+    public String GetPerticulardateCollection(String Foodcourtname, Date start, Date end) throws Exception 
     {
          java.sql.Date sdate = new java.sql.Date(start.getTime());
         java.sql.Date edate = new java.sql.Date(end.getTime());
         
         
-        String Query="select  Collect from  Demo_collection  WHERE Date >= '"+sdate+"' AND Date <= '"+edate+"';";    
+        String Query="select  Collect from  "+Foodcourtname+"_collection  WHERE Date >= '"+sdate+"' AND Date <= '"+edate+"';";    
          float old =0;
        boolean newday = true;
        Statement stmt=conn.createStatement();  
