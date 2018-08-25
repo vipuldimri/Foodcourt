@@ -103,20 +103,21 @@ public class Email extends javax.swing.JDialog {
         jPanel1.add(jScrollPane1);
         jScrollPane1.setBounds(40, 210, 540, 100);
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel4.setText("Comment");
+        jLabel4.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jLabel4.setText("Comment:");
         jPanel1.add(jLabel4);
-        jLabel4.setBounds(40, 170, 190, 30);
+        jLabel4.setBounds(40, 170, 100, 30);
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jLabel5.setText("E-mail trasaction");
         jPanel1.add(jLabel5);
         jLabel5.setBounds(210, 20, 190, 30);
 
-        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel6.setText("To");
+        jLabel6.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jLabel6.setText("To:");
         jPanel1.add(jLabel6);
-        jLabel6.setBounds(40, 60, 190, 30);
+        jLabel6.setBounds(40, 60, 40, 30);
+        jLabel6.getAccessibleContext().setAccessibleName("To:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

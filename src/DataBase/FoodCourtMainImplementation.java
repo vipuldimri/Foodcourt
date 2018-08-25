@@ -132,7 +132,7 @@ public class FoodCourtMainImplementation implements FoodCourtMainInterface
        ResultSet rs = stmt.executeQuery(Query);
        while(rs.next())  
                    {
-                       old = Float.parseFloat(rs.getString(1));
+                       old = old+  Float.parseFloat(rs.getString(1));
                        newday = false;
                     
                    }

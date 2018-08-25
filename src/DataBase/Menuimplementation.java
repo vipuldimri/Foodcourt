@@ -78,8 +78,6 @@ public class Menuimplementation implements MenuInterface
     @Override
     public Boolean AddItem(String FoodCourtID, String Name, String Price, String Category) throws Exception 
     {
-        
-           System.out.println(Category + " " + Name + " "+Price );
             PreparedStatement psmnt = null;
             psmnt = conn.prepareStatement(" insert into "+FoodCourtID+"_Items(Name,price,Category) values (?,?,?);");
             psmnt.setString(1, Name.trim());
@@ -107,7 +105,6 @@ public class Menuimplementation implements MenuInterface
          Items.add(item);
          
         }
-        System.out.println(Items.size());
         return Items;
        
        
@@ -120,7 +117,6 @@ public class Menuimplementation implements MenuInterface
        
         ArrayList<Menu_Items> Items = new ArrayList<>();
         final String Query = "select * from "+FoodCourtName+"_Items where Category = '"+cat+"';";
-        System.out.println(Query);
         Statement stmt=conn.createStatement();  
         ResultSet rs = stmt.executeQuery(Query);
         while(rs.next())  

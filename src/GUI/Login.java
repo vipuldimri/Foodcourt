@@ -21,11 +21,10 @@ public class Login extends javax.swing.JFrame {
     /**
      * Creates new form Login
      */
-        public ArrayList<Users> users;
+    public ArrayList<Users> users;
     public FoodCourtModel FoodCourt;
     public Login(FoodCourtModel FoodCourt ,  ArrayList<Users> users)
     {
-    
         initComponents();
         Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
         int x = (int) ((dimension.getWidth() - getWidth()) / 2);
@@ -33,7 +32,7 @@ public class Login extends javax.swing.JFrame {
         setLocation(x, y);
         this.FoodCourt = FoodCourt;
         this.users = users;
-      
+        this.getRootPane().setDefaultButton(loginbutton);
     }
 
     /**
@@ -53,10 +52,9 @@ public class Login extends javax.swing.JFrame {
         Password = new javax.swing.JPasswordField();
         UserName = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
-        jLabel7 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
+        loginbutton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(36, 47, 65));
@@ -105,36 +103,6 @@ public class Login extends javax.swing.JFrame {
         jPanel1.add(jLabel5);
         jLabel5.setBounds(120, 210, 86, 22);
 
-        jPanel2.setBackground(new java.awt.Color(153, 153, 255));
-        jPanel2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jPanel2MouseClicked(evt);
-            }
-        });
-
-        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel7.setText("Sign In");
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(39, Short.MAX_VALUE)
-                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-
-        jPanel1.add(jPanel2);
-        jPanel2.setBounds(120, 410, 140, 50);
-
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Sign In");
@@ -153,20 +121,38 @@ public class Login extends javax.swing.JFrame {
         jPanel1.add(jLabel6);
         jLabel6.setBounds(460, 340, 60, 30);
 
+        loginbutton.setText("Sign In");
+        loginbutton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loginbuttonActionPerformed(evt);
+            }
+        });
+        jPanel1.add(loginbutton);
+        loginbutton.setBounds(120, 400, 110, 50);
+
         getContentPane().add(jPanel1);
         jPanel1.setBounds(0, 0, 560, 620);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jPanel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MouseClicked
+    private void jLabel6MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MousePressed
+        // TODO add your handling code here:show password mouse enter
+        Password.setEchoChar((char) 0);
+    }//GEN-LAST:event_jLabel6MousePressed
+
+    private void jLabel6MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseReleased
+        // TODO add your handling code here:show password mouse released
+        Password.setEchoChar('*');
+    }//GEN-LAST:event_jLabel6MouseReleased
+
+    private void loginbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginbuttonActionPerformed
         // TODO add your handling code here:
-        //Login click event here 
-        if(UserName.getText().length() == 0 || Password.getPassword().length == 0)
+          if(UserName.getText().length() == 0 || Password.getPassword().length == 0)
         {
                     JOptionPane.showMessageDialog(jPanel1,
                      "Both Fields Are Mandatory",
-                     "Inane error",
+                     "Login error",
                       JOptionPane.ERROR_MESSAGE);
                   
                     return ;
@@ -185,6 +171,8 @@ public class Login extends javax.swing.JFrame {
         {
             if(u.getUserName().equalsIgnoreCase(username) && u.getPassword().equals(pass))
             {
+                UserName.setText("");
+                Password.setText("");
                 MainScreen main = new MainScreen(FoodCourt,u,this);
                 main.setVisible(rootPaneCheckingEnabled);
                 this.setVisible(false);
@@ -193,21 +181,10 @@ public class Login extends javax.swing.JFrame {
         }
                    
                      JOptionPane.showMessageDialog(jPanel1,
-                     "Please check Upername and password",
-                     "Inane error",
+                     "Please check Username and password",
+                     "Login error",
                       JOptionPane.ERROR_MESSAGE);
-         
-    }//GEN-LAST:event_jPanel2MouseClicked
-
-    private void jLabel6MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MousePressed
-        // TODO add your handling code here:show password mouse enter
-        Password.setEchoChar((char) 0);
-    }//GEN-LAST:event_jLabel6MousePressed
-
-    private void jLabel6MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseReleased
-        // TODO add your handling code here:show password mouse released
-        Password.setEchoChar('*');
-    }//GEN-LAST:event_jLabel6MouseReleased
+    }//GEN-LAST:event_loginbuttonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -253,10 +230,9 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JButton loginbutton;
     // End of variables declaration//GEN-END:variables
 }

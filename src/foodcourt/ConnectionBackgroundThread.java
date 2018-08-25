@@ -20,6 +20,8 @@ public class ConnectionBackgroundThread extends Thread
         
         try 
         {
+            MyLog.setup();
+            FactoryClass.createObjects();
             Connect connection = new Connect();
             Properties prop2 = new Properties();
 	   // prop2.load(new FileInputStream("C://stark//FoodCourt//config.properties"));
@@ -32,7 +34,6 @@ public class ConnectionBackgroundThread extends Thread
             System.out.println("Error Unable to connect to server "+ex);
             System.exit(0);
         }
-        System.out.println(Id +" and "+Name);
         try
         {
             FoodCourtMainInterface Dao = FoodCourtFactory.GetInstance();

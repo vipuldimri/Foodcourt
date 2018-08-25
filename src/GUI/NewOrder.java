@@ -10,6 +10,7 @@ import DataBase.FoodCourtMainInterface;
 import DataBase.MenuFactory;
 import DataBase.MenuInterface;
 import DataStructures.Trie;
+import foodcourt.FactoryClass;
 import foodcourt.FoodCourtModel;
 import foodcourt.Menu_Items;
 import java.awt.Dimension;
@@ -20,11 +21,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import javax.print.PrintService;
 import javax.print.PrintServiceLookup;
+import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -52,12 +55,15 @@ public class NewOrder extends javax.swing.JFrame {
         setLocation(x, y);
          
         trie = new Trie();
-        this.foodcourt = foodcourt;
         this.mainscreen = mainscreen;
-       
+        this.foodcourt = foodcourt;
 
         GetItems();
-        
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment( JLabel.CENTER );
+        BillingTable.getColumnModel().getColumn(0).setCellRenderer( centerRenderer );
+        BillingTable.getColumnModel().getColumn(1).setCellRenderer( centerRenderer );
+        BillingTable.getColumnModel().getColumn(2).setCellRenderer( centerRenderer );
         
     }
 
@@ -116,24 +122,29 @@ public class NewOrder extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        SeachItem.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        SeachItem.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         SeachItem.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 SeachItemKeyReleased(evt);
             }
         });
 
-        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel7.setText("Search");
+        jLabel7.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jLabel7.setText("Search:");
 
-        list1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        list1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         list1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 list1MouseClicked(evt);
             }
         });
+        list1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                list1KeyReleased(evt);
+            }
+        });
 
-        BillingTable.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        BillingTable.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         BillingTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -165,23 +176,26 @@ public class NewOrder extends javax.swing.JFrame {
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
-                .addGap(27, 27, 27)
+                .addContainerGap()
                 .addComponent(jLabel7)
-                .addGap(18, 18, 18)
-                .addComponent(SeachItem, javax.swing.GroupLayout.PREFERRED_SIZE, 627, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(SeachItem, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(list1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jScrollPane1)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 745, Short.MAX_VALUE)
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(SeachItem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addComponent(jLabel7)
+                        .addGap(21, 21, 21))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLabel7)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(SeachItem, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addComponent(list1, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -190,15 +204,15 @@ public class NewOrder extends javax.swing.JFrame {
 
         jPanel5.setBackground(new java.awt.Color(0, 0, 0));
 
-        jButton8.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jButton8.setText("Cancel");
+        jButton8.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        jButton8.setText("Back");
         jButton8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton8ActionPerformed(evt);
             }
         });
 
-        jButton7.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jButton7.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jButton7.setText("Clear");
         jButton7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -206,7 +220,7 @@ public class NewOrder extends javax.swing.JFrame {
             }
         });
 
-        jButton6.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jButton6.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jButton6.setText("Print");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -220,23 +234,22 @@ public class NewOrder extends javax.swing.JFrame {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(34, 34, 34)
-                .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(78, 78, 78)
-                .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(79, 79, 79)
+                .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(48, 48, 48))
+                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(72, 72, 72))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
+                    .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -263,8 +276,30 @@ public class NewOrder extends javax.swing.JFrame {
 
     private void SeachItemKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_SeachItemKeyReleased
         // TODO add your handling code here:Key relaes
+        
+          if((int)(evt.getKeyChar()) == 65535)
+        {
+            list1.requestFocus();
+            return;
+        }
+        
+        
+        
                 list1.removeAll();
                 String enteredstring =  SeachItem.getText().trim();
+                if(enteredstring == null || enteredstring.length() == 0)
+                {
+                    return;
+                }
+                if(this.items == null || this.items.size() == 0)
+                {
+                     JOptionPane.showMessageDialog(this,
+                     "No item found",
+                     "",
+                      JOptionPane.ERROR_MESSAGE);
+                  
+                    return ;
+                }
                 for (Menu_Items item : this.items) {
                 if(item.getName().toLowerCase().startsWith(enteredstring.toLowerCase())  || item.getName().toLowerCase().contains(enteredstring.toLowerCase()) )
                 {
@@ -318,7 +353,7 @@ public class NewOrder extends javax.swing.JFrame {
             {
                                     JOptionPane.showMessageDialog(this,
                                     "Can't take empty order",
-                                      "Inane error",
+                                      "Error",
                                      JOptionPane.ERROR_MESSAGE);
                                     return;
             }
@@ -326,10 +361,7 @@ public class NewOrder extends javax.swing.JFrame {
                  
             for(int i = 0 ; i < rows ;  i ++)
             {
-                        
-            Total = Total + Float.valueOf(""+ model.getValueAt(i, 2));
-      
-                
+                Total = Total + Float.valueOf(""+ model.getValueAt(i, 2));   
             }
         
         int dialogButton = JOptionPane.YES_NO_OPTION;
@@ -340,9 +372,17 @@ public class NewOrder extends javax.swing.JFrame {
           System.out.println("No Option");
           return;
         } 
+        
         //Updating the collection
         try
         {
+            
+            FactoryClass.getCardRechargerCommObj().sendData(Float.toString(Total));
+            // If card transaction fails return from here
+            if(!FactoryClass.getCardRechargerCommObj().getStatus())
+            {
+                return;
+            }
             FoodCourtMainInterface dao = FoodCourtFactory.GetInstance();
             dao.updatecollection(foodcourt.getName(), Total);
         }catch(Exception e)
@@ -353,14 +393,7 @@ public class NewOrder extends javax.swing.JFrame {
             JOptionPane.ERROR_MESSAGE);
         }
    			
-   
-
-
-
-     
            PrinterService printerService = new PrinterService();
-
-           System.out.println(printerService.getPrinters());
            Date d = new Date();
            String demo = "";
          for(int i = 0 ; i < rows ; i ++)
@@ -405,6 +438,7 @@ public class NewOrder extends javax.swing.JFrame {
 
            try
            {
+               
            //print some stuff. Change the printer name to your thermal printer name.
             printerService.printString("EPSON TM-T88IV Receipt", 
              s);
@@ -553,6 +587,44 @@ public class NewOrder extends javax.swing.JFrame {
         mainscreen.setVisible(true);
         setVisible(false);
     }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void list1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_list1KeyReleased
+        // TODO add your handling code here:
+        
+        if((int)(evt.getKeyChar()) == 10)
+        {
+            //enter
+              
+        if(list1.getSelectedIndex() == -1)
+        {
+            return;
+        }
+        
+        try{
+            SeachItem.setText("");
+        for(Menu_Items item : items)
+        {
+            if(item.getName().toLowerCase().equalsIgnoreCase(list1.getSelectedItem().toLowerCase()))
+            {
+                DefaultTableModel  model = (DefaultTableModel) BillingTable.getModel();
+                Object row[] = new Object[3];
+      
+                row[0] = item.getName();
+                row[1] = "1";
+                row[2] = item.getPrice();
+                model.addRow(row);
+       
+                list1.removeAll();
+                break;
+            }
+            
+        }
+        }catch(Exception e)
+        {
+            
+        }
+        }
+    }//GEN-LAST:event_list1KeyReleased
 
     /**
      * @param args the command line arguments

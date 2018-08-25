@@ -10,6 +10,7 @@ import java.awt.Toolkit;
 import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 
@@ -20,6 +21,10 @@ public class MainScreen extends javax.swing.JFrame
     Users CurrentUser;
     Login loginscreen;
     JPanel container;
+    public MainScreen()
+    {
+        
+    }
     public MainScreen(FoodCourtModel foodcourt ,   Users CurrentUser ,Login loginscreen) 
     {
         
@@ -110,7 +115,13 @@ public class MainScreen extends javax.swing.JFrame
         
     }
 
-  
+    public void message(String msg)
+    {
+        JOptionPane.showMessageDialog(this,
+            msg,
+            "Recharge",
+            JOptionPane.INFORMATION_MESSAGE);
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -610,6 +621,7 @@ public class MainScreen extends javax.swing.JFrame
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         // TODO add your handling code here:
+        
         loginscreen.setVisible(true);
         this.setVisible(false);
         this.dispose();

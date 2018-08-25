@@ -3,10 +3,14 @@ package GUI;
 import DataBase.MenuFactory;
 import DataBase.MenuInterface;
 import foodcourt.Menu_Items;
+import foodcourt.MyLog;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.util.ArrayList;
+import java.util.Iterator;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -36,6 +40,12 @@ public class MenuItems extends javax.swing.JDialog
         setLocation(x, y);
         
         FillingTable();
+        this.getRootPane().setDefaultButton(jButton1);
+          DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment( JLabel.CENTER );
+        ItemsTable.getColumnModel().getColumn(0).setCellRenderer( centerRenderer );
+        ItemsTable.getColumnModel().getColumn(1).setCellRenderer( centerRenderer );
+        
         
     }
 
@@ -66,7 +76,7 @@ public class MenuItems extends javax.swing.JDialog
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        ItemsTable.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        ItemsTable.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         ItemsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -97,20 +107,22 @@ public class MenuItems extends javax.swing.JDialog
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.LINE_START);
 
-        jPanel2.setBackground(new java.awt.Color(0, 0, 0));
+        jPanel2.setBackground(new java.awt.Color(102, 102, 255));
+        jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        jPanel2.setForeground(new java.awt.Color(102, 102, 102));
         jPanel2.setPreferredSize(new java.awt.Dimension(911, 200));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Item Name");
+        jLabel1.setText("Item Name:");
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Item Price");
+        jLabel2.setText("Item Price:");
 
-        itemprice.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        itemprice.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
 
-        itemname.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        itemname.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
 
         jButton1.setText("ADD");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -119,8 +131,9 @@ public class MenuItems extends javax.swing.JDialog
             }
         });
 
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("ADD / UPDATE BEVRAGES");
+        jLabel3.setText("ADD / UPDATE ITEMS");
 
         jButton2.setText("Delete");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -147,9 +160,9 @@ public class MenuItems extends javax.swing.JDialog
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(97, 97, 97)
                 .addComponent(jLabel1)
-                .addGap(30, 30, 30)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(itemname, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(24, 24, 24)
                 .addComponent(jLabel2)
                 .addGap(3, 3, 3)
                 .addComponent(itemprice, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -157,7 +170,7 @@ public class MenuItems extends javax.swing.JDialog
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE))
+                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 234, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -180,7 +193,7 @@ public class MenuItems extends javax.swing.JDialog
                         .addComponent(jButton3)))
                 .addGap(12, 12, 12)
                 .addComponent(jButton2)
-                .addContainerGap(49, Short.MAX_VALUE))
+                .addContainerGap(50, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel2, java.awt.BorderLayout.SOUTH);
@@ -466,8 +479,8 @@ public class MenuItems extends javax.swing.JDialog
         MenuInterface Dao   = MenuFactory.GetInstance();
         try
         {
-            Items =   Dao.GetCatItems("Demo",cateName);
-             
+            MyLog.getLogger().info("Foodcourtname:"+this.FoodCourtName);
+            Items =   Dao.GetCatItems(FoodCourtName,cateName);
         }catch(Exception ex)
         {
             System.out.println("Unable to get categories items from database "+ex);
