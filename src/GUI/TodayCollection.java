@@ -35,7 +35,7 @@ public class TodayCollection extends javax.swing.JDialog {
         try
         {
             FoodCourtMainInterface dao = FoodCourtFactory.GetInstance();
-            this.Collection = dao.GettodayCollection(this.foodcourt.getName());
+            this.Collection = dao.GettodayCollection(this.foodcourt.getName(),foodcourt.getTime());
             jTextField1.setText(this.Collection);
         }catch(Exception e)
         {

@@ -21,8 +21,9 @@ public class FoodCourtModel {
     private double CGST;
     private Date   SubEnd;
     private String Email;
+    private String Time;
 
-    public FoodCourtModel(int Id, String Name, String Contact, String Address, String Owner, double GGST, double CGST, Date SubEnd, String Email) {
+    public FoodCourtModel(int Id, String Name, String Contact, String Address, String Owner, double GGST, double CGST, Date SubEnd, String Email,String Time) {
         this.Id = Id;
         this.Name = Name;
         this.Contact = Contact;
@@ -32,6 +33,15 @@ public class FoodCourtModel {
         this.CGST = CGST;
         this.SubEnd = SubEnd;
         this.Email = Email;
+        this.Time = Time;
+    }
+
+    public String getTime() {
+        return Time;
+    }
+
+    public void setTime(String Time) {
+        this.Time = Time;
     }
 
     public int getId() {

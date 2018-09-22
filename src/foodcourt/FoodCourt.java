@@ -41,6 +41,7 @@ public class FoodCourt {
                 if(connectionBackgroundThread.users == null)
                 {
                     System.out.println("Users is null");
+                    MyLog.getLogger().severe("Users is null exiting from here");
                     System.exit(0);
                     return;
                 }

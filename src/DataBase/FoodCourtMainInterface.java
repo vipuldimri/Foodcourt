@@ -6,6 +6,7 @@
 package DataBase;
 
 import foodcourt.FoodCourtModel;
+import foodcourt.UpdateInfo;
 import foodcourt.Users;
 import java.util.ArrayList;
 import java.util.Date;
@@ -20,11 +21,11 @@ public interface FoodCourtMainInterface {
     
     public FoodCourtModel GetFoodCourtDetails(String ID)throws Exception;
     
-    public void updateinfo(int id,FoodCourtModel foodcourt)throws Exception;
+    public void updateinfo(FoodCourtModel foodcourt,UpdateInfo update)throws Exception;
     
-    public void updatecollection(String Foodcourtname,Float price) throws Exception;
+    public void updatecollection(String Foodcourtname,Float price,String time) throws Exception;
     
-    public String GettodayCollection(String Foodcourtname) throws Exception;
+    public String GettodayCollection(String Foodcourtname,String time) throws Exception;
     
     public String GetPerticulardateCollection(String Foodcourtname,Date start, Date end) throws Exception;
 }

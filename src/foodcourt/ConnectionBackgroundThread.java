@@ -25,26 +25,26 @@ public class ConnectionBackgroundThread extends Thread
             Connect connection = new Connect();
             Properties prop2 = new Properties();
 	   // prop2.load(new FileInputStream("C://stark//FoodCourt//config.properties"));
-            prop2.load(new FileInputStream("C://Foodcourt//config.properties"));
-            Id = prop2.getProperty("ID");       
+            prop2.load(new FileInputStream("C://FoodCourt//config.properties"));
+            Id = prop2.getProperty("ID");
             Name = prop2.getProperty("Name");
             
         } catch (Exception ex) 
         {
             System.out.println("Error Unable to connect to server "+ex);
+            MyLog.getLogger().severe(ex.getMessage());
             System.exit(0);
         }
         try
         {
+            
             FoodCourtMainInterface Dao = FoodCourtFactory.GetInstance();
             FoodCourt = Dao.GetFoodCourtDetails(Id);
-            users = Dao.GetUsers(Name);        
+            users = Dao.GetUsers(Name);    
         }catch(Exception e)
         {
             System.out.println("Error getting data :: "+e);
         }
-    
-    
     }
     
     

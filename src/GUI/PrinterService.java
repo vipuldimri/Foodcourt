@@ -21,6 +21,8 @@ import javax.print.PrintServiceLookup;
 import javax.print.SimpleDoc;
 import javax.print.attribute.HashPrintRequestAttributeSet;
 import javax.print.attribute.PrintRequestAttributeSet;
+import javax.print.attribute.standard.Copies;
+
 /**
  *
  * @author dimri
@@ -98,10 +100,10 @@ public class PrinterService implements Printable {
     public void printBytes(String printerName, byte[] bytes) {
 
         DocFlavor flavor = DocFlavor.BYTE_ARRAY.AUTOSENSE;
-        PrintRequestAttributeSet pras = new HashPrintRequestAttributeSet();
+        PrintRequestAttributeSet attributes = new HashPrintRequestAttributeSet();
 
         PrintService printService[] = PrintServiceLookup.lookupPrintServices(
-                flavor, pras);
+                flavor, attributes);
         PrintService service = findPrintService(printerName, printService);
 
         DocPrintJob job = service.createPrintJob();
@@ -111,6 +113,7 @@ public class PrinterService implements Printable {
             Doc doc = new SimpleDoc(bytes, flavor, null);
 
             job.print(doc, null);
+            attributes.add(new Copies(2));
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -17,6 +17,8 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.print.PrintService;
@@ -29,7 +31,7 @@ import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-
+//import org.openqa.selenium.Keys;
 
 /**
  *
@@ -41,14 +43,14 @@ public class NewOrder extends javax.swing.JFrame {
      * Creates new form NewOrder
      */
     ArrayList<Menu_Items> items;
+    Menu_Items selectedItem;
     Trie trie;
     FoodCourtModel foodcourt;
     MainScreen mainscreen;
+    int tokenNumber=0;
+    Date currentDate;
     public NewOrder(FoodCourtModel foodcourt,MainScreen mainscreen) {
         initComponents();
-  
-       
-         
         Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
         int x = (int) ((dimension.getWidth() - getWidth()) / 2);
         int y = (int) ((dimension.getHeight() - getHeight()) / 2);
@@ -64,9 +66,8 @@ public class NewOrder extends javax.swing.JFrame {
         BillingTable.getColumnModel().getColumn(0).setCellRenderer( centerRenderer );
         BillingTable.getColumnModel().getColumn(1).setCellRenderer( centerRenderer );
         BillingTable.getColumnModel().getColumn(2).setCellRenderer( centerRenderer );
-        
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -85,14 +86,16 @@ public class NewOrder extends javax.swing.JFrame {
         list1 = new java.awt.List();
         jScrollPane1 = new javax.swing.JScrollPane();
         BillingTable = new javax.swing.JTable();
+        qtyTextField = new javax.swing.JTextField();
+        addButton = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jButton8 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
+        printButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Order");
-        setMaximumSize(new java.awt.Dimension(700, 700));
         setMinimumSize(new java.awt.Dimension(500, 500));
         setResizable(false);
 
@@ -144,6 +147,7 @@ public class NewOrder extends javax.swing.JFrame {
             }
         });
 
+        BillingTable.setBackground(new java.awt.Color(0, 153, 255));
         BillingTable.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         BillingTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -171,6 +175,22 @@ public class NewOrder extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(BillingTable);
 
+        qtyTextField.setText("1");
+
+        addButton.setText("Add");
+        addButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addButtonActionPerformed(evt);
+            }
+        });
+        addButton.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                addButtonKeyPressed(evt);
+            }
+        });
+
+        jLabel1.setText("Qty:");
+
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
@@ -180,6 +200,12 @@ public class NewOrder extends javax.swing.JFrame {
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(SeachItem, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(14, 14, 14)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(qtyTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(list1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 745, Short.MAX_VALUE)
@@ -194,7 +220,11 @@ public class NewOrder extends javax.swing.JFrame {
                         .addGap(21, 21, 21))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(SeachItem, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(SeachItem, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(qtyTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(addButton)
+                            .addComponent(jLabel1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addComponent(list1, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -220,11 +250,11 @@ public class NewOrder extends javax.swing.JFrame {
             }
         });
 
-        jButton6.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jButton6.setText("Print");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
+        printButton.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        printButton.setText("Print");
+        printButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
+                printButtonActionPerformed(evt);
             }
         });
 
@@ -238,7 +268,7 @@ public class NewOrder extends javax.swing.JFrame {
                 .addGap(79, 79, 79)
                 .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(printButton, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(72, 72, 72))
         );
         jPanel5Layout.setVerticalGroup(
@@ -246,7 +276,7 @@ public class NewOrder extends javax.swing.JFrame {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
+                    .addComponent(printButton, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
                     .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(17, Short.MAX_VALUE))
@@ -280,10 +310,9 @@ public class NewOrder extends javax.swing.JFrame {
           if((int)(evt.getKeyChar()) == 65535)
         {
             list1.requestFocus();
+            //list1.requestFocus();
             return;
         }
-        
-        
         
                 list1.removeAll();
                 String enteredstring =  SeachItem.getText().trim();
@@ -305,7 +334,6 @@ public class NewOrder extends javax.swing.JFrame {
                 {
                     list1.add(item.getName());
                 }
-                
         }
                 
         
@@ -318,44 +346,42 @@ public class NewOrder extends javax.swing.JFrame {
         {
             return;
         }
+        this.SeachItem.setText(list1.getSelectedItem());
+           
+            //enter
+            this.qtyTextField.requestFocus();
+            qtyTextField.selectAll();
         
-        try{
-            SeachItem.setText("");
+            try{
+            
         for(Menu_Items item : items)
         {
             if(item.getName().toLowerCase().equalsIgnoreCase(list1.getSelectedItem().toLowerCase()))
             {
-                DefaultTableModel  model = (DefaultTableModel) BillingTable.getModel();
-                Object row[] = new Object[3];
-      
-                row[0] = item.getName();
-                row[1] = "1";
-                row[2] = item.getPrice();
-                model.addRow(row);
-       
-                list1.removeAll();
+                this.selectedItem = item;
+                 list1.removeAll();
                 break;
             }
-            
         }
+        
         }catch(Exception e)
         {
             
         }
+        
     }//GEN-LAST:event_list1MouseClicked
     //code for bill makinng
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+    private void printButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printButtonActionPerformed
         // TODO add your handling code here:
-
             DefaultTableModel  model = (DefaultTableModel) BillingTable.getModel();
             int rows = model.getRowCount();
             if(rows == 0)
             {
-                                    JOptionPane.showMessageDialog(this,
-                                    "Can't take empty order",
-                                      "Error",
-                                     JOptionPane.ERROR_MESSAGE);
-                                    return;
+                JOptionPane.showMessageDialog(this,
+                "Can't take empty order",
+                  "Error",
+                 JOptionPane.ERROR_MESSAGE);
+                return;
             }
             float Total = 0;
                  
@@ -376,15 +402,15 @@ public class NewOrder extends javax.swing.JFrame {
         //Updating the collection
         try
         {
-            
+            /*
             FactoryClass.getCardRechargerCommObj().sendData(Float.toString(Total));
             // If card transaction fails return from here
             if(!FactoryClass.getCardRechargerCommObj().getStatus())
             {
                 return;
-            }
+            }*/
             FoodCourtMainInterface dao = FoodCourtFactory.GetInstance();
-            dao.updatecollection(foodcourt.getName(), Total);
+            dao.updatecollection(foodcourt.getName(), Total,foodcourt.getTime());
         }catch(Exception e)
         {
             JOptionPane.showMessageDialog(this,
@@ -420,12 +446,13 @@ public class NewOrder extends javax.swing.JFrame {
            }
             
         }
-      //Header Text 
-        String s = "                  | Welcome | \n                  Swaad Sadan \n "+
+           //tokenNumber++;
+          // String s = "Token:"+Integer.toString(tokenNumber)+"\n";
+         //Header Text 
+            String s = "                  | Welcome | \n                  Swaad Sadan \n "+
                 "         "+d+"\n           Tiffins | Chatt | Juice \n\nORDER "+
                 "DETAILS \n-------------\nSno | ItemName       | QTY | Price \n"+
                 "----------------------------------\n";
-
            s = s + demo;
            s = s + "\n Total Rs:- "+Total;
            s = s + "\n\n-----------------------\n";
@@ -435,7 +462,6 @@ public class NewOrder extends javax.swing.JFrame {
            s = s + "-----------------------\n";
            s = s + "Powered by Stark Technologies";
            s += "\n\n\n\n\n\n\n\n";
-
            try
            {
                
@@ -446,9 +472,11 @@ public class NewOrder extends javax.swing.JFrame {
              byte[] cutP = new byte[] { 0x1d, 'V', 1 };
 
              printerService.printBytes("EPSON TM-T88IV Receipt", cutP);
+             
            }
            catch(Exception e)
            {
+               //tokenNumber--;
                JOptionPane.showMessageDialog(this,
             "Printer error",
             "Error",
@@ -461,14 +489,13 @@ public class NewOrder extends javax.swing.JFrame {
             for (int i = rowCount - 1; i >= 0; i--) {
             dm.removeRow(i);}
         
-    }//GEN-LAST:event_jButton6ActionPerformed
+            
+    }//GEN-LAST:event_printButtonActionPerformed
 
     private void BillingTableKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BillingTableKeyReleased
         // TODO add your handling code here:
             DefaultTableModel  model = (DefaultTableModel) BillingTable.getModel();
             int rows = model.getRowCount();
-        
-                 
             for(int i = 0 ; i < rows ;  i ++)
             {
                 int qty = -1;        
@@ -483,7 +510,7 @@ public class NewOrder extends javax.swing.JFrame {
                       return ;
      }
      if(qty == -1){ return;}
-            if(qty != 1)
+            if(qty >= 0)
             {
                 float value=0;
                for(Menu_Items item : items)
@@ -593,30 +620,23 @@ public class NewOrder extends javax.swing.JFrame {
         
         if((int)(evt.getKeyChar()) == 10)
         {
+            this.SeachItem.setText(list1.getSelectedItem());
+           
             //enter
-              
-        if(list1.getSelectedIndex() == -1)
-        {
-            return;
-        }
+            this.qtyTextField.requestFocus();
+            qtyTextField.selectAll();
         
-        try{
-            SeachItem.setText("");
+            try{
+            
         for(Menu_Items item : items)
         {
             if(item.getName().toLowerCase().equalsIgnoreCase(list1.getSelectedItem().toLowerCase()))
             {
-                DefaultTableModel  model = (DefaultTableModel) BillingTable.getModel();
-                Object row[] = new Object[3];
-      
-                row[0] = item.getName();
-                row[1] = "1";
-                row[2] = item.getPrice();
-                model.addRow(row);
-       
-                list1.removeAll();
+                this.selectedItem = item;
+                 list1.removeAll();
                 break;
             }
+            
             
         }
         }catch(Exception e)
@@ -625,6 +645,125 @@ public class NewOrder extends javax.swing.JFrame {
         }
         }
     }//GEN-LAST:event_list1KeyReleased
+
+    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
+        // TODO add your handling code here:
+        if( this.SeachItem.getText().isEmpty())
+        {
+            JOptionPane.showMessageDialog(this,
+           "Search Item or quantity cannot be empty",
+           "Warning",
+            JOptionPane.WARNING_MESSAGE);
+            this.SeachItem.requestFocusInWindow();
+            return;
+        }
+        
+        if(this.selectedItem == null)
+            {
+                return;
+            }
+             try{
+                 Integer.valueOf(qtyTextField.getText());
+            }catch(NumberFormatException e)
+            {
+                             JOptionPane.showMessageDialog(this,
+                            "Enter valid qty",
+                            "Inane error",
+                             JOptionPane.ERROR_MESSAGE);
+                             return ;
+            }
+              DefaultTableModel  model = (DefaultTableModel) BillingTable.getModel();
+                Object row[] = new Object[3];
+      
+                row[0] = this.selectedItem.getName();
+                row[1] = qtyTextField.getText();
+                row[2] = this.selectedItem.getPrice();
+                model.addRow(row);
+                int rows = model.getRowCount();
+                int qty = -1;        
+            try{
+                   qty = Integer.valueOf(qtyTextField.getText());
+            }catch(NumberFormatException e)
+            {
+                             JOptionPane.showMessageDialog(this,
+                            "Enter valid qty",
+                            "Inane error",
+                             JOptionPane.ERROR_MESSAGE);
+                             return ;
+            }
+     if(qty == -1){ return;}
+            if(qty >= 0)
+            {
+                float value=0;
+                {   
+                  value = qty * Float.valueOf(selectedItem.getPrice());
+                }  
+                model.setValueAt(value, rows-1, 2);
+            }
+            this.SeachItem.setText("");
+            this.qtyTextField.setText("1");
+            this.SeachItem.requestFocusInWindow();
+
+    }//GEN-LAST:event_addButtonActionPerformed
+
+    private void addButtonKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_addButtonKeyPressed
+        // TODO add your handling code here:
+        if( this.SeachItem.getText().isEmpty())
+        {
+            JOptionPane.showMessageDialog(this,
+           "Search Item or quantity cannot be empty",
+           "Warning",
+            JOptionPane.WARNING_MESSAGE);
+            this.SeachItem.requestFocusInWindow();
+            return;
+        }
+                if(this.selectedItem == null)
+            {
+                return;
+            }
+             try{
+                 Integer.valueOf(qtyTextField.getText());
+            }catch(NumberFormatException e)
+            {
+                             JOptionPane.showMessageDialog(this,
+                            "Enter valid qty",
+                            "Inane error",
+                             JOptionPane.ERROR_MESSAGE);
+                             return ;
+            }
+        DefaultTableModel  model = (DefaultTableModel) BillingTable.getModel();
+                Object row[] = new Object[3];
+      
+                row[0] = this.selectedItem.getName();
+                row[1] = qtyTextField.getText();
+                row[2] = this.selectedItem.getPrice();
+                model.addRow(row);
+                int rows = model.getRowCount();
+                int qty = -1;        
+            try{
+                   qty = Integer.valueOf(qtyTextField.getText());
+            }catch(NumberFormatException e)
+            {
+                             JOptionPane.showMessageDialog(this,
+                            "Enter valid qty",
+                            "Inane error",
+                             JOptionPane.ERROR_MESSAGE);
+                             return ;
+            }
+     if(qty == -1){ return;}
+            if(qty >= 0)
+            {
+                float value=0;
+                {   
+                  value = qty * Float.valueOf(selectedItem.getPrice());
+                }  
+                model.setValueAt(value, rows-1, 2);
+            }
+            this.SeachItem.setText("");
+            this.qtyTextField.setText("1");
+            this.SeachItem.requestFocusInWindow();
+
+    }//GEN-LAST:event_addButtonKeyPressed
 
     /**
      * @param args the command line arguments
@@ -664,9 +803,10 @@ public class NewOrder extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable BillingTable;
     private javax.swing.JTextField SeachItem;
-    private javax.swing.JButton jButton6;
+    private javax.swing.JButton addButton;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -675,6 +815,8 @@ public class NewOrder extends javax.swing.JFrame {
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane1;
     private java.awt.List list1;
+    private javax.swing.JButton printButton;
+    private javax.swing.JTextField qtyTextField;
     // End of variables declaration//GEN-END:variables
 
    private void GetItems() 

@@ -1,27 +1,21 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package DataBase;
 
 import foodcourt.FoodCourtModel;
+import foodcourt.MyLog;
 import foodcourt.Users;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
+import foodcourt.UpdateInfo;
 
-/**
- *
- * @author dimri
- */
 public class FoodCourtMainImplementation implements FoodCourtMainInterface
 {
     Connection conn;
-    
    FoodCourtMainImplementation(){
        conn = Connect.getconnection();
    }
@@ -30,14 +24,20 @@ public class FoodCourtMainImplementation implements FoodCourtMainInterface
     public ArrayList<Users> GetUsers(String Name) throws Exception {
         ArrayList<Users> users = new ArrayList<>();
         String Query="select * from "+Name+"_Users ";
-        
+        try
+        {
                    Statement stmt=conn.createStatement();  
                    ResultSet rs = stmt.executeQuery(Query);
                    while(rs.next())  
                    {
-                 Users user  = new Users(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8));
+                  Users user  = new Users(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8));
                   users.add(user);
                    }
+        }
+        catch(Exception ex)
+        {
+            MyLog.getLogger().severe(ex.getMessage());
+        }
         return users;
     }
 
@@ -47,60 +47,111 @@ public class FoodCourtMainImplementation implements FoodCourtMainInterface
         String query = "select * from FoodCourts where ID = "+ID+"";
         
          FoodCourtModel f = null;
+         try
+         {
                    Statement stmt=conn.createStatement();  
                    ResultSet rs = stmt.executeQuery(query);
                    while(rs.next())  
                    {
-                  f = new FoodCourtModel(rs.getInt(1),rs.getString(2),rs.getString(5),rs.getString(3),rs.getString(4),rs.getDouble(6),rs.getDouble(7),rs.getDate(8),rs.getString(9));
-                
-                    
-                    
+                       f = new FoodCourtModel(rs.getInt(1),rs.getString(2),rs.getString(5),rs.getString(3),rs.getString(4),rs.getDouble(6),rs.getDouble(7),rs.getDate(8),rs.getString(9),rs.getString(10));
                    }
-        
+         }
+         catch(Exception ex)
+         {
+             MyLog.getLogger().severe(ex.getMessage());
+         }
         return f;
+         
+         
     }
 
     @Override
-    public void updateinfo(int id,FoodCourtModel foodcourt) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    public void updateinfo(FoodCourtModel foodcourt,UpdateInfo update) throws Exception {
 
-    @Override
-    public void updatecollection(String Foodcourtname, Float price) throws Exception {
+                  String query = "update FoodCourts set  Time = '"+update.Time+"' , CGST = "+update.CGST+" ,SGST = "+update.SGST+" ,Email = '"+update.Email+"' where ID = "+foodcourt.getId() ;
+                  PreparedStatement psmnt = null;
+                   psmnt = conn.prepareStatement(query);
+                   psmnt.executeUpdate();  
         
-       String data ="select  Collect from  "+Foodcourtname+"_collection where  date = curdate()"; 
+    }
+
+    @Override
+    public void updatecollection(String Foodcourtname, Float price,String time) throws Exception 
+    {
+        int ResetTime = Integer.parseInt(time);
+        int presentHR = -1;
+        presentHR = LocalDateTime.now().getHour();
+        String data = "";
+        if( presentHR < ResetTime )
+        {
+             data ="select  Collect from  "+Foodcourtname+"_collection where  date  = curdate() - INTERVAL 1 DAY";
+        }else{
+             data ="select  Collect from  "+Foodcourtname+"_collection where  date = curdate()"; 
+        }
+          
        float old =0;
        boolean newday = true;
-         Statement stmt=conn.createStatement();  
-          ResultSet rs = stmt.executeQuery(data);
-                   while(rs.next())  
-                   {
-                       old = Float.parseFloat(rs.getString(1));
-                       newday = false;
-                    
-                   }
+       Statement stmt=conn.createStatement();  
+       ResultSet rs = stmt.executeQuery(data);
+        while(rs.next())  
+        {
+            old = Float.parseFloat(rs.getString(1));
+            newday = false;
+        }
                    
         if(newday)
         {
+                if( presentHR < ResetTime )
+                {
+                   old = old + price;
+                   String query = "insert into "+Foodcourtname+"_collection(Collect,date) values ('"+price+"',curdate() - INTERVAL 1 DAY)";
+                   PreparedStatement psmnt = null;
+                   psmnt = conn.prepareStatement(query);
+                   psmnt.executeUpdate();
+
+                }else{
                    old = old + price;
                    String query = "insert into "+Foodcourtname+"_collection(Collect,date) values ('"+price+"',curdate())";
                    PreparedStatement psmnt = null;
                    psmnt = conn.prepareStatement(query);
                    psmnt.executeUpdate();
-        
-        }else {
-                             old = old + price;
-        String query = "update  "+Foodcourtname+"_collection set  Collect = '"+old+"' where date = curdate()";
-       PreparedStatement psmnt = null;
+                }
+        }else 
+        {
+             if( presentHR < ResetTime )
+                {
+        old = old + price;
+        String query = "update  "+Foodcourtname+"_collection set  Collect = '"+old+"' where date  = curdate() - INTERVAL 1 DAY";
+        PreparedStatement psmnt = null;
         psmnt = conn.prepareStatement(query);
         psmnt.executeUpdate();
+
+                }else{
+        old = old + price;
+        String query = "update  "+Foodcourtname+"_collection set  Collect = '"+old+"' where date = curdate()";
+        PreparedStatement psmnt = null;
+        psmnt = conn.prepareStatement(query);
+        psmnt.executeUpdate();
+                }
+      
         }
   
     }
 
     @Override
-    public String GettodayCollection(String Foodcourtname) throws Exception {
-       String data ="select  Collect from  "+Foodcourtname+"_collection where  date = curdate()"; 
+    public String GettodayCollection(String Foodcourtname,String time) throws Exception {
+                
+         int ResetTime = Integer.parseInt(time);
+        int presentHR = LocalDateTime.now().getHour();
+        String data = "";
+        if( presentHR < ResetTime )
+        {
+             data ="select  Collect from  "+Foodcourtname+"_collection where  date  = curdate() - INTERVAL 1 DAY";
+        }else{
+             data ="select  Collect from  "+Foodcourtname+"_collection where  date = curdate()"; 
+        }
+ 
+       // String data ="select  Collect from  "+Foodcourtname+"_collection where  date = curdate()"; 
        float old =0;
        boolean newday = true;
        Statement stmt=conn.createStatement();  
@@ -109,14 +160,14 @@ public class FoodCourtMainImplementation implements FoodCourtMainInterface
                    {
                        old = Float.parseFloat(rs.getString(1));
                        newday = false;
-                    
                    }
        
-       if(newday){
-           return "0";
+       if(newday){   
+            return "0";      
        }
                    return old+"";
     }
+    
 
     @Override
     public String GetPerticulardateCollection(String Foodcourtname, Date start, Date end) throws Exception 
@@ -126,7 +177,7 @@ public class FoodCourtMainImplementation implements FoodCourtMainInterface
         
         
         String Query="select  Collect from  "+Foodcourtname+"_collection  WHERE Date >= '"+sdate+"' AND Date <= '"+edate+"';";    
-         float old =0;
+        float old =0;
        boolean newday = true;
        Statement stmt=conn.createStatement();  
        ResultSet rs = stmt.executeQuery(Query);
@@ -138,7 +189,9 @@ public class FoodCourtMainImplementation implements FoodCourtMainInterface
                    }
        
        if(newday){
-           return "0";
+             
+            return "0";
+           
        }
                    return old+"";
     }

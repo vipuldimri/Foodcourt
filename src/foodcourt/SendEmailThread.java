@@ -60,7 +60,7 @@ public class SendEmailThread extends Thread
         try
         {
             FoodCourtMainInterface dao = FoodCourtFactory.GetInstance();
-            collection = dao.GettodayCollection(foodcourt.getName());
+            collection = dao.GettodayCollection(foodcourt.getName(),foodcourt.getTime());
 
         }catch(Exception e)
         {
