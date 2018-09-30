@@ -1,0 +1,4 @@
+Sep 30, 2018 2:08:30 PM foodcourt.FactoryClass getPortsFromConfig
+INFO: rechargerport:COM15
+Sep 30, 2018 2:09:46 PM foodcourt.FactoryClass getPortsFromConfig
+INFO: rechargerport:COM15

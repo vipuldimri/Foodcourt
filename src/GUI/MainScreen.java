@@ -2,7 +2,9 @@ package GUI;
 import DataBase.MenuFactory;
 import DataBase.MenuInterface;
 import foodcourt.Category;
+import foodcourt.ClockThread;
 import foodcourt.FoodCourtModel;
+import foodcourt.Menu_Items;
 import foodcourt.Users;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -16,6 +18,9 @@ import javax.swing.JPanel;
 
 public class MainScreen extends javax.swing.JFrame 
 {
+    
+         
+    String MessageString = "";
     ArrayList<Category> Categories;
     FoodCourtModel foodcourt;
     Users CurrentUser;
@@ -30,6 +35,11 @@ public class MainScreen extends javax.swing.JFrame
         
         
         initComponents();
+        
+        
+        ClockThread c = new ClockThread(Clock);
+        c.start();
+   
         setExtendedState(MainScreen.MAXIMIZED_BOTH); 
         jPanel6.removeAll();
         jPanel6.add(Reports);
@@ -108,10 +118,35 @@ public class MainScreen extends javax.swing.JFrame
    
              Menu.add(PP);
 
-             
+            
         }
         
-     
+                 CheckATUbutton.setForeground(Color.RED);
+                MenuInterface Dao2 = MenuFactory.GetInstance();
+                try
+                {
+                   ArrayList<Menu_Items> list  =  Dao2.GetCatItemsQTY(foodcourt.getName());
+                    for (int j = 0; j < list.size(); j++) {
+                        
+                        if(list.get(j).getCategory().equals("Cold Drinks")){
+                            
+                            if(Integer.parseInt(list.get(j).getQTY()) <=  Integer.parseInt(foodcourt.getColddrinkQTY())){
+                                MessageString =  MessageString + list.get(j).getName() +" Low QTY ("+list.get(j).getQTY()+") ,";
+                            }
+                            
+                        }else{
+                         //Water  
+                            if(Integer.parseInt(list.get(j).getQTY()) <=  Integer.parseInt(foodcourt.getWaterQTY())){
+                                MessageString =  MessageString + list.get(j).getName() +" Low QTY ("+list.get(j).getQTY()+") ,";
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex) 
+                {
+                    System.out.println("Failed loading items"+ex);
+                    return;
+                }
         
     }
 
@@ -135,9 +170,14 @@ public class MainScreen extends javax.swing.JFrame
         menusidepanel = new javax.swing.JPanel();
         jLabel20 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
+        menusidepanel1 = new javax.swing.JPanel();
+        jLabel22 = new javax.swing.JLabel();
+        jLabel23 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jPanel10 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
+        Clock = new javax.swing.JLabel();
+        CheckATUbutton = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
         Reports = new javax.swing.JPanel();
         jPanel22 = new javax.swing.JPanel();
@@ -157,6 +197,15 @@ public class MainScreen extends javax.swing.JFrame
         jPanel3 = new javax.swing.JPanel();
         vbut = new javax.swing.JButton();
         blab = new javax.swing.JLabel();
+        Drinks = new javax.swing.JPanel();
+        Add = new javax.swing.JPanel();
+        jLabel36 = new javax.swing.JLabel();
+        jButton11 = new javax.swing.JButton();
+        jLabel42 = new javax.swing.JLabel();
+        jPanel24 = new javax.swing.JPanel();
+        jLabel37 = new javax.swing.JLabel();
+        jButton12 = new javax.swing.JButton();
+        jLabel43 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -261,6 +310,48 @@ public class MainScreen extends javax.swing.JFrame
 
         jPanel4.add(menusidepanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 150, -1, 70));
 
+        menusidepanel1.setBackground(new java.awt.Color(255, 255, 255));
+        menusidepanel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menusidepanel1MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                menusidepanel1MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                menusidepanel1MouseExited(evt);
+            }
+        });
+
+        jLabel22.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/drinks.png"))); // NOI18N
+
+        jLabel23.setText("Drinks");
+
+        javax.swing.GroupLayout menusidepanel1Layout = new javax.swing.GroupLayout(menusidepanel1);
+        menusidepanel1.setLayout(menusidepanel1Layout);
+        menusidepanel1Layout.setHorizontalGroup(
+            menusidepanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(menusidepanel1Layout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addComponent(jLabel22)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel23)
+                .addContainerGap(42, Short.MAX_VALUE))
+        );
+        menusidepanel1Layout.setVerticalGroup(
+            menusidepanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(menusidepanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(menusidepanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel22)
+                    .addGroup(menusidepanel1Layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addComponent(jLabel23)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel4.add(menusidepanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 270, -1, 70));
+
         jPanel1.add(jPanel4, java.awt.BorderLayout.WEST);
 
         jPanel2.setBackground(new java.awt.Color(153, 153, 153));
@@ -270,6 +361,16 @@ public class MainScreen extends javax.swing.JFrame
 
         jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/StarkLogo.jpg"))); // NOI18N
 
+        Clock.setFont(new java.awt.Font("Tahoma", 2, 36)); // NOI18N
+        Clock.setForeground(new java.awt.Color(255, 255, 0));
+
+        CheckATUbutton.setText("check QTY");
+        CheckATUbutton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CheckATUbuttonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
         jPanel10Layout.setHorizontalGroup(
@@ -277,14 +378,27 @@ public class MainScreen extends javax.swing.JFrame
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(1447, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 1256, Short.MAX_VALUE)
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
+                        .addComponent(Clock, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
+                        .addComponent(CheckATUbutton, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(56, 56, 56))))
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addComponent(jLabel10)
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addContainerGap(25, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(Clock, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(CheckATUbutton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -482,6 +596,97 @@ public class MainScreen extends javax.swing.JFrame
 
         jPanel6.add(jScrollPane1, "card4");
 
+        Add.setBackground(new java.awt.Color(255, 255, 255));
+        Add.setPreferredSize(new java.awt.Dimension(300, 300));
+
+        jLabel36.setText("Cold Drinks");
+
+        jButton11.setText("Add");
+        jButton11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton11ActionPerformed(evt);
+            }
+        });
+
+        jLabel42.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/cold drink.png"))); // NOI18N
+
+        javax.swing.GroupLayout AddLayout = new javax.swing.GroupLayout(Add);
+        Add.setLayout(AddLayout);
+        AddLayout.setHorizontalGroup(
+            AddLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AddLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton11)
+                .addGap(112, 112, 112))
+            .addGroup(AddLayout.createSequentialGroup()
+                .addGroup(AddLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(AddLayout.createSequentialGroup()
+                        .addGap(107, 107, 107)
+                        .addComponent(jLabel36, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(AddLayout.createSequentialGroup()
+                        .addGap(81, 81, 81)
+                        .addComponent(jLabel42)))
+                .addContainerGap(81, Short.MAX_VALUE))
+        );
+        AddLayout.setVerticalGroup(
+            AddLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(AddLayout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addComponent(jLabel36)
+                .addGap(35, 35, 35)
+                .addComponent(jLabel42)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                .addComponent(jButton11)
+                .addGap(37, 37, 37))
+        );
+
+        Drinks.add(Add);
+
+        jPanel24.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel24.setPreferredSize(new java.awt.Dimension(300, 300));
+
+        jLabel37.setText("Water bottle");
+
+        jButton12.setText("Add");
+        jButton12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton12ActionPerformed(evt);
+            }
+        });
+
+        jLabel43.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/water.png"))); // NOI18N
+
+        javax.swing.GroupLayout jPanel24Layout = new javax.swing.GroupLayout(jPanel24);
+        jPanel24.setLayout(jPanel24Layout);
+        jPanel24Layout.setHorizontalGroup(
+            jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel24Layout.createSequentialGroup()
+                .addGap(91, 91, 91)
+                .addGroup(jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel37, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel43))
+                .addContainerGap(81, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel24Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton12)
+                .addGap(113, 113, 113))
+        );
+        jPanel24Layout.setVerticalGroup(
+            jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel24Layout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addComponent(jLabel37)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+                .addComponent(jLabel43)
+                .addGap(18, 18, 18)
+                .addComponent(jButton12)
+                .addGap(48, 48, 48))
+        );
+
+        Drinks.add(jPanel24);
+
+        jPanel6.add(Drinks, "card4");
+
         jPanel1.add(jPanel6, java.awt.BorderLayout.CENTER);
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
@@ -627,6 +832,70 @@ public class MainScreen extends javax.swing.JFrame
         this.dispose();
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
+    private void menusidepanel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menusidepanel1MouseClicked
+        // TODO add your handling code here
+             jPanel6.removeAll();
+     //jPanel6.add(Menu);
+     //jPanel6.add(container);
+     jPanel6.add(Drinks);
+     jPanel6.repaint();
+     jPanel6.revalidate();
+    }//GEN-LAST:event_menusidepanel1MouseClicked
+
+    private void menusidepanel1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menusidepanel1MouseEntered
+        // TODO add your handling code here:
+               menusidepanel1.setBackground(Color.YELLOW);
+    }//GEN-LAST:event_menusidepanel1MouseEntered
+
+    private void menusidepanel1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menusidepanel1MouseExited
+        // TODO add your handling code here:
+               menusidepanel1.setBackground(Color.WHITE);
+    }//GEN-LAST:event_menusidepanel1MouseExited
+
+    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
+        // TODO add your handling code here:
+              MenuItems menuItems = new MenuItems(this, rootPaneCheckingEnabled,foodcourt.getName(),"Cold Drinks");
+             menuItems.setVisible(rootPaneCheckingEnabled);
+    }//GEN-LAST:event_jButton11ActionPerformed
+
+    private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
+  MenuItems menuItems = new MenuItems(this, rootPaneCheckingEnabled,foodcourt.getName(),"Water");
+             menuItems.setVisible(rootPaneCheckingEnabled);        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton12ActionPerformed
+
+    private void CheckATUbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CheckATUbuttonActionPerformed
+        // TODO add your handling code here:
+             MenuInterface Dao2 = MenuFactory.GetInstance();
+                try
+                {
+                   ArrayList<Menu_Items> list  =  Dao2.GetCatItemsQTY(foodcourt.getName());
+                    for (int j = 0; j < list.size(); j++) {
+                        
+                        if(list.get(j).getCategory().equals("Cold Drinks")){
+                            
+                            if(Integer.parseInt(list.get(j).getQTY()) <=  Integer.parseInt(foodcourt.getColddrinkQTY())){
+                                MessageString =  MessageString + list.get(j).getName() +" Low QTY ("+list.get(j).getQTY()+") ,";
+                            }
+                            
+                        }else{
+                         //Water  
+                            if(Integer.parseInt(list.get(j).getQTY()) <=  Integer.parseInt(foodcourt.getWaterQTY())){
+                                MessageString =  MessageString + list.get(j).getName() +" Low QTY ("+list.get(j).getQTY()+") ,";
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex) 
+                {
+                    System.out.println("Failed loading items"+ex);
+                    return;
+                }
+        JOptionPane.showMessageDialog(this,
+                     this.MessageString,
+                     "",
+                      JOptionPane.PLAIN_MESSAGE);
+    }//GEN-LAST:event_CheckATUbuttonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -663,11 +932,17 @@ public class MainScreen extends javax.swing.JFrame
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel Add;
+    private javax.swing.JButton CheckATUbutton;
+    private javax.swing.JLabel Clock;
     private javax.swing.JPanel Dashboardsidepanel;
+    private javax.swing.JPanel Drinks;
     private javax.swing.JPanel Menu;
     private javax.swing.JPanel Reports;
     private javax.swing.JLabel blab;
     private javax.swing.JButton jButton10;
+    private javax.swing.JButton jButton11;
+    private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
@@ -675,13 +950,19 @@ public class MainScreen extends javax.swing.JFrame
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
+    private javax.swing.JLabel jLabel36;
+    private javax.swing.JLabel jLabel37;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel40;
     private javax.swing.JLabel jLabel41;
+    private javax.swing.JLabel jLabel42;
+    private javax.swing.JLabel jLabel43;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
@@ -694,11 +975,13 @@ public class MainScreen extends javax.swing.JFrame
     private javax.swing.JPanel jPanel20;
     private javax.swing.JPanel jPanel21;
     private javax.swing.JPanel jPanel22;
+    private javax.swing.JPanel jPanel24;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel menusidepanel;
+    private javax.swing.JPanel menusidepanel1;
     private javax.swing.JButton vbut;
     // End of variables declaration//GEN-END:variables
 }

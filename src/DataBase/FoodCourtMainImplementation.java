@@ -53,7 +53,7 @@ public class FoodCourtMainImplementation implements FoodCourtMainInterface
                    ResultSet rs = stmt.executeQuery(query);
                    while(rs.next())  
                    {
-                       f = new FoodCourtModel(rs.getInt(1),rs.getString(2),rs.getString(5),rs.getString(3),rs.getString(4),rs.getDouble(6),rs.getDouble(7),rs.getDate(8),rs.getString(9),rs.getString(10));
+                       f = new FoodCourtModel(rs.getInt(1),rs.getString(2),rs.getString(5),rs.getString(3),rs.getString(4),rs.getDouble(6),rs.getDouble(7),rs.getDate(8),rs.getString(9),rs.getString(10),rs.getString(11),rs.getString(12));
                    }
          }
          catch(Exception ex)
@@ -68,11 +68,11 @@ public class FoodCourtMainImplementation implements FoodCourtMainInterface
     @Override
     public void updateinfo(FoodCourtModel foodcourt,UpdateInfo update) throws Exception {
 
-                  String query = "update FoodCourts set  Time = '"+update.Time+"' , CGST = "+update.CGST+" ,SGST = "+update.SGST+" ,Email = '"+update.Email+"' where ID = "+foodcourt.getId() ;
+                  String query = "update FoodCourts set  Time = '"+update.Time+"' , CGST = "+update.CGST+" ,SGST = "+update.SGST+" ,Email = '"+update.Email+"' , ColddrinkQTY = '"+update.ColdDrink+"'  , WaterQTY = '"+update.ColdDrink+"'  where ID = "+foodcourt.getId() ;
                   PreparedStatement psmnt = null;
                    psmnt = conn.prepareStatement(query);
                    psmnt.executeUpdate();  
-        
+      
     }
 
     @Override
@@ -98,7 +98,7 @@ public class FoodCourtMainImplementation implements FoodCourtMainInterface
             old = Float.parseFloat(rs.getString(1));
             newday = false;
         }
-                   
+                
         if(newday)
         {
                 if( presentHR < ResetTime )
@@ -185,7 +185,7 @@ public class FoodCourtMainImplementation implements FoodCourtMainInterface
                    {
                        old = old+  Float.parseFloat(rs.getString(1));
                        newday = false;
-                    
+                  
                    }
        
        if(newday){

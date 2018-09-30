@@ -13,6 +13,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Menuimplementation implements MenuInterface
 {
@@ -86,6 +87,19 @@ public class Menuimplementation implements MenuInterface
             int ans = psmnt.executeUpdate();
             return true;         
     }
+    @Override
+    public Boolean AddItem(String FoodCourtID, String Name, String Price, String Category , String QTY ) throws Exception 
+    {
+            PreparedStatement psmnt = null;
+            psmnt = conn.prepareStatement(" insert into "+FoodCourtID+"_Items(Name,price,Category,QTY) values (?,?,?,?);");
+            psmnt.setString(1, Name.trim());
+            psmnt.setString(2, Price.trim());
+            psmnt.setString(3, Category.trim()); 
+             psmnt.setString(4, QTY); 
+            
+            int ans = psmnt.executeUpdate();
+            return true;         
+    }
 
     @Override
     public ArrayList<Menu_Items> GetItems(String FoodCourtName,Trie trie) throws Exception 
@@ -101,7 +115,8 @@ public class Menuimplementation implements MenuInterface
          String Name = rs.getString(2);
          String Price = rs.getString(3);
          String Cat = rs.getString(4);
-         Menu_Items item = new Menu_Items(id, Name, Price, Cat);
+         String QTY = rs.getString(5);
+         Menu_Items item = new Menu_Items(id, Name, Price, Cat,QTY);
          Items.add(item);
          
         }
@@ -125,8 +140,8 @@ public class Menuimplementation implements MenuInterface
          String Name = rs.getString(2);
          String Price = rs.getString(3);
          String Cat = rs.getString(4);
-         
-         Menu_Items item = new Menu_Items(id, Name, Price, Cat);
+         String QTY = rs.getString(5);
+         Menu_Items item = new Menu_Items(id, Name, Price, Cat,QTY);
          Items.add(item);
          
         }
@@ -134,13 +149,39 @@ public class Menuimplementation implements MenuInterface
         return Items;
     }
 
+    
+
     @Override
-    public Boolean UpdateItem(String FoodCourtID, String Name, String Price, String Category) throws Exception {
+    public ArrayList<Menu_Items> GetCatItemsQTY(String FoodCourtName) throws Exception {
+       
+        ArrayList<Menu_Items> Items = new ArrayList<>();
+        final String Query = "select * from "+FoodCourtName+"_Items where Category = 'Water' or  Category = 'Cold Drinks' ;";
+        Statement stmt=conn.createStatement();  
+        ResultSet rs = stmt.executeQuery(Query);
+        while(rs.next())  
+        {
+         int id = rs.getInt(1);
+         String Name = rs.getString(2);
+         String Price = rs.getString(3);
+         String Cat = rs.getString(4);
+         String QTY = rs.getString(5);
+         Menu_Items item = new Menu_Items(id, Name, Price, Cat,QTY);
+         Items.add(item);
+         
+        }
+        
+        return Items;
+    }
+    
+    
+    @Override
+    public Boolean UpdateItem(String FoodCourtID, String Name, String Price, String Category , String QTY) throws Exception {
         
               
+        
             System.out.println(Category + " " + Name + " "+Price );
             PreparedStatement psmnt = null;
-            psmnt = conn.prepareStatement(" update "+FoodCourtID+"_Items set Price = "+Price+" where  Category = '"+Category+"' and Name = '"+Name+"'");
+            psmnt = conn.prepareStatement(" update "+FoodCourtID+"_Items set Price = "+Price+" , QTY = '"+QTY+"' where  Category = '"+Category+"' and Name = '"+Name+"'");
             psmnt.executeUpdate();
             return true;    
     }
@@ -170,5 +211,30 @@ public class Menuimplementation implements MenuInterface
             return true;
     }
     
+    
+    
+    @Override
+    public String  UpdateDrinksQTY(String FoodCourtID, HashMap<String,Integer> map) throws Exception {
+     
+        for ( String key : map.keySet() ) {
+                        int id  = 0;
+                        final String Query = "select QTY from "+FoodCourtID+"_Items where Name = '"+key+"';";
+                        Statement stmt=conn.createStatement();  
+                        ResultSet rs = stmt.executeQuery(Query);
+                        while(rs.next())  
+                        {
+                        
+                             id = Integer.parseInt(rs.getString(1));
+                            
+                            
+         
+                        }
+                        
+                         PreparedStatement psmnt = null;
+                         psmnt = conn.prepareStatement("update "+FoodCourtID+"_Items set  QTY = '"+ (id - map.get(key)) +"' where Name = '"+key+"'");
+                         psmnt.executeUpdate();
+            }
+        return "";   
+    }
 }
  

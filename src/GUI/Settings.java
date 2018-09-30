@@ -34,6 +34,9 @@ public class Settings extends javax.swing.JDialog {
     sgst.setText(foodcourt.getGGST()+"");
     cgst.setText(foodcourt.getCGST()+"");
     email.setText(foodcourt.getEmail());
+    colddrinkqty.setText(this.foodcourt.getColddrinkQTY());
+     waterqty.setText(this.foodcourt.getWaterQTY());
+    
     timeComboBox.setSelectedItem(foodcourt.getTime());
     
     if(timeComboBox.getSelectedIndex() < 12)
@@ -66,6 +69,10 @@ public class Settings extends javax.swing.JDialog {
         jLabel6 = new javax.swing.JLabel();
         timeComboBox = new javax.swing.JComboBox<>();
         amPmLabel = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        waterqty = new javax.swing.JTextField();
+        colddrinkqty = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(0, 153, 153));
@@ -97,6 +104,16 @@ public class Settings extends javax.swing.JDialog {
 
         timeComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24" }));
 
+        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel7.setText("Water ");
+
+        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel8.setText("Cold Drinks");
+
+        waterqty.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+
+        colddrinkqty.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -110,9 +127,17 @@ public class Settings extends javax.swing.JDialog {
                             .addComponent(jLabel6)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(jLabel5)
-                                .addComponent(jLabel3)))
+                                .addComponent(jLabel3))
+                            .addComponent(jLabel8))
                         .addGap(47, 47, 47)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(colddrinkqty)
+                                .addGap(32, 32, 32)
+                                .addComponent(jLabel7)
+                                .addGap(18, 18, 18)
+                                .addComponent(waterqty)
+                                .addGap(39, 39, 39))
                             .addComponent(email)
                             .addComponent(sgst)
                             .addComponent(cgst)
@@ -145,7 +170,13 @@ public class Settings extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(colddrinkqty, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7)
+                    .addComponent(waterqty, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 21, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -174,11 +205,28 @@ public class Settings extends javax.swing.JDialog {
       {
           this.amPmLabel.setText("PM");
       }
+      
+      int drink = 0;
+      int water = 0;
+     try{
+         
+         drink = Integer.parseInt(colddrinkqty.getText());
+         water = Integer.parseInt(waterqty.getText());
+         
+     }catch(Exception e){
+                JOptionPane.showMessageDialog(this,
+                            "Quantity value not correct",
+                            "Inane error",
+                            JOptionPane.ERROR_MESSAGE);
+     }
+      
       UpdateInfo update = new UpdateInfo();
       update.SGST = SGST;
       update.CGST = CGST;
       update.Email = newEmail;
       update.Time = timereset;
+      update.ColdDrink = drink+"";
+      update.Water = water+"";
         
           FoodCourtMainInterface Dao = FoodCourtFactory.GetInstance();
          try{
@@ -187,7 +235,8 @@ public class Settings extends javax.swing.JDialog {
              foodcourt.setEmail(update.Email);
              foodcourt.setCGST(Double.parseDouble(update.CGST));
              foodcourt.setGGST(Double.parseDouble(update.SGST));
-             
+             foodcourt.setColddrinkQTY(update.ColdDrink);
+             foodcourt.setWaterQTY(update.Water);
              
              
              sgst.setText(foodcourt.getGGST()+"");
@@ -274,13 +323,17 @@ public class Settings extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel amPmLabel;
     private javax.swing.JTextField cgst;
+    private javax.swing.JTextField colddrinkqty;
     private javax.swing.JTextField email;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JTextField sgst;
     private javax.swing.JComboBox<String> timeComboBox;
     private javax.swing.JButton updateButton;
+    private javax.swing.JTextField waterqty;
     // End of variables declaration//GEN-END:variables
 }

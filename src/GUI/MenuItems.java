@@ -45,6 +45,14 @@ public class MenuItems extends javax.swing.JDialog
         centerRenderer.setHorizontalAlignment( JLabel.CENTER );
         ItemsTable.getColumnModel().getColumn(0).setCellRenderer( centerRenderer );
         ItemsTable.getColumnModel().getColumn(1).setCellRenderer( centerRenderer );
+         ItemsTable.getColumnModel().getColumn(2).setCellRenderer( centerRenderer );
+        if(cateName.equals("Cold Drinks") ||  cateName.equals("Water")){
+               QTY.setEnabled(true);
+               
+        }else{
+               QTY.setEnabled(false);
+               ItemsTable.removeColumn(ItemsTable.getColumnModel().getColumn(2));
+        }
         
         
     }
@@ -70,6 +78,8 @@ public class MenuItems extends javax.swing.JDialog
         jLabel3 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        QTY = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("ADD / UPDATE  ITEMS");
@@ -82,7 +92,7 @@ public class MenuItems extends javax.swing.JDialog
 
             },
             new String [] {
-                "Name", "Price"
+                "Name", "Price","QTY"
             }
         )
         {public boolean isCellEditable(int row, int column){return false;}}
@@ -152,28 +162,43 @@ public class MenuItems extends javax.swing.JDialog
         }
     });
 
+    jLabel4.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+    jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+    jLabel4.setText("QTY");
+
+    QTY.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+
     javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
     jPanel2.setLayout(jPanel2Layout);
     jPanel2Layout.setHorizontalGroup(
         jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(jPanel2Layout.createSequentialGroup()
-            .addGap(382, 382, 382)
-            .addComponent(jLabel3)
-            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        .addGroup(jPanel2Layout.createSequentialGroup()
-            .addGap(97, 97, 97)
-            .addComponent(jLabel1)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(itemname, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(24, 24, 24)
-            .addComponent(jLabel2)
-            .addGap(3, 3, 3)
-            .addComponent(itemprice, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(108, 108, 108)
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 234, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addGap(97, 97, 97)
+                    .addComponent(jLabel1)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(itemname, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(24, 24, 24)
+                    .addComponent(jLabel2)
+                    .addGap(3, 3, 3)
+                    .addComponent(itemprice, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(108, 108, 108)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 231, Short.MAX_VALUE)))
+                .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addGap(382, 382, 382)
+                            .addComponent(jLabel3))
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addGap(330, 330, 330)
+                            .addComponent(jLabel4)
+                            .addGap(18, 18, 18)
+                            .addComponent(QTY, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGap(0, 0, Short.MAX_VALUE)))
             .addContainerGap())
     );
     jPanel2Layout.setVerticalGroup(
@@ -192,11 +217,17 @@ public class MenuItems extends javax.swing.JDialog
                 .addGroup(jPanel2Layout.createSequentialGroup()
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(jButton1)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
                     .addComponent(jButton3)))
             .addGap(12, 12, 12)
-            .addComponent(jButton2)
-            .addContainerGap(50, Short.MAX_VALUE))
+            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addComponent(jButton2)
+                    .addGap(24, 24, 24))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(QTY, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addContainerGap(19, Short.MAX_VALUE))
     );
 
     getContentPane().add(jPanel2, java.awt.BorderLayout.SOUTH);
@@ -215,6 +246,29 @@ public class MenuItems extends javax.swing.JDialog
                       JOptionPane.ERROR_MESSAGE);
                       return ;
             
+        }
+        
+        if(cateName.equals("Cold Drinks") ||  cateName.equals("Water")){
+        
+                if("".equals(QTY.getText()) )
+                  {
+                     JOptionPane.showMessageDialog(jPanel1,
+                     "Invalid Quantity",
+                     "Inane error",
+                      JOptionPane.ERROR_MESSAGE);
+                      return ;
+            
+                  }
+                     try{
+            int sad = Integer.parseInt(QTY .getText());
+      }catch(Exception ex)
+      {
+          JOptionPane.showMessageDialog(jPanel1,
+                     "Invalid Quantity",
+                     "Inane error",
+                      JOptionPane.ERROR_MESSAGE);
+                      return ;
+      }
         }
         
         for(Menu_Items item : Items)
@@ -244,18 +298,27 @@ public class MenuItems extends javax.swing.JDialog
         if(Items.size() != 0)
         {
                    firstitem = false;
-                   item = new Menu_Items(Items.get(Items.size()-1).getId()+1, itemname.getText().trim(), itemprice .getText().trim(), cateName);
+                   item = new Menu_Items(Items.get(Items.size()-1).getId()+1, itemname.getText().trim(), itemprice .getText().trim(), cateName,"0");
 
             
         }
 
-             item = new Menu_Items(1, itemname.getText().trim(), itemprice .getText().trim(), cateName);
+             item = new Menu_Items(1, itemname.getText().trim(), itemprice .getText().trim(), cateName,"0");
 
         MenuInterface Dao = MenuFactory.GetInstance();
         try
         {
             System.out.println("Adding item");
-            Dao.AddItem(FoodCourtName, itemname.getText().trim(), itemprice .getText().trim(), cateName);
+            
+             
+        if(cateName.equals("Cold Drinks") ||  cateName.equals("Water")){
+             Dao.AddItem(FoodCourtName, itemname.getText().trim(), itemprice .getText().trim(), cateName , QTY.getText().trim());
+        }else{
+             Dao.AddItem(FoodCourtName, itemname.getText().trim(), itemprice .getText().trim(), cateName);
+        }
+            
+            
+           
         } catch (Exception ex) 
         {
             System.out.println("Failed"+ex);
@@ -266,6 +329,7 @@ public class MenuItems extends javax.swing.JDialog
          FillingTable();
          itemname.setText("");
          itemprice.setText("");
+         QTY.setText("");
          this.itemname.requestFocusInWindow();
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -276,10 +340,10 @@ public class MenuItems extends javax.swing.JDialog
 
         String Name = ItemsTable.getModel().getValueAt(row, 0).toString();
         String Price = ItemsTable.getModel().getValueAt(row, 1).toString();
-     
+         String QTY1 = ItemsTable.getModel().getValueAt(row, 2).toString();
         itemname.setText(Name);
         itemprice.setText(Price);
-
+            QTY.setText(QTY1);
        
         
         
@@ -310,30 +374,50 @@ public class MenuItems extends javax.swing.JDialog
         
         String ItemName = itemname.getText().trim();
         String Categoryitem = cateName;
+        String QTY6 = "-1";
         
         for(Menu_Items item : Items)
         {
                  if(item.getName().equalsIgnoreCase(itemname.getText().trim()))
                  {
-                      if(item.getPrice().equalsIgnoreCase(itemprice.getText().trim()))
-                      {
+                      
+                         if(cateName.equals("Cold Drinks") ||  cateName.equals("Water"))
+                         {
+                                                  try{
+                                                    int sad = Integer.parseInt(QTY .getText());
+                                              }catch(Exception ex)
+                                              {
+                                                  JOptionPane.showMessageDialog(jPanel1,
+                                                             "Invalid Quantity",
+                                                             "Inane error",
+                                                              JOptionPane.ERROR_MESSAGE);
+                                                              return ;
+                                              }
+                                                  QTY6 = QTY.getText().trim();
+                             
+                         }else{
+                             if(item.getPrice().equalsIgnoreCase(itemprice.getText().trim()))
+                             {
                                     JOptionPane.showMessageDialog(jPanel1,
                                      "Change item price if you want to update ",
                                     "Inane error",
                                      JOptionPane.ERROR_MESSAGE);
                                      return ;
-                      }
+                              }
+                         }
                      
                      
                                MenuInterface Dao = MenuFactory.GetInstance();
                                try
                                {
                                    System.out.println("updating item");
-                                   Dao.UpdateItem(FoodCourtName, itemname.getText().trim(), itemprice .getText().trim(), cateName);
+                                   Dao.UpdateItem(FoodCourtName, itemname.getText().trim(), itemprice .getText().trim(), cateName ,QTY6.trim());
                                    item.setPrice(itemprice.getText().trim());
+                                   item.setQTY(QTY6);
                                    FillingTable();
                                    itemname.setText("");
                                     itemprice.setText("");
+                                    QTY.setText("");
                                    return;
                                    
                                } catch (Exception ex) 
@@ -464,6 +548,7 @@ public class MenuItems extends javax.swing.JDialog
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable ItemsTable;
+    private javax.swing.JTextField QTY;
     private javax.swing.JTextField itemname;
     private javax.swing.JTextField itemprice;
     private javax.swing.JButton jButton1;
@@ -472,6 +557,7 @@ public class MenuItems extends javax.swing.JDialog
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
@@ -503,10 +589,11 @@ public class MenuItems extends javax.swing.JDialog
        for(Menu_Items item : Items)
        {
         DefaultTableModel  model = (DefaultTableModel) ItemsTable.getModel();
-        Object row[] = new Object[2];
+        Object row[] = new Object[3];
       
             row[0] = item.getName();
             row[1] = item.getPrice();
+               row[2] = item.getQTY();
             model.addRow(row);
             
         

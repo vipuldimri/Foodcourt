@@ -21,6 +21,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import javax.print.PrintService;
 import javax.print.PrintServiceLookup;
 import javax.swing.JLabel;
@@ -66,6 +67,9 @@ public class NewOrder extends javax.swing.JFrame {
         BillingTable.getColumnModel().getColumn(0).setCellRenderer( centerRenderer );
         BillingTable.getColumnModel().getColumn(1).setCellRenderer( centerRenderer );
         BillingTable.getColumnModel().getColumn(2).setCellRenderer( centerRenderer );
+        
+        
+        BillingTable.removeColumn(BillingTable.getColumnModel().getColumn(3));
     }
     
     /**
@@ -154,7 +158,7 @@ public class NewOrder extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Name", "QTY", "Price"
+                "Name", "QTY", "Price", "Category"
             }
         ));
         BillingTable.setRowHeight(25);
@@ -398,35 +402,67 @@ public class NewOrder extends javax.swing.JFrame {
           System.out.println("No Option");
           return;
         } 
-        
-        //Updating the collection
-        try
-        {
-            /*
-            FactoryClass.getCardRechargerCommObj().sendData(Float.toString(Total));
-            // If card transaction fails return from here
-            if(!FactoryClass.getCardRechargerCommObj().getStatus())
-            {
-                return;
-            }*/
-            FoodCourtMainInterface dao = FoodCourtFactory.GetInstance();
-            dao.updatecollection(foodcourt.getName(), Total,foodcourt.getTime());
-        }catch(Exception e)
-        {
-            JOptionPane.showMessageDialog(this,
-            "Internet connection error",
-            "Inane error",
-            JOptionPane.ERROR_MESSAGE);
-        }
+
    			
            PrinterService printerService = new PrinterService();
            Date d = new Date();
            String demo = "";
+           
+           HashMap<String , Integer> qtymap = new HashMap<>();
          for(int i = 0 ; i < rows ; i ++)
         {
             String Name = model.getValueAt(i, 0).toString();
-           
        
+            String cateName = model.getValueAt(i, 3).toString();
+            if(cateName.equals("Cold Drinks") ||  cateName.equals("Water"))
+            {
+                
+                for (int j = 0; j < items.size(); j++) {
+                
+                    if(items.get(j).getName().equals(Name))
+                    {
+                        
+                        
+                        if(Integer.parseInt(items.get(j).getQTY()) < Integer.parseInt( model.getValueAt(i, 1).toString()))
+                        {
+                              JOptionPane.showMessageDialog(this,
+                                "Qty low ("+items.get(j).getQTY()+") for "+items.get(j).getName(),
+                                  "Error",
+                                 JOptionPane.ERROR_MESSAGE);
+                                return;
+                        }else{
+                            int x = Integer.parseInt(items.get(j).getQTY()) - Integer.parseInt( model.getValueAt(i, 1).toString());
+                            items.get(j).setQTY(x+"");
+                        }
+                        
+                    }
+                    
+                }
+                
+                    if (qtymap.containsKey(Name))  
+                        { 
+                            Integer a = qtymap.get(Name); 
+                            qtymap.put(Name,a + Integer.parseInt( model.getValueAt(i, 1).toString()));
+                        } else{
+                        qtymap.put(Name, Integer.parseInt( model.getValueAt(i, 1).toString()));
+                        
+                     
+                    }
+                    
+                try{
+                    
+                        MenuInterface dao = MenuFactory.GetInstance();
+                        dao.UpdateDrinksQTY(foodcourt.getName(), qtymap);  
+                }catch(Exception e){
+                         JOptionPane.showMessageDialog(this,
+                            "Error Updating QTY error is "+e,
+                            "Inane error",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+                
+                
+            }
+            
            String ans = "";
            boolean first = true;
            if(Name.length() > 15)
@@ -444,8 +480,27 @@ public class NewOrder extends javax.swing.JFrame {
                 demo = demo + "|"+ (i+1) +"|  "+model.getValueAt(i, 0)+spa+" | "+model.getValueAt(i, 1)+"   | "+model.getValueAt(i, 2)+"\n";
 
            }
+           
+         
             
         }
+                 
+        //Updating the collection
+
+         try
+        {
+ 
+            FoodCourtMainInterface dao = FoodCourtFactory.GetInstance();
+            dao.updatecollection(foodcourt.getName(), Total,foodcourt.getTime());
+        }catch(Exception e)
+        {
+            JOptionPane.showMessageDialog(this,
+            "Internet connection error "+e,
+            "Inane error",
+            JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+         
            //tokenNumber++;
           // String s = "Token:"+Integer.toString(tokenNumber)+"\n";
          //Header Text 
@@ -673,11 +728,12 @@ public class NewOrder extends javax.swing.JFrame {
                              return ;
             }
               DefaultTableModel  model = (DefaultTableModel) BillingTable.getModel();
-                Object row[] = new Object[3];
+                Object row[] = new Object[4];
       
                 row[0] = this.selectedItem.getName();
                 row[1] = qtyTextField.getText();
                 row[2] = this.selectedItem.getPrice();
+                 row[3] = this.selectedItem.getCategory();
                 model.addRow(row);
                 int rows = model.getRowCount();
                 int qty = -1;        
@@ -732,11 +788,12 @@ public class NewOrder extends javax.swing.JFrame {
                              return ;
             }
         DefaultTableModel  model = (DefaultTableModel) BillingTable.getModel();
-                Object row[] = new Object[3];
+                Object row[] = new Object[4];
       
                 row[0] = this.selectedItem.getName();
                 row[1] = qtyTextField.getText();
                 row[2] = this.selectedItem.getPrice();
+                row[3] = this.selectedItem.getCategory();
                 model.addRow(row);
                 int rows = model.getRowCount();
                 int qty = -1;        

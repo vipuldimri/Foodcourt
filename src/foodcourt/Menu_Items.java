@@ -15,12 +15,21 @@ public class Menu_Items
    private String Name;
    private String Price;
    private String Category;
-
-    public Menu_Items(int Id, String Name, String Price, String Category) {
+   private String QTY;
+    public Menu_Items(int Id, String Name, String Price, String Category,String QTY) {
         this.Id = Id;
         this.Name = Name;
         this.Price = Price;
         this.Category = Category;
+        this.QTY = QTY;
+    }
+
+    public String getQTY() {
+        return QTY;
+    }
+
+    public void setQTY(String QTY) {
+        this.QTY = QTY;
     }
 
     public int getId() {

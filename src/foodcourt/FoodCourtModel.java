@@ -22,8 +22,11 @@ public class FoodCourtModel {
     private Date   SubEnd;
     private String Email;
     private String Time;
-
-    public FoodCourtModel(int Id, String Name, String Contact, String Address, String Owner, double GGST, double CGST, Date SubEnd, String Email,String Time) {
+    private String ColddrinkQTY;
+    private String WaterQTY;
+    
+    
+    public FoodCourtModel(int Id, String Name, String Contact, String Address, String Owner, double GGST, double CGST, Date SubEnd, String Email,String Time,String ColddrinkQTY,String WaterQTY) {
         this.Id = Id;
         this.Name = Name;
         this.Contact = Contact;
@@ -34,6 +37,24 @@ public class FoodCourtModel {
         this.SubEnd = SubEnd;
         this.Email = Email;
         this.Time = Time;
+        this.ColddrinkQTY = ColddrinkQTY;
+        this.WaterQTY = WaterQTY;
+    }
+
+    public String getColddrinkQTY() {
+        return ColddrinkQTY;
+    }
+
+    public void setColddrinkQTY(String ColddrinkQTY) {
+        this.ColddrinkQTY = ColddrinkQTY;
+    }
+
+    public String getWaterQTY() {
+        return WaterQTY;
+    }
+
+    public void setWaterQTY(String WaterQTY) {
+        this.WaterQTY = WaterQTY;
     }
 
     public String getTime() {
