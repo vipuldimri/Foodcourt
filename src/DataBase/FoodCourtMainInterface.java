@@ -28,4 +28,6 @@ public interface FoodCourtMainInterface {
     public String GettodayCollection(String Foodcourtname,String time) throws Exception;
     
     public String GetPerticulardateCollection(String Foodcourtname,Date start, Date end) throws Exception;
+    
+    public int GetToken(String Foodcourtname ) throws Exception;
 }

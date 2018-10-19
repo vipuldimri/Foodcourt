@@ -19,7 +19,6 @@ public class FoodCourtMainImplementation implements FoodCourtMainInterface
    FoodCourtMainImplementation(){
        conn = Connect.getconnection();
    }
-    
     @Override
     public ArrayList<Users> GetUsers(String Name) throws Exception {
         ArrayList<Users> users = new ArrayList<>();
@@ -40,7 +39,6 @@ public class FoodCourtMainImplementation implements FoodCourtMainInterface
         }
         return users;
     }
-
     @Override
     public FoodCourtModel GetFoodCourtDetails(String ID) throws Exception {
      // FoodCourtModel f = new FoodCourtModel(ID, Name, Contact, Address, Owner, ID, ID, SubEnd, Email)
@@ -70,8 +68,8 @@ public class FoodCourtMainImplementation implements FoodCourtMainInterface
 
                   String query = "update FoodCourts set  Time = '"+update.Time+"' , CGST = "+update.CGST+" ,SGST = "+update.SGST+" ,Email = '"+update.Email+"' , ColddrinkQTY = '"+update.ColdDrink+"'  , WaterQTY = '"+update.ColdDrink+"'  where ID = "+foodcourt.getId() ;
                   PreparedStatement psmnt = null;
-                   psmnt = conn.prepareStatement(query);
-                   psmnt.executeUpdate();  
+                  psmnt = conn.prepareStatement(query);
+                  psmnt.executeUpdate();  
       
     }
 
@@ -82,13 +80,18 @@ public class FoodCourtMainImplementation implements FoodCourtMainInterface
         int presentHR = -1;
         presentHR = LocalDateTime.now().getHour();
         String data = "";
+     
+       
+        
         if( presentHR < ResetTime )
         {
              data ="select  Collect from  "+Foodcourtname+"_collection where  date  = curdate() - INTERVAL 1 DAY";
+       
         }else{
              data ="select  Collect from  "+Foodcourtname+"_collection where  date = curdate()"; 
         }
           
+ 
        float old =0;
        boolean newday = true;
        Statement stmt=conn.createStatement();  
@@ -108,40 +111,51 @@ public class FoodCourtMainImplementation implements FoodCourtMainInterface
                    PreparedStatement psmnt = null;
                    psmnt = conn.prepareStatement(query);
                    psmnt.executeUpdate();
-
+                   
+                   
+                   // To reset token count 
+                   String queryt = "update  "+Foodcourtname+"_TokenCount set  Token = 0";
+                   PreparedStatement psmntt = null;
+                   psmntt = conn.prepareStatement(queryt);
+                   psmntt.executeUpdate();
+                   
                 }else{
                    old = old + price;
                    String query = "insert into "+Foodcourtname+"_collection(Collect,date) values ('"+price+"',curdate())";
                    PreparedStatement psmnt = null;
                    psmnt = conn.prepareStatement(query);
                    psmnt.executeUpdate();
+                   
+                   
+                   // To reset token count 
+                   String queryt = "update  "+Foodcourtname+"_TokenCount set  Token = 0";
+                   PreparedStatement psmntt = null;
+                   psmntt = conn.prepareStatement(queryt);
+                   psmntt.executeUpdate();
                 }
-        }else 
-        {
+        }else  {
              if( presentHR < ResetTime )
-                {
-        old = old + price;
-        String query = "update  "+Foodcourtname+"_collection set  Collect = '"+old+"' where date  = curdate() - INTERVAL 1 DAY";
-        PreparedStatement psmnt = null;
-        psmnt = conn.prepareStatement(query);
-        psmnt.executeUpdate();
-
-                }else{
+                {  
+                old = old + price;
+                String query = "update  "+Foodcourtname+"_collection set  Collect = '"+old+"' where date  = curdate() - INTERVAL 1 DAY";
+                PreparedStatement psmnt = null;
+                psmnt = conn.prepareStatement(query);
+                psmnt.executeUpdate();
+                }else
+             {
         old = old + price;
         String query = "update  "+Foodcourtname+"_collection set  Collect = '"+old+"' where date = curdate()";
         PreparedStatement psmnt = null;
         psmnt = conn.prepareStatement(query);
         psmnt.executeUpdate();
                 }
-      
+             
+        
         }
-  
     }
-
     @Override
-    public String GettodayCollection(String Foodcourtname,String time) throws Exception {
-                
-         int ResetTime = Integer.parseInt(time);
+    public String GettodayCollection(String Foodcourtname,String time) throws Exception {        
+        int ResetTime = Integer.parseInt(time);
         int presentHR = LocalDateTime.now().getHour();
         String data = "";
         if( presentHR < ResetTime )
@@ -167,17 +181,13 @@ public class FoodCourtMainImplementation implements FoodCourtMainInterface
        }
                    return old+"";
     }
-    
-
     @Override
     public String GetPerticulardateCollection(String Foodcourtname, Date start, Date end) throws Exception 
     {
-         java.sql.Date sdate = new java.sql.Date(start.getTime());
-        java.sql.Date edate = new java.sql.Date(end.getTime());
-        
-        
-        String Query="select  Collect from  "+Foodcourtname+"_collection  WHERE Date >= '"+sdate+"' AND Date <= '"+edate+"';";    
-        float old =0;
+       java.sql.Date sdate = new java.sql.Date(start.getTime());
+       java.sql.Date edate = new java.sql.Date(end.getTime()); 
+       String Query="select  Collect from  "+Foodcourtname+"_collection  WHERE Date >= '"+sdate+"' AND Date <= '"+edate+"';";    
+       float old =0;
        boolean newday = true;
        Statement stmt=conn.createStatement();  
        ResultSet rs = stmt.executeQuery(Query);
@@ -185,14 +195,31 @@ public class FoodCourtMainImplementation implements FoodCourtMainInterface
                    {
                        old = old+  Float.parseFloat(rs.getString(1));
                        newday = false;
-                  
                    }
-       
        if(newday){
              
-            return "0";
-           
+                 
+                   return "0";
        }
                    return old+"";
+    }
+    @Override
+    public int GetToken(String Foodcourtname) throws Exception 
+    {
+                  
+                   int currenttoken = -1;
+                   String tokenquery = "select max(Token) from "+Foodcourtname+"_TokenCount;";
+                   Statement stmt=conn.createStatement();  
+                   ResultSet rs = stmt.executeQuery(tokenquery);
+                   while(rs.next())  
+                   {
+                       currenttoken = rs.getInt(1);
+                   }
+                   int t = currenttoken + 1;
+                   String query = "update  "+Foodcourtname+"_TokenCount set  Token = "+t;
+                   PreparedStatement psmnt = null;
+                   psmnt = conn.prepareStatement(query);
+                   psmnt.executeUpdate();  
+                   return currenttoken + 1;
     }
 }

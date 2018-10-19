@@ -17,10 +17,13 @@ public class FoodCourtModel {
     private String Contact;
     private String Address;
     private String Owner;
-    private double  GGST;
-    private double CGST;
     private Date   SubEnd;
     private String Email;
+    
+    
+    
+    private double  GGST;
+    private double CGST;
     private String Time;
     private String ColddrinkQTY;
     private String WaterQTY;

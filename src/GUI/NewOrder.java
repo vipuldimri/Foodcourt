@@ -1,10 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package GUI;
-
 import DataBase.FoodCourtFactory;
 import DataBase.FoodCourtMainInterface;
 import DataBase.MenuFactory;
@@ -32,12 +26,6 @@ import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-//import org.openqa.selenium.Keys;
-
-/**
- *
- * @author u20o90
- */
 public class NewOrder extends javax.swing.JFrame {
 
     /**
@@ -486,12 +474,15 @@ public class NewOrder extends javax.swing.JFrame {
         }
                  
         //Updating the collection
-
+         int currenttoken  = -1;
          try
         {
  
             FoodCourtMainInterface dao = FoodCourtFactory.GetInstance();
             dao.updatecollection(foodcourt.getName(), Total,foodcourt.getTime());
+            currenttoken =  dao.GetToken(foodcourt.getName());
+            
+            
         }catch(Exception e)
         {
             JOptionPane.showMessageDialog(this,
@@ -501,10 +492,15 @@ public class NewOrder extends javax.swing.JFrame {
             return;
         }
          
+         
+          
+         
            //tokenNumber++;
           // String s = "Token:"+Integer.toString(tokenNumber)+"\n";
          //Header Text 
-            String s = "                  | Welcome | \n                  Swaad Sadan \n "+
+          String tokenadd = "TOKEN NO:"+currenttoken+" \n ";
+         
+          String s = "                  | Welcome | \n                  "+foodcourt.getName()+" \n "+
                 "         "+d+"\n           Tiffins | Chatt | Juice \n\nORDER "+
                 "DETAILS \n-------------\nSno | ItemName       | QTY | Price \n"+
                 "----------------------------------\n";
@@ -513,10 +509,15 @@ public class NewOrder extends javax.swing.JFrame {
            s = s + "\n\n-----------------------\n";
            s = s + "Thank you , Visit again\n";
            s = s + "Contact Us \n";
-           s = s + "9718327876\n";
+           s = s + ""+foodcourt.getContact()+"\n";
            s = s + "-----------------------\n";
            s = s + "Powered by Stark Technologies";
            s += "\n\n\n\n\n\n\n\n";
+           
+            s = tokenadd+s;
+            
+            System.out.println(s);
+            
            try
            {
                
@@ -543,8 +544,6 @@ public class NewOrder extends javax.swing.JFrame {
             //Remove rows one by one from the end of the table
             for (int i = rowCount - 1; i >= 0; i--) {
             dm.removeRow(i);}
-        
-            
     }//GEN-LAST:event_printButtonActionPerformed
 
     private void BillingTableKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BillingTableKeyReleased
