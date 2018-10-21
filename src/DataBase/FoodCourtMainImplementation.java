@@ -3,6 +3,7 @@ package DataBase;
 
 import foodcourt.FoodCourtModel;
 import foodcourt.MyLog;
+import foodcourt.Settings;
 import foodcourt.Users;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,9 +17,9 @@ import foodcourt.UpdateInfo;
 public class FoodCourtMainImplementation implements FoodCourtMainInterface
 {
     Connection conn;
-   FoodCourtMainImplementation(){
+    FoodCourtMainImplementation(){
        conn = Connect.getconnection();
-   }
+    }
     @Override
     public ArrayList<Users> GetUsers(String Name) throws Exception {
         ArrayList<Users> users = new ArrayList<>();
@@ -51,7 +52,7 @@ public class FoodCourtMainImplementation implements FoodCourtMainInterface
                    ResultSet rs = stmt.executeQuery(query);
                    while(rs.next())  
                    {
-                       f = new FoodCourtModel(rs.getInt(1),rs.getString(2),rs.getString(5),rs.getString(3),rs.getString(4),rs.getDouble(6),rs.getDouble(7),rs.getDate(8),rs.getString(9),rs.getString(10),rs.getString(11),rs.getString(12));
+                       f = new FoodCourtModel(rs.getInt(1),rs.getString(2),rs.getString(5),rs.getString(3),rs.getString(4),rs.getDate(8),rs.getString(9));
                    }
          }
          catch(Exception ex)
@@ -62,14 +63,13 @@ public class FoodCourtMainImplementation implements FoodCourtMainInterface
          
          
     }
-
     @Override
     public void updateinfo(FoodCourtModel foodcourt,UpdateInfo update) throws Exception {
 
-                  String query = "update FoodCourts set  Time = '"+update.Time+"' , CGST = "+update.CGST+" ,SGST = "+update.SGST+" ,Email = '"+update.Email+"' , ColddrinkQTY = '"+update.ColdDrink+"'  , WaterQTY = '"+update.ColdDrink+"'  where ID = "+foodcourt.getId() ;
-                  PreparedStatement psmnt = null;
-                  psmnt = conn.prepareStatement(query);
-                  psmnt.executeUpdate();  
+     String query = "update Settings set  Time = '"+update.Time+"' , CGST = "+update.CGST+" ,SGST = "+update.SGST+" ,Email = '"+update.Email+"' , ColddrinkQTY = '"+update.ColdDrink+"'  , WaterQTY = '"+update.ColdDrink+"'  where ID = "+foodcourt.getId() ;
+     PreparedStatement psmnt = null;
+     psmnt = conn.prepareStatement(query);
+     psmnt.executeUpdate();  
       
     }
 
@@ -221,5 +221,19 @@ public class FoodCourtMainImplementation implements FoodCourtMainInterface
                    psmnt = conn.prepareStatement(query);
                    psmnt.executeUpdate();  
                    return currenttoken + 1;
+    }
+
+    @Override
+    public Settings GetSettings(String ID) throws Exception
+    {
+                   String tokenquery = "select * from Settings where ID = "+ID;
+                   Statement stmt=conn.createStatement();  
+                   ResultSet rs = stmt.executeQuery(tokenquery);
+                   while(rs.next())  
+                   {
+                       return new Settings(rs.getDouble(2), rs.getDouble(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7));
+                   }
+        
+        return null;
     }
 }

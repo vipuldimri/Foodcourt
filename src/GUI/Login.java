@@ -23,7 +23,8 @@ public class Login extends javax.swing.JFrame {
      */
     public ArrayList<Users> users;
     public FoodCourtModel FoodCourt;
-    public Login(FoodCourtModel FoodCourt ,  ArrayList<Users> users)
+    public foodcourt.Settings settings;
+    public Login(FoodCourtModel FoodCourt ,  ArrayList<Users> users,foodcourt.Settings settings)
     {
         initComponents();
         Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
@@ -32,6 +33,7 @@ public class Login extends javax.swing.JFrame {
         setLocation(x, y);
         this.FoodCourt = FoodCourt;
         this.users = users;
+        this.settings = settings;
         this.getRootPane().setDefaultButton(loginbutton);
     }
 
@@ -173,7 +175,7 @@ public class Login extends javax.swing.JFrame {
             {
                 UserName.setText("");
                 Password.setText("");
-                MainScreen main = new MainScreen(FoodCourt,u,this);
+                MainScreen main = new MainScreen(FoodCourt,u,this,this.settings);
                 main.setVisible(rootPaneCheckingEnabled);
                 this.setVisible(false);
                 return;

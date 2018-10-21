@@ -1,0 +1,8 @@
+Oct 21, 2018 6:40:00 PM foodcourt.FactoryClass getPortsFromConfig
+INFO: rechargerport:COM15
+Oct 21, 2018 6:40:44 PM GUI.MenuItems GetCatItems
+INFO: Foodcourtname:foodcourtDemo
+Oct 21, 2018 6:40:57 PM GUI.MenuItems GetCatItems
+INFO: Foodcourtname:foodcourtDemo
+Oct 21, 2018 6:41:02 PM GUI.MenuItems GetCatItems
+INFO: Foodcourtname:foodcourtDemo

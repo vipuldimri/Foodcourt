@@ -36,9 +36,11 @@ public class NewOrder extends javax.swing.JFrame {
     Trie trie;
     FoodCourtModel foodcourt;
     MainScreen mainscreen;
+    foodcourt.Settings settings;
+    
     int tokenNumber=0;
     Date currentDate;
-    public NewOrder(FoodCourtModel foodcourt,MainScreen mainscreen) {
+    public NewOrder(FoodCourtModel foodcourt,MainScreen mainscreen , foodcourt.Settings settings ) {
         initComponents();
         Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
         int x = (int) ((dimension.getWidth() - getWidth()) / 2);
@@ -48,6 +50,7 @@ public class NewOrder extends javax.swing.JFrame {
         trie = new Trie();
         this.mainscreen = mainscreen;
         this.foodcourt = foodcourt;
+        this.settings = settings;
 
         GetItems();
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
@@ -479,7 +482,7 @@ public class NewOrder extends javax.swing.JFrame {
         {
  
             FoodCourtMainInterface dao = FoodCourtFactory.GetInstance();
-            dao.updatecollection(foodcourt.getName(), Total,foodcourt.getTime());
+            dao.updatecollection(foodcourt.getName(), Total,settings.getTime());
             currenttoken =  dao.GetToken(foodcourt.getName());
             
             

@@ -1,10 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package GUI;
-
 import DataBase.FoodCourtFactory;
 import DataBase.FoodCourtMainInterface;
 import foodcourt.FoodCourtModel;
@@ -12,11 +6,6 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.util.HashMap;
 import javax.swing.JOptionPane;
-
-/**
- *
- * @author dimri
- */
 public class TodayCollection extends javax.swing.JDialog {
 
     /**
@@ -24,7 +13,9 @@ public class TodayCollection extends javax.swing.JDialog {
      */
     String Collection ="";
         FoodCourtModel foodcourt;
-    public TodayCollection(java.awt.Frame parent, boolean modal,FoodCourtModel foodcourt) {
+        foodcourt.Settings settings;
+        
+    public TodayCollection(java.awt.Frame parent, boolean modal,FoodCourtModel foodcourt,foodcourt.Settings settings) {
         super(parent, modal);
         initComponents();
             Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
@@ -32,10 +23,11 @@ public class TodayCollection extends javax.swing.JDialog {
     int y = (int) ((dimension.getHeight() - getHeight()) / 2);
     setLocation(x, y);
     this.foodcourt = foodcourt;
+    this.settings = settings;
         try
         {
             FoodCourtMainInterface dao = FoodCourtFactory.GetInstance();
-            this.Collection = dao.GettodayCollection(this.foodcourt.getName(),foodcourt.getTime());
+            this.Collection = dao.GettodayCollection(this.foodcourt.getName(),this.settings.getTime());
             jTextField1.setText(this.Collection);
         }catch(Exception e)
         {

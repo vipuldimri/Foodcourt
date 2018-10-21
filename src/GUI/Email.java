@@ -32,16 +32,19 @@ public class Email extends javax.swing.JDialog {
      * Creates new form Email
      */
     FoodCourtModel foodcourt;
+    foodcourt.Settings settings;
     
-    public Email(java.awt.Frame parent, boolean modal,FoodCourtModel foodcourt) {
-    super(parent, modal);
-    initComponents();
-    this.foodcourt = foodcourt;
-    To.setText(foodcourt.getEmail());
-    Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
-    int x = (int) ((dimension.getWidth() - getWidth()) / 2);
-    int y = (int) ((dimension.getHeight() - getHeight()) / 2);
-    setLocation(x, y);
+    public Email(java.awt.Frame parent, boolean modal,FoodCourtModel foodcourt,foodcourt.Settings settings)
+    {
+            super(parent, modal);
+            initComponents();
+            this.foodcourt = foodcourt;
+            this.settings = settings;
+            To.setText(foodcourt.getEmail());
+            Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+            int x = (int) ((dimension.getWidth() - getWidth()) / 2);
+            int y = (int) ((dimension.getHeight() - getHeight()) / 2);
+            setLocation(x, y);
       
     }
 
@@ -144,7 +147,7 @@ public class Email extends javax.swing.JDialog {
         {
             return;
         }
-        SendEmailThread sendthread = new SendEmailThread(foodcourt,Comment.getText().trim());
+        SendEmailThread sendthread = new SendEmailThread(foodcourt,Comment.getText().trim(),this.settings);
         sendthread.run();
         System.out.println("done");
     }//GEN-LAST:event_jButton1ActionPerformed

@@ -6,6 +6,7 @@
 package DataBase;
 
 import foodcourt.FoodCourtModel;
+import foodcourt.Settings;
 import foodcourt.UpdateInfo;
 import foodcourt.Users;
 import java.util.ArrayList;
@@ -30,4 +31,7 @@ public interface FoodCourtMainInterface {
     public String GetPerticulardateCollection(String Foodcourtname,Date start, Date end) throws Exception;
     
     public int GetToken(String Foodcourtname ) throws Exception;
+    
+    public Settings GetSettings(String ID)throws Exception;
+    
 }

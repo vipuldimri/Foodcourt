@@ -26,11 +26,12 @@ public class MainScreen extends javax.swing.JFrame
     Users CurrentUser;
     Login loginscreen;
     JPanel container;
+    public foodcourt.Settings settings;
     public MainScreen()
     {
         
     }
-    public MainScreen(FoodCourtModel foodcourt ,   Users CurrentUser ,Login loginscreen) 
+    public MainScreen(FoodCourtModel foodcourt ,   Users CurrentUser ,Login loginscreen,foodcourt.Settings settings ) 
     {
         
         
@@ -53,6 +54,7 @@ public class MainScreen extends javax.swing.JFrame
         
         this.foodcourt = foodcourt;
         this.CurrentUser = CurrentUser;
+        this.settings = settings;
         this.loginscreen = loginscreen;
         //Getting Menu From the Database 
         MenuInterface Dao   = MenuFactory.GetInstance();
@@ -130,13 +132,13 @@ public class MainScreen extends javax.swing.JFrame
                         
                         if(list.get(j).getCategory().equals("Cold Drinks")){
                             
-                            if(Integer.parseInt(list.get(j).getQTY()) <=  Integer.parseInt(foodcourt.getColddrinkQTY())){
+                            if(Integer.parseInt(list.get(j).getQTY()) <=  Integer.parseInt(settings.getColddrinkQTY())){
                                 MessageString =  MessageString + list.get(j).getName() +" Low QTY ("+list.get(j).getQTY()+") ,";
                             }
                             
                         }else{
                          //Water  
-                            if(Integer.parseInt(list.get(j).getQTY()) <=  Integer.parseInt(foodcourt.getWaterQTY())){
+                            if(Integer.parseInt(list.get(j).getQTY()) <=  Integer.parseInt(settings.getWaterQTY())){
                                 MessageString =  MessageString + list.get(j).getName() +" Low QTY ("+list.get(j).getQTY()+") ,";
                             }
                         }
@@ -738,21 +740,21 @@ public class MainScreen extends javax.swing.JFrame
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:NEw order
         
-        NewOrder neworder = new NewOrder(foodcourt,this);
+        NewOrder neworder = new NewOrder(foodcourt,this,this.settings);
         neworder.setVisible(true);
         setVisible(false);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         // TODO add your handling code here:Setting 
-        Settings setting = new Settings(this, rootPaneCheckingEnabled,foodcourt);
+        Settings setting = new Settings(this, rootPaneCheckingEnabled,foodcourt,this.settings);
         setting.setVisible(true);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         // TODO add your handling code here:email
         
-        Email email = new Email(this, rootPaneCheckingEnabled,foodcourt);
+        Email email = new Email(this, rootPaneCheckingEnabled,foodcourt,this.settings);
         email.setVisible(true);
         
         
@@ -812,14 +814,14 @@ public class MainScreen extends javax.swing.JFrame
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         // TODO add your handling code here:
-        TodayCollection todaycollection = new  TodayCollection(this, rootPaneCheckingEnabled,foodcourt);
+        TodayCollection todaycollection = new  TodayCollection(this, rootPaneCheckingEnabled,foodcourt,this.settings);
         todaycollection.setVisible(rootPaneCheckingEnabled);
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
         // TODO add your handling code here:
                
-        NewOrder neworder = new NewOrder(foodcourt,this);
+        NewOrder neworder = new NewOrder(foodcourt,this,this.settings);
         neworder.setVisible(true);
         setVisible(false);
     }//GEN-LAST:event_jButton10ActionPerformed
@@ -873,13 +875,13 @@ public class MainScreen extends javax.swing.JFrame
                         
                         if(list.get(j).getCategory().equals("Cold Drinks")){
                             
-                            if(Integer.parseInt(list.get(j).getQTY()) <=  Integer.parseInt(foodcourt.getColddrinkQTY())){
+                            if(Integer.parseInt(list.get(j).getQTY()) <=  Integer.parseInt(settings.getColddrinkQTY())){
                                 MessageString =  MessageString + list.get(j).getName() +" Low QTY ("+list.get(j).getQTY()+") ,";
                             }
                             
                         }else{
                          //Water  
-                            if(Integer.parseInt(list.get(j).getQTY()) <=  Integer.parseInt(foodcourt.getWaterQTY())){
+                            if(Integer.parseInt(list.get(j).getQTY()) <=  Integer.parseInt(settings.getWaterQTY())){
                                 MessageString =  MessageString + list.get(j).getName() +" Low QTY ("+list.get(j).getQTY()+") ,";
                             }
                         }

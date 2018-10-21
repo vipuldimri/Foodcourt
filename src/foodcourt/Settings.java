@@ -1,7 +1,7 @@
 package foodcourt;
 public class Settings {
     
-    private double  GGST;
+    private double GGST;
     private double CGST;
     private String Time;
     private String ColddrinkQTY;

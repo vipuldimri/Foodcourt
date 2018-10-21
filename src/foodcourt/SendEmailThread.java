@@ -21,10 +21,12 @@ public class SendEmailThread extends Thread
   
     FoodCourtModel foodcourt;
     String Comment;
-    public SendEmailThread(FoodCourtModel foodcourt,String Comment)
+    foodcourt.Settings settings;
+    public SendEmailThread(FoodCourtModel foodcourt,String Comment,foodcourt.Settings settings)
     {
         this.Comment = Comment;
         this.foodcourt = foodcourt;
+        this.settings = settings;
     }
     @Override
     public void run()
@@ -38,9 +40,6 @@ public class SendEmailThread extends Thread
         props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");    
         props.put("mail.smtp.auth", "true");    
         props.put("mail.smtp.port", "465");    
-       
-        
-
            Session session = Session.getDefaultInstance(props,    
            new javax.mail.Authenticator() {    
            @Override
@@ -60,7 +59,7 @@ public class SendEmailThread extends Thread
         try
         {
             FoodCourtMainInterface dao = FoodCourtFactory.GetInstance();
-            collection = dao.GettodayCollection(foodcourt.getName(),foodcourt.getTime());
+            collection = dao.GettodayCollection(foodcourt.getName(),settings.getTime());
 
         }catch(Exception e)
         {

@@ -12,6 +12,7 @@ public class ConnectionBackgroundThread extends Thread
     public String Id="";
     public String Name="";
     public ArrayList<Users> users;
+    public Settings settings;
     public FoodCourtModel FoodCourt;
     
     @Override
@@ -40,7 +41,9 @@ public class ConnectionBackgroundThread extends Thread
             
             FoodCourtMainInterface Dao = FoodCourtFactory.GetInstance();
             FoodCourt = Dao.GetFoodCourtDetails(Id);
-            users = Dao.GetUsers(Name);    
+            users = Dao.GetUsers(Name);   
+            settings = Dao.GetSettings(Id);
+            
         }catch(Exception e)
         {
             System.out.println("Error getting data :: "+e);
