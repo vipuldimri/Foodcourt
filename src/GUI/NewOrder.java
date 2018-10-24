@@ -479,12 +479,18 @@ public class NewOrder extends javax.swing.JFrame {
         //Updating the collection
          int currenttoken  = -1;
          try
-        {
- 
+         {
+             /*
+            // Commented for now
+            FactoryClass.getCardRechargerCommObj().sendData(Float.toString(Total));
+            if(!FactoryClass.getCardRechargerCommObj().getStatus()){
+                return;
+            }*/
+            
             FoodCourtMainInterface dao = FoodCourtFactory.GetInstance();
             dao.updatecollection(foodcourt.getName(), Total,settings.getTime());
             currenttoken =  dao.GetToken(foodcourt.getName());
-            
+           
             
         }catch(Exception e)
         {
