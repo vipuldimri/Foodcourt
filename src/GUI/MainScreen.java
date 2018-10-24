@@ -9,6 +9,7 @@ import foodcourt.Users;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -149,7 +150,8 @@ public class MainScreen extends javax.swing.JFrame
                     System.out.println("Failed loading items"+ex);
                     return;
                 }
-        
+                
+          
     }
 
     public void message(String msg)
@@ -327,7 +329,7 @@ public class MainScreen extends javax.swing.JFrame
 
         jLabel22.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/drinks.png"))); // NOI18N
 
-        jLabel23.setText("Drinks");
+        jLabel23.setText("Inventory");
 
         javax.swing.GroupLayout menusidepanel1Layout = new javax.swing.GroupLayout(menusidepanel1);
         menusidepanel1.setLayout(menusidepanel1Layout);
@@ -352,7 +354,7 @@ public class MainScreen extends javax.swing.JFrame
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel4.add(menusidepanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 270, -1, 70));
+        jPanel4.add(menusidepanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 240, -1, 70));
 
         jPanel1.add(jPanel4, java.awt.BorderLayout.WEST);
 

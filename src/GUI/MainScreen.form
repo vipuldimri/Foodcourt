@@ -259,7 +259,7 @@
               </Events>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="0" y="270" width="-1" height="70"/>
+                  <AbsoluteConstraints x="0" y="240" width="-1" height="70"/>
                 </Constraint>
               </Constraints>
 
@@ -301,7 +301,7 @@
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel23">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Drinks"/>
+                    <Property name="text" type="java.lang.String" value="Inventory"/>
                   </Properties>
                 </Component>
               </SubComponents>

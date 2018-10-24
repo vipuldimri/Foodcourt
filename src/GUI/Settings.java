@@ -245,9 +245,10 @@ public class Settings extends javax.swing.JDialog {
                   
                
              
-         }catch(Exception e){
+         }catch(Exception e)
+         {
                   JOptionPane.showMessageDialog(this,
-                     "Error updating Settings",
+                     "Error updating Settings "+e,
                      "Error",
                       JOptionPane.ERROR_MESSAGE);
                   

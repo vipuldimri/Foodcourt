@@ -30,6 +30,8 @@ public class ConnectionBackgroundThread extends Thread
             Id = prop2.getProperty("ID");
             Name = prop2.getProperty("Name");
             
+        
+            
         } catch (Exception ex) 
         {
             System.out.println("Error Unable to connect to server "+ex);

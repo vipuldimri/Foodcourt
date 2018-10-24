@@ -13,11 +13,11 @@ public class Connect
         try
         {
          conn = null;
-	 String url =  "jdbc:mysql://foodcourt.cw0b5ff1vv8q.us-east-2.rds.amazonaws.com:3306/FoodCourt";
-	// String url =  "jdbc:mysql://localhost:3306/FoodCourt";
+	 //String url =  "jdbc:mysql://foodcourt.cw0b5ff1vv8q.us-east-2.rds.amazonaws.com:3306/FoodCourt";
+	String url =  "jdbc:mysql://localhost:3306/FoodCourt";
          Class.forName("com.mysql.jdbc.Driver");
-	 conn = DriverManager.getConnection (url,"vasant","foodcourt");
-         //conn = DriverManager.getConnection (url,"root","vasant");
+	 //conn = DriverManager.getConnection (url,"vasant","foodcourt");
+         conn = DriverManager.getConnection (url,"root","vasant");
 	 System.out.println ("Database connection established");
         }
         catch(Exception ex)

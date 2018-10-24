@@ -52,7 +52,7 @@ public class FoodCourtMainImplementation implements FoodCourtMainInterface
                    ResultSet rs = stmt.executeQuery(query);
                    while(rs.next())  
                    {
-                       f = new FoodCourtModel(rs.getInt(1),rs.getString(2),rs.getString(5),rs.getString(3),rs.getString(4),rs.getDate(8),rs.getString(9));
+                       f = new FoodCourtModel(rs.getInt(1),rs.getString(2),rs.getString(5),rs.getString(3),rs.getString(4),rs.getDate(5),rs.getString(6));
                    }
          }
          catch(Exception ex)
@@ -66,7 +66,7 @@ public class FoodCourtMainImplementation implements FoodCourtMainInterface
     @Override
     public void updateinfo(FoodCourtModel foodcourt,UpdateInfo update) throws Exception {
 
-     String query = "update Settings set  Time = '"+update.Time+"' , CGST = "+update.CGST+" ,SGST = "+update.SGST+" ,Email = '"+update.Email+"' , ColddrinkQTY = '"+update.ColdDrink+"'  , WaterQTY = '"+update.ColdDrink+"'  where ID = "+foodcourt.getId() ;
+     String query = "update Settings set  Time = '"+update.Time+"' , CGST = "+update.CGST+" ,GGST = "+update.SGST+" ,Email = '"+update.Email+"' , ColddrinkQTY = '"+update.ColdDrink+"'  , WaterQTY = '"+update.ColdDrink+"'  where ID = "+foodcourt.getId() ;
      PreparedStatement psmnt = null;
      psmnt = conn.prepareStatement(query);
      psmnt.executeUpdate();  
