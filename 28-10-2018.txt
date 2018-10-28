@@ -1,0 +1,40 @@
+Oct 28, 2018 11:31:17 AM foodcourt.FactoryClass getPortsFromConfig
+INFO: rechargerport:COM15
+Oct 28, 2018 11:31:20 AM DataBase.Connect <init>
+SEVERE: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+Oct 28, 2018 11:31:20 AM DataBase.FoodCourtMainImplementation GetFoodCourtDetails
+SEVERE: null
+Oct 28, 2018 11:31:20 AM DataBase.FoodCourtMainImplementation GetUsers
+SEVERE: null
+Oct 28, 2018 11:33:10 AM foodcourt.FactoryClass getPortsFromConfig
+INFO: rechargerport:COM15
+Oct 28, 2018 11:36:32 AM foodcourt.FactoryClass getPortsFromConfig
+INFO: rechargerport:COM15
+Oct 28, 2018 11:42:02 AM foodcourt.FactoryClass getPortsFromConfig
+INFO: rechargerport:COM15
+Oct 28, 2018 11:45:03 AM foodcourt.FactoryClass getPortsFromConfig
+INFO: rechargerport:COM15
+Oct 28, 2018 12:17:44 PM foodcourt.FactoryClass getPortsFromConfig
+INFO: rechargerport:COM15
+Oct 28, 2018 12:21:15 PM foodcourt.FactoryClass getPortsFromConfig
+INFO: rechargerport:COM15
+Oct 28, 2018 12:24:42 PM foodcourt.FactoryClass getPortsFromConfig
+INFO: rechargerport:COM15
+Oct 28, 2018 1:22:01 PM foodcourt.FactoryClass getPortsFromConfig
+INFO: rechargerport:COM15
+Oct 28, 2018 1:45:06 PM foodcourt.FactoryClass getPortsFromConfig
+INFO: rechargerport:COM15
+Oct 28, 2018 1:46:07 PM foodcourt.FactoryClass getPortsFromConfig
+INFO: rechargerport:COM15
+Oct 28, 2018 1:47:14 PM foodcourt.FactoryClass getPortsFromConfig
+INFO: rechargerport:COM15
+Oct 28, 2018 1:48:02 PM foodcourt.FactoryClass getPortsFromConfig
+INFO: rechargerport:COM15
+Oct 28, 2018 6:45:49 PM foodcourt.FactoryClass getPortsFromConfig
+INFO: rechargerport:COM15
+Oct 28, 2018 6:47:48 PM foodcourt.FactoryClass getPortsFromConfig
+INFO: rechargerport:COM15
+Oct 28, 2018 6:49:20 PM foodcourt.FactoryClass getPortsFromConfig
+INFO: rechargerport:COM15

@@ -13,7 +13,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import foodcourt.UpdateInfo;
-
 public class FoodCourtMainImplementation implements FoodCourtMainInterface
 {
     Connection conn;
@@ -52,7 +51,7 @@ public class FoodCourtMainImplementation implements FoodCourtMainInterface
                    ResultSet rs = stmt.executeQuery(query);
                    while(rs.next())  
                    {
-                       f = new FoodCourtModel(rs.getInt(1),rs.getString(2),rs.getString(5),rs.getString(3),rs.getString(4),rs.getDate(5),rs.getString(6));
+                       f = new FoodCourtModel(rs.getInt(1),rs.getString(2),rs.getString(5),rs.getString(3),rs.getString(4),rs.getDate(6),rs.getString(7));
                    }
          }
          catch(Exception ex)
@@ -235,5 +234,17 @@ public class FoodCourtMainImplementation implements FoodCourtMainInterface
                    }
         
         return null;
+    }
+
+    @Override
+    public void AddUser(String Foodcourtname, Users user) throws Exception {
+     
+        String Query = "insert into "+Foodcourtname+"_Users (Name, Phone, Address, Email, UserName, Password, type) "
+                + " values ('"+user.getName()+"','"+user.getPhone()+"','"+user.getAddress()+"','"+user.getEmail()+"','"+user.getUserName()+"','"+user.getPassword()+"','EMP');";
+        PreparedStatement psmnt = null;
+        
+        System.out.println(Query);
+        psmnt = conn.prepareStatement(Query);
+        psmnt.executeUpdate();  
     }
 }

@@ -29,9 +29,9 @@ public class MenuItems extends javax.swing.JDialog
         int x = (int) ((dimension.getWidth() - getWidth()) / 2);
         int y = (int) ((dimension.getHeight() - getHeight()) / 2);
         
-        
+        setLocation(x, y); 
         GetCatItems();
-        setLocation(x, y);
+       
         
         FillingTable();
         this.getRootPane().setDefaultButton(jButton1);

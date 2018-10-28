@@ -175,7 +175,7 @@ public class Login extends javax.swing.JFrame {
             {
                 UserName.setText("");
                 Password.setText("");
-                MainScreen main = new MainScreen(FoodCourt,u,this,this.settings);
+                MainScreen main = new MainScreen(FoodCourt,u,this,this.settings,u);
                 main.setVisible(rootPaneCheckingEnabled);
                 this.setVisible(false);
                 return;

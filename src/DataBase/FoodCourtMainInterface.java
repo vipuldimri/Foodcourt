@@ -34,4 +34,5 @@ public interface FoodCourtMainInterface {
     
     public Settings GetSettings(String ID)throws Exception;
     
+    public void AddUser(String Foodcourtname,Users user) throws Exception;
 }

@@ -26,13 +26,14 @@ public class MainScreen extends javax.swing.JFrame
     FoodCourtModel foodcourt;
     Users CurrentUser;
     Login loginscreen;
+    Users Current;
     JPanel container;
     public foodcourt.Settings settings;
     public MainScreen()
     {
         
     }
-    public MainScreen(FoodCourtModel foodcourt ,   Users CurrentUser ,Login loginscreen,foodcourt.Settings settings ) 
+    public MainScreen(FoodCourtModel foodcourt ,   Users CurrentUser ,Login loginscreen,foodcourt.Settings settings ,Users Current) 
     {
         
         
@@ -57,6 +58,15 @@ public class MainScreen extends javax.swing.JFrame
         this.CurrentUser = CurrentUser;
         this.settings = settings;
         this.loginscreen = loginscreen;
+        this.Current  = Current;
+        
+        if(Current.getType().equals("EMP")){
+            menusidepanel.setVisible(false);
+            menusidepanel1.setVisible(false);
+            jPanel21.setVisible(false);
+            jMenuItem2.setVisible(false);
+            jMenuItem4.setVisible(false);
+        }
         //Getting Menu From the Database 
         MenuInterface Dao   = MenuFactory.GetInstance();
         try
@@ -516,6 +526,11 @@ public class MainScreen extends javax.swing.JFrame
         jLabel34.setText("Employee Details");
 
         jButton9.setText("Employee");
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
+            }
+        });
 
         jLabel35.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/Employee.png"))); // NOI18N
 
@@ -899,6 +914,14 @@ public class MainScreen extends javax.swing.JFrame
                      "",
                       JOptionPane.PLAIN_MESSAGE);
     }//GEN-LAST:event_CheckATUbuttonActionPerformed
+
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        // TODO add your handling code here:
+        
+          AllUsers allusers = new  AllUsers(this, rootPaneCheckingEnabled,foodcourt);
+          allusers.setVisible(rootPaneCheckingEnabled);
+        
+    }//GEN-LAST:event_jButton9ActionPerformed
 
     /**
      * @param args the command line arguments

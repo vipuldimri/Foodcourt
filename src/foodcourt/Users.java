@@ -19,6 +19,10 @@ public class Users {
     private String Password;
     private String Type;
 
+    
+    public Users(){
+        
+    }
     public Users(int Id, String Name, String Phone, String Address, String Email, String UserName, String Password, String Type) {
         this.Id = Id;
         this.Name = Name;
